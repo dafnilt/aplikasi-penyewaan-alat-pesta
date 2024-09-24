@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  h1 {
+    @apply text-4xl font-bold;
+  }
+
+  ul {
+    @apply list-disc pl-8;
+  }
+
+  a {
+    @apply text-blue-500 underline hover:no-underline;
+  }
+}
