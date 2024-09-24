@@ -1,0 +1,7 @@
+const catalogProducPage = () => {
+    return (
+       <>
+       
+       </>
+    )
+}

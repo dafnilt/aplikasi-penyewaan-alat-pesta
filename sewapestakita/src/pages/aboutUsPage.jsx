@@ -1,0 +1,8 @@
+const AboutUsPage = () => {
+
+    return(
+        <>
+        
+        </>
+    )
+}
