@@ -1,17 +1,43 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
-  h1 {
-    @apply text-4xl font-bold;
+  .inter {
+    font-family: "Inter", sans-serif;
   }
 
-  ul {
-    @apply list-disc pl-8;
+  body {
+    font-family: "Open Sans", sans-serif;
+  }
+}
+
+@layer components {
+  .my-h-screen {
+    @apply h-[calc(100vh-3.5rem)];
   }
 
-  a {
-    @apply text-blue-500 underline hover:no-underline;
+  .nav-link {
+    @apply px-3 py-2 hover:bg-black/10 transition-all;
+  }
+
+  .banner-link {
+    @apply bg-white/70 px-4 py-2 rounded-full;
+  }
+
+  .catalog-item {
+    cursor:
+      url(./assets/icon/drag.svg) 30 30,
+      auto;
+    @apply aspect-[9/16] mx-1 rounded-lg;
+  }
+
+  .porto-item {
+    cursor:
+      url(./assets/icon/drag.svg) 30 30,
+      auto;
+    @apply aspect-[4/3] mx-1 rounded-lg overflow-hidden;
   }
 }

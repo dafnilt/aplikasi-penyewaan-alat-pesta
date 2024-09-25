@@ -1,6 +1,7 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import "react-multi-carousel/lib/styles.css";
 import "./index.css";
 import App from "./App";
 import Contacts from "./pages/Contacts";
