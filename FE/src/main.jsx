@@ -4,8 +4,8 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "react-multi-carousel/lib/styles.css";
 import "./index.css";
 import App from "./App";
-import Contacts from "./pages/Contacts";
 import Another from "./pages/Another";
+import AboutUs from "./pages/AboutUs";
 
 const router = createBrowserRouter([
   {
@@ -13,8 +13,8 @@ const router = createBrowserRouter([
     element: <App />,
   },
   {
-    path: "/contacts",
-    element: <Contacts />,
+    path: "/about-us",
+    element: <AboutUs />,
   },
   {
     path: "/another",
