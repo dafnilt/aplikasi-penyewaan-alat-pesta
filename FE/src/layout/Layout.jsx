@@ -3,7 +3,7 @@ import Navbar from "../components/Navbar";
 
 function Layout({ children }) {
   return (
-    <div className="pt-14">
+    <div className="pt-[66px]">
       <Navbar />
       {children}
       <Footer />
