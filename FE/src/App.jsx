@@ -134,9 +134,17 @@ function App() {
       {/* Katalog Produk */}
       <div className="bg-[#F6F6F6] py-8 px-2">
         <div className="max-w-screen-xl mx-auto">
-          <div className="w-max mb-4 px-2">
+          <div className="w-max px-2">
             <h1 className="text-2xl font-bold mb-1">Katalog Produk</h1>
             <div className="bg-black w-[65%] h-[2px] rounded-full" />
+          </div>
+          <div className="flex justify-end mb-4 px-2">
+            <a
+              href="#"
+              className="underline underline-offset-2 hover:no-underline"
+            >
+              More &gt;&gt;
+            </a>
           </div>
           <div className="px-1">
             <Carousel
@@ -239,9 +247,17 @@ function App() {
 
       {/* Portofolio */}
       <div className="py-8 px-2">
-        <div className="w-max xl:mx-auto mb-4 px-2">
+        <div className="w-max xl:mx-auto px-2">
           <h1 className="text-2xl font-bold mb-1">Portofolio Kami</h1>
           <div className="bg-black w-[65%] xl:mx-auto h-[2px] rounded-full" />
+        </div>
+        <div className="flex justify-end mb-4 px-2">
+          <a
+            href="#"
+            className="underline underline-offset-2 hover:no-underline"
+          >
+            More &gt;&gt;
+          </a>
         </div>
         <div className="px-1">
           <Carousel

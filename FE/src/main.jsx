@@ -6,6 +6,7 @@ import "./index.css";
 import App from "./App";
 import AboutUs from "./pages/AboutUs";
 import Catalog from "./pages/Catalog";
+import Product from "./pages/Product";
 
 const router = createBrowserRouter([
   {
@@ -19,6 +20,14 @@ const router = createBrowserRouter([
   {
     path: "/catalog",
     element: <Catalog />,
+  },
+  {
+    path: "/catalog/:productId",
+    element: <Product />,
+  },
+  {
+    path: "*",
+    element: <Product />,
   },
 ]);
 

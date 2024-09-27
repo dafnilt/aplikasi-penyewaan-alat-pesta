@@ -27,6 +27,8 @@ function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const { pathname } = useLocation();
 
+  const catalogRegex = /\/catalog/;
+
   return (
     <div className="bg-white fixed top-0 inset-x-0 z-[9999]">
       <div className="h-[66px] max-w-screen-xl mx-auto p-3 xl:border-b xl:border-black">
@@ -46,7 +48,7 @@ function Navbar() {
               Tentang Kami
             </a>
             <a
-              className={`nav-link ${pathname == "/catalog" && "nav-active"}`}
+              className={`nav-link ${catalogRegex.test(pathname) && "nav-active"}`}
               href="/catalog"
             >
               Katalog Produk
@@ -91,7 +93,7 @@ function Navbar() {
               Tentang Kami
             </a>
             <a
-              className={`nav-link ${pathname == "/catalog" && "bg-black/10"}`}
+              className={`nav-link ${catalogRegex.test(pathname) && "bg-black/10"}`}
               href="/catalog"
             >
               Katalog Produk

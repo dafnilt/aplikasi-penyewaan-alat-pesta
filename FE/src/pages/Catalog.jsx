@@ -1,183 +1,14 @@
 import Layout from "../layout/Layout";
-import catalog1 from "../assets/catalog/catalog-1.jpeg";
-import catalog2 from "../assets/catalog/catalog-2.jpeg";
-import catalog3 from "../assets/catalog/catalog-3.jpeg";
-import catalog4 from "../assets/catalog/catalog-4.jpeg";
-import catalog5 from "../assets/catalog/catalog-5.jpeg";
-import catalog6 from "../assets/catalog/catalog-6.jpeg";
 import filterIcon from "../assets/icon/filter.svg";
 import chevronDownIcon from "../assets/icon/chevron-down.svg";
+import { allProduct } from "../data";
 
 function Catalog() {
   const catalogProduct = [
-    {
-      img: catalog1,
-      title: "Kursi Portabel",
-      desc: "Kursi portabel ukuran 1x1 m",
-      fee: 35000,
-      timesRented: 300,
-    },
-    {
-      img: catalog2,
-      title: "Microphone",
-      desc: "Microphone Blue berkualitas tinggi",
-      fee: 200000,
-      timesRented: 300,
-    },
-    {
-      img: catalog3,
-      title: "Speaker Portabel",
-      desc: "Speaker portabel ukuran 50x50 cm",
-      fee: 200000,
-      timesRented: 300,
-    },
-    {
-      img: catalog4,
-      title: "Meja Kanopi",
-      desc: "Meja kanopi ukuran 3x2 m",
-      fee: 350000,
-      timesRented: 300,
-    },
-    {
-      img: catalog5,
-      title: "Air Filter",
-      desc: "Air Filter ukuran 30x30 cm",
-      fee: 50000,
-      timesRented: 300,
-    },
-    {
-      img: catalog6,
-      title: "Meja Bundar",
-      desc: "Meja bundar ukuran 2x2 m",
-      fee: 150000,
-      timesRented: 300,
-    },
-    {
-      img: catalog1,
-      title: "Kursi Portabel",
-      desc: "Kursi portabel ukuran 1x1 m",
-      fee: 35000,
-      timesRented: 300,
-    },
-    {
-      img: catalog2,
-      title: "Microphone",
-      desc: "Microphone Blue berkualitas tinggi",
-      fee: 200000,
-      timesRented: 300,
-    },
-    {
-      img: catalog3,
-      title: "Speaker Portabel",
-      desc: "Speaker portabel ukuran 50x50 cm",
-      fee: 200000,
-      timesRented: 300,
-    },
-    {
-      img: catalog4,
-      title: "Meja Kanopi",
-      desc: "Meja kanopi ukuran 3x2 m",
-      fee: 350000,
-      timesRented: 300,
-    },
-    {
-      img: catalog5,
-      title: "Air Filter",
-      desc: "Air Filter ukuran 30x30 cm",
-      fee: 50000,
-      timesRented: 300,
-    },
-    {
-      img: catalog6,
-      title: "Meja Bundar",
-      desc: "Meja bundar ukuran 2x2 m",
-      fee: 150000,
-      timesRented: 300,
-    },
-    {
-      img: catalog1,
-      title: "Kursi Portabel",
-      desc: "Kursi portabel ukuran 1x1 m",
-      fee: 35000,
-      timesRented: 300,
-    },
-    {
-      img: catalog2,
-      title: "Microphone",
-      desc: "Microphone Blue berkualitas tinggi",
-      fee: 200000,
-      timesRented: 300,
-    },
-    {
-      img: catalog3,
-      title: "Speaker Portabel",
-      desc: "Speaker portabel ukuran 50x50 cm",
-      fee: 200000,
-      timesRented: 300,
-    },
-    {
-      img: catalog4,
-      title: "Meja Kanopi",
-      desc: "Meja kanopi ukuran 3x2 m",
-      fee: 350000,
-      timesRented: 300,
-    },
-    {
-      img: catalog5,
-      title: "Air Filter",
-      desc: "Air Filter ukuran 30x30 cm",
-      fee: 50000,
-      timesRented: 300,
-    },
-    {
-      img: catalog6,
-      title: "Meja Bundar",
-      desc: "Meja bundar ukuran 2x2 m",
-      fee: 150000,
-      timesRented: 300,
-    },
-    {
-      img: catalog1,
-      title: "Kursi Portabel",
-      desc: "Kursi portabel ukuran 1x1 m",
-      fee: 35000,
-      timesRented: 300,
-    },
-    {
-      img: catalog2,
-      title: "Microphone",
-      desc: "Microphone Blue berkualitas tinggi",
-      fee: 200000,
-      timesRented: 300,
-    },
-    {
-      img: catalog3,
-      title: "Speaker Portabel",
-      desc: "Speaker portabel ukuran 50x50 cm",
-      fee: 200000,
-      timesRented: 300,
-    },
-    {
-      img: catalog4,
-      title: "Meja Kanopi",
-      desc: "Meja kanopi ukuran 3x2 m",
-      fee: 350000,
-      timesRented: 300,
-    },
-    {
-      img: catalog5,
-      title: "Air Filter",
-      desc: "Air Filter ukuran 30x30 cm",
-      fee: 50000,
-      timesRented: 300,
-    },
-    {
-      img: catalog6,
-      title: "Meja Bundar",
-      desc: "Meja bundar ukuran 2x2 m",
-      fee: 150000,
-      timesRented: 300,
-    },
+    ...allProduct,
+    ...allProduct,
+    ...allProduct,
+    ...allProduct,
   ];
 
   return (
@@ -203,7 +34,7 @@ function Catalog() {
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-3 px-3 md:px-10 mb-3 max-w-screen-xl mx-auto">
           {catalogProduct.map((item, index) => (
-            <div key={index}>
+            <a href={`/catalog/${item.id}`} key={index}>
               <div
                 style={{
                   background: `url(${item.img})`,
@@ -222,7 +53,7 @@ function Catalog() {
                   <p className="text-xs text-end">Disewa {item.timesRented}x</p>
                 </div>
               </div>
-            </div>
+            </a>
           ))}
         </div>
       </div>
