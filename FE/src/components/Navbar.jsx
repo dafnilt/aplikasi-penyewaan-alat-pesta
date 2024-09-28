@@ -31,7 +31,7 @@ function Navbar() {
 
   return (
     <div className="bg-white fixed top-0 inset-x-0 z-[9999]">
-      <div className="h-[66px] max-w-screen-xl mx-auto p-3 xl:border-b xl:border-black">
+      <div className="h-[66px] max-w-screen-2xl mx-auto p-3 xl:border-b xl:border-black">
         <div className="h-full flex items-center justify-between">
           <img src={logo} className="h-8" alt="Logo Sewa Pesta Kita" />
           <div className="navbar-container hidden lg:flex gap-2">

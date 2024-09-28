@@ -96,3 +96,26 @@
     @apply w-6;
   }
 }
+
+.carousel .control-dots {
+  display: flex;
+  justify-content: space-between; /* Space dots evenly */
+  width: 100%;
+  position: absolute !important;
+  bottom: 0px !important; /* Adjust the distance of dots from the bottom */
+  pointer-events: all; /* Ensure dots can be interacted with */
+}
+
+.carousel .control-dots .dot {
+  flex-grow: 1;
+  height: 5px; 
+  margin: 0 !important; 
+  background-color: #7c7c7c !important; 
+  border-radius: 0 !important; 
+  transition: background-color 0.3s ease;
+}
+
+.carousel .control-dots .dot.selected {
+  background-color: #000 !important;
+  border-radius: 10px !important;
+}

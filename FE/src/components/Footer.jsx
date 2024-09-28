@@ -3,7 +3,7 @@ import mailIcon from "../assets/icon/mail.svg";
 
 function Footer() {
   return (
-    <div className="bg-black text-white px-4 py-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-6 gap-8">
+    <div className="max-w-screen-2xl mx-auto bg-black text-white px-4 py-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-6 gap-8">
       <div className="min-w-max">
         <div className="w-max mb-4">
           <h1 className="text-xl font-bold mb-1">Kontak</h1>

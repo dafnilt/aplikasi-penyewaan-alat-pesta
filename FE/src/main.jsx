@@ -7,6 +7,9 @@ import App from "./App";
 import AboutUs from "./pages/AboutUs";
 import Catalog from "./pages/Catalog";
 import Product from "./pages/Product";
+import Portofolio from "./pages/Portofolio";
+import PortofolioDetail from "./pages/PortofolioDetail";
+import Contact from "./pages/Contact";
 
 const router = createBrowserRouter([
   {
@@ -24,6 +27,18 @@ const router = createBrowserRouter([
   {
     path: "/catalog/:productId",
     element: <Product />,
+  },
+  {
+    path: "/portofolio",
+    element: <Portofolio />,
+  },
+  {
+    path: "/portofolio/:id", 
+    element: <PortofolioDetail />,
+  },
+  {
+    path: "/contact", 
+    element: <Contact />,
   },
   {
     path: "*",

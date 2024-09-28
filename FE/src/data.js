@@ -61,3 +61,91 @@ export const allProduct = [
     timesSeen: 1280,
   },
 ];
+
+export const allPortofolio = [
+  {
+    id: "porto1",
+    img: catalog1,
+    title: "Acara Di Kantor Walikota",
+    desc: "Lorem Ipsum is Lorem Ipsum and Lorem Ipsum is simply dummy. Lorem Ipsum ahsdbva asdasda asd asd asw ",
+    dokumentasi : []
+  },
+  {
+    id: "porto2",
+    img: catalog2,
+    title: "Event Gedung Krida Bakti",
+    desc: "Lorem Ipsum is Lorem Ipsum and Lorem Ipsum is simply dummy. Lorem Ipsum",
+    dokumentasi : []
+  },
+  {
+    id: "porto3",
+    img: catalog3,
+    title: "Asrama Haji Pondok Gede",
+    desc: "Lorem Ipsum is Lorem Ipsum and Lorem Ipsum is simply dummy. Lorem Ipsum",
+    dokumentasi : []
+  },
+  {
+    id: "porto4",
+    img: catalog4,
+    title: "Event CBIS NINE Buillding",
+    desc: "Lorem Ipsum is Lorem Ipsum and Lorem Ipsum is simply dummy. Lorem Ipsum",
+    dokumentasi : []
+  },
+  {
+    id: "porto5",
+    img: catalog5,
+    title: "Event Gudang Peruri Karawang",
+    desc: "Lorem Ipsum is Lorem Ipsum and Lorem Ipsum is simply dummy. Lorem Ipsum",
+    dokumentasi : []
+  },
+  {
+    id: "porto6",
+    img: catalog6,
+    title: "Event ICE BSD Lobby Nusantara",
+    desc: "Lorem Ipsum is Lorem Ipsum and Lorem Ipsum is simply dummy. Lorem Ipsum",
+    dokumentasi : []
+  },
+  {
+    id: "porto7",
+    img: catalog6,
+    title: "Acara Podcast",
+    desc: "Lorem Ipsum is Lorem Ipsum and Lorem Ipsum is simply dummy. Lorem Ipsum",
+    dokumentasi : []
+  },
+  {
+    id: "porto8",
+    img: catalog6,
+    title: "Nikahan Nikita Mirzani",
+    desc: "Lorem Ipsum is Lorem Ipsum and Lorem Ipsum is simply dummy. Lorem Ipsum",
+    dokumentasi : []
+  },
+  {
+    id: "porto9",
+    img: catalog6,
+    title: "Putin Speac",
+    desc: "Lorem Ipsum is Lorem Ipsum and Lorem Ipsum is simply dummy. Lorem Ipsum",
+    dokumentasi : []
+  },
+  {
+    id: "porto10",
+    img: catalog6,
+    title: "Acara Podcast",
+    desc: "Lorem Ipsum is Lorem Ipsum and Lorem Ipsum is simply dummy. Lorem Ipsum",
+    dokumentasi : []
+  },
+  {
+    id: "porto11",
+    img: catalog6,
+    title: "Nikahan Nikita Mirzani",
+    desc: "Lorem Ipsum is Lorem Ipsum and Lorem Ipsum is simply dummy. Lorem Ipsum",
+    dokumentasi : []
+  },
+  {
+    id: "porto12",
+    img: catalog6,
+    title: "Putin Speac",
+    desc: "Lorem Ipsum is Lorem Ipsum and Lorem Ipsum is simply dummy. Lorem Ipsum",
+    dokumentasi : []
+  },
+];
+

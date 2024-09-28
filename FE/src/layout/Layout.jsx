@@ -3,9 +3,11 @@ import Navbar from "../components/Navbar";
 
 function Layout({ children }) {
   return (
-    <div className="pt-[66px]">
+    <div >
       <Navbar />
+      <div className="pt-[66px] mx-2 md:mx-8">
       {children}
+      </div>
       <Footer />
     </div>
   );
