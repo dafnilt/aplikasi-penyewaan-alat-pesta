@@ -9,7 +9,6 @@ function ContactPage() {
     return (
         <Layout>
             <div className="relative max-w-screen-2xl mx-auto px-8 py-12 overflow-hidden">
-                <div className="bg-gray-100 w-full h-[3000px] absolute top-0 left-0 z-[-1]"></div>
 
                 <div className="text-center mb-16">
                     <h1 className="text-4xl font-bold">Kontak Kami</h1>
@@ -19,6 +18,7 @@ function ContactPage() {
                     </p>
                 </div>
 
+                <div className="bg-gray-100 w-full h-[3000px] absolute -mt-8 left-0 z-[-1]"></div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
                     <div className="p-8 bg-white shadow-lg rounded-lg">
                         <h2 className="text-2xl font-bold mb-6">Get In Touch</h2>
