@@ -5,10 +5,10 @@ import { allPortofolio } from "../data";
 import catalog1 from "../assets/catalog/catalog-1.jpeg";
 import catalog2 from "../assets/catalog/catalog-2.jpeg";
 import catalog3 from "../assets/catalog/catalog-3.jpeg";
-import { FaCircleChevronLeft, FaCircleChevronRight } from "react-icons/fa6"; // Import the left and right arrows
+import { FaCircleChevronLeft, FaCircleChevronRight } from "react-icons/fa6";
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
-import '../index.css'; // Ensure your index.css contains customizations
+import '../index.css'; 
 
 function PortfolioDetail() {
     const { id } = useParams();
