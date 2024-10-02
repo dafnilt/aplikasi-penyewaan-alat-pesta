@@ -7,14 +7,9 @@ import catalog3 from "./assets/catalog/catalog-3.jpeg";
 import catalog4 from "./assets/catalog/catalog-4.jpeg";
 import catalog5 from "./assets/catalog/catalog-5.jpeg";
 import catalog6 from "./assets/catalog/catalog-6.jpeg";
-import porto1 from "./assets/portofolio/porto-1.jpeg";
-import porto2 from "./assets/portofolio/porto-2.jpeg";
-import porto3 from "./assets/portofolio/porto-3.jpeg";
-import porto4 from "./assets/portofolio/porto-4.jpeg";
-import porto5 from "./assets/portofolio/porto-5.jpeg";
-import porto6 from "./assets/portofolio/porto-6.jpeg";
 import locationIcon from "./assets/icon/location.svg";
-import mapImage from "./assets/map.png";
+import { allPortofolio } from "./data";
+import Maps from "./components/Maps";
 
 function App() {
   const catalogResponsive = {
@@ -64,36 +59,12 @@ function App() {
   };
 
   const portoItems = [
-    {
-      img: porto1,
-      title: "Wedding Venue",
-      desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce hendrerit lacus vitae nisl porta, eget molestie dui ornare. Suspendisse quis ipsum non orci condimentum",
-    },
-    {
-      img: porto2,
-      title: "Sound System",
-      desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce hendrerit lacus vitae nisl porta, eget molestie",
-    },
-    {
-      img: porto3,
-      title: "DJ Tools",
-      desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce hendrerit lacus vitae nisl porta, eget molestie dui ornare. Suspendisse quis ipsum non orci condimentum",
-    },
-    {
-      img: porto4,
-      title: "Birthday Party",
-      desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce hendrerit lacus vitae nisl porta, eget molestie dui ornare.",
-    },
-    {
-      img: porto5,
-      title: "Concert Venue",
-      desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce hendrerit lacus vitae nisl porta, eget",
-    },
-    {
-      img: porto6,
-      title: "Premium Mic",
-      desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce hendrerit lacus vitae nisl porta, eget",
-    },
+    allPortofolio[13],
+    { ...allPortofolio[2], img: allPortofolio[2].dokumentasi[0] },
+    allPortofolio[7],
+    allPortofolio[8],
+    allPortofolio[12],
+    allPortofolio[4],
   ];
 
   return (
@@ -311,26 +282,18 @@ function App() {
       </div>
 
       {/* Maps */}
-      <div className="max-w-screen-xl my-8 mx-4 xl:mx-auto">
+      <div className="max-w-screen-xl my-8 mx-4 xl:mx-auto relative">
         <div className="w-max mb-4">
           <h1 className="text-2xl font-bold mb-1">Alamat Kami</h1>
           <div className="bg-black w-[65%] h-[2px] rounded-full" />
         </div>
-        <div
-          style={{
-            background: `url(${mapImage})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
-          className="shadow-lg aspect-[4/3] md:aspect-[16/7] rounded-lg"
-        >
-          <div className="h-full flex justify-center items-end pb-3">
-            <div className="flex items-center gap-3 bg-white px-4 py-2 rounded-full border">
-              <img className="h-8" src={locationIcon} alt="Location Icon" />
-              <p className="text-sm w-60">
-                Jl. Haji Makmur, Rt 11, Rw 08, Bekasi, Jawa Barat
-              </p>
-            </div>
+        <Maps />
+        <div className="absolute bottom-2 inset-x-0 z-[9998] flex justify-center">
+          <div className="flex items-center gap-3 bg-white px-4 py-2 rounded-full border">
+            <img className="h-8" src={locationIcon} alt="Location Icon" />
+            <p className="text-sm w-60">
+              Jl. Haji Makmur, Rt 11, Rw 08, Bekasi, Jawa Barat
+            </p>
           </div>
         </div>
       </div>

@@ -62,15 +62,15 @@
   }
 
   .xl-porto-container .porto-item:nth-child(1) {
-    @apply absolute left-0 top-0 w-[calc(40%-8px)] h-full;
+    @apply absolute left-0 top-0 w-[calc(35%-8px)] h-full;
   }
 
   .xl-porto-container .porto-item:nth-child(2) {
-    @apply absolute top-0 left-[calc(40%+8px)] w-[calc(20%-16px)] h-[calc(40%-8px)];
+    @apply absolute top-0 left-[calc(35%+8px)] w-[calc(25%-16px)] h-[calc(40%-8px)];
   }
 
   .xl-porto-container .porto-item:nth-child(3) {
-    @apply absolute bottom-0 left-[calc(40%+8px)] w-[calc(20%-16px)] h-[calc(60%-8px)];
+    @apply absolute bottom-0 left-[calc(35%+8px)] w-[calc(25%-16px)] h-[calc(60%-8px)];
   }
 
   .xl-porto-container .porto-item:nth-child(4) {
@@ -108,10 +108,10 @@
 
 .carousel .control-dots .dot {
   flex-grow: 1;
-  height: 5px; 
-  margin: 0 !important; 
-  background-color: #7c7c7c !important; 
-  border-radius: 0 !important; 
+  height: 5px;
+  margin: 0 !important;
+  background-color: #7c7c7c !important;
+  border-radius: 0 !important;
   transition: background-color 0.3s ease;
 }
 
