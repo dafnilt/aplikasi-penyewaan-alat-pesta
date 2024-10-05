@@ -54,7 +54,7 @@ function Navbar() {
               Katalog Produk
             </a>
             <a
-              className={`nav-link ${pathname == "/portofolio" && "nav-active"}`}
+              className={`nav-link ${/\/portofolio/.test(pathname) && "nav-active"}`}
               href="/portofolio"
             >
               Portofolio
