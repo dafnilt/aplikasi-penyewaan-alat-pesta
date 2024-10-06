@@ -10,6 +10,7 @@ import Product from "./pages/Product";
 import Portofolio from "./pages/Portofolio";
 import PortofolioDetail from "./pages/PortofolioDetail";
 import Contact from "./pages/Contact";
+import NotFound from "./pages/NotFound";
 
 const router = createBrowserRouter([
   {
@@ -33,16 +34,16 @@ const router = createBrowserRouter([
     element: <Portofolio />,
   },
   {
-    path: "/portofolio/:id", 
+    path: "/portofolio/:id",
     element: <PortofolioDetail />,
   },
   {
-    path: "/contact", 
+    path: "/contact",
     element: <Contact />,
   },
   {
     path: "*",
-    element: <Product />,
+    element: <NotFound />,
   },
 ]);
 

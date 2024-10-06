@@ -36,9 +36,6 @@
   }
 
   .catalog-item {
-    cursor:
-      url(./assets/icon/drag.svg) 30 30,
-      auto;
     @apply aspect-[9/16] xl:aspect-[3/4] mx-1 rounded-lg;
   }
 

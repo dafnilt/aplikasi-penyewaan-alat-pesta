@@ -1,22 +1,16 @@
 import Layout from "./layout/Layout";
 import Carousel from "react-multi-carousel";
 import banner from "./assets/banner.jpeg";
-import catalog1 from "./assets/catalog/catalog-1.jpeg";
-import catalog2 from "./assets/catalog/catalog-2.jpeg";
-import catalog3 from "./assets/catalog/catalog-3.jpeg";
-import catalog4 from "./assets/catalog/catalog-4.jpeg";
-import catalog5 from "./assets/catalog/catalog-5.jpeg";
-import catalog6 from "./assets/catalog/catalog-6.jpeg";
 import locationIcon from "./assets/icon/location.svg";
 import { allPortofolio } from "./data";
 import Maps from "./components/Maps";
+import { allProduct } from "./dataProduk";
 
 function App() {
   const catalogResponsive = {
     xl: {
       breakpoint: { max: 10000, min: 1280 },
-      items: 6,
-      partialVisibilityGutter: 5,
+      items: 5,
     },
     lg: {
       breakpoint: { max: 1279, min: 768 },
@@ -57,6 +51,30 @@ function App() {
       partialVisibilityGutter: 30,
     },
   };
+
+  const categories = [
+    {
+      name: "Kursi",
+      img: allProduct.kursi[0].images[0],
+    },
+    {
+      name: "Meja",
+      img: allProduct.meja[0].images[0],
+    },
+    {
+      name: "Multimedia",
+      img: allProduct.multimedia[0].images[0],
+    },
+    {
+      name: "Perlengkapan",
+      img: allProduct.perlengkapan[0].images[0],
+    },
+    {
+      name: "Tenda",
+      img: allProduct.tenda[0].images[0],
+    },
+  ];
+  console.log(allProduct.tenda[0].images[0]);
 
   const portoItems = [
     allPortofolio[13],
@@ -127,90 +145,22 @@ function App() {
               removeArrowOnDeviceType={["sm", "xs"]}
               partialVisible={true}
             >
-              <div
-                style={{
-                  background: `url(${catalog1})`,
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
-                }}
-                className="catalog-item"
-              >
-                <div className="h-full flex justify-center items-end pb-4">
-                  <div className="text">Kursi</div>
-                </div>
-              </div>
-              <div
-                style={{
-                  background: `url(${catalog2})`,
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
-                }}
-                className="catalog-item"
-              >
-                <div className="h-full flex justify-center items-end pb-4 px-4">
-                  <div className="text">Microphone</div>
-                </div>
-              </div>
-              <div
-                style={{
-                  background: `url(${catalog3})`,
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
-                }}
-                className="catalog-item"
-              >
-                <div className="h-full flex justify-center items-end pb-4">
-                  <div className="text">Speaker Portable</div>
-                </div>
-              </div>
-              <div
-                style={{
-                  background: `url(${catalog4})`,
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
-                }}
-                className="catalog-item"
-              >
-                <div className="h-full flex justify-center items-end pb-4">
-                  <div className="text">Kursi Canopi</div>
-                </div>
-              </div>
-              <div
-                style={{
-                  background: `url(${catalog5})`,
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
-                }}
-                className="catalog-item"
-              >
-                <div className="h-full flex justify-center items-end pb-4">
-                  <div className="text">Air Cooler</div>
-                </div>
-              </div>
-              <div
-                style={{
-                  background: `url(${catalog6})`,
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
-                }}
-                className="catalog-item"
-              >
-                <div className="h-full flex justify-center items-end pb-4">
-                  <div className="text">Meja Bundar</div>
-                </div>
-              </div>
-              <div
-                style={{
-                  background: `url(${catalog6})`,
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
-                }}
-                className="catalog-item"
-              >
-                <div className="h-full flex justify-center items-end pb-4">
-                  <div className="text">Meja Bundar</div>
-                </div>
-              </div>
+              {categories.map((item, i) => (
+                <a key={i} href="/catalog">
+                  <div
+                    style={{
+                      background: `url(${item.img})`,
+                      backgroundSize: "cover",
+                      backgroundPosition: "center",
+                    }}
+                    className="catalog-item"
+                  >
+                    <div className="h-full flex justify-center items-end pb-4">
+                      <div className="text">{item.name}</div>
+                    </div>
+                  </div>
+                </a>
+              ))}
             </Carousel>
           </div>
         </div>
@@ -222,7 +172,7 @@ function App() {
           <h1 className="text-2xl font-bold mb-1">Portofolio Kami</h1>
           <div className="bg-black w-[65%] xl:mx-auto h-[2px] rounded-full" />
         </div>
-        <div className="flex justify-end mb-4 px-2">
+        <div className="max-w-screen-xl mx-auto flex justify-end mb-4 px-2">
           <a
             href="/portofolio"
             className="underline underline-offset-2 hover:no-underline"
@@ -264,7 +214,7 @@ function App() {
               <div
                 key={index}
                 style={{
-                  background: `url(${item.img})`,
+                  backgroundImage: `url(${item.img})`,
                   backgroundSize: "cover",
                   backgroundPosition: "center",
                 }}
@@ -292,7 +242,8 @@ function App() {
           <div className="flex items-center gap-3 bg-white px-4 py-2 rounded-full border">
             <img className="h-8" src={locationIcon} alt="Location Icon" />
             <p className="text-sm w-96">
-            Jl. Siti 1 No.40, RT.001/RW.008, Mustika Jaya, Kec. Mustika Jaya, Kota Bks, Jawa Barat 17158
+              Jl. Siti 1 No.40, RT.001/RW.008, Mustika Jaya, Kec. Mustika Jaya,
+              Kota Bks, Jawa Barat 17158
             </p>
           </div>
         </div>

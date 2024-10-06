@@ -2,15 +2,49 @@ import { useState } from "react";
 import Layout from "../layout/Layout";
 import filterIcon from "../assets/icon/filter.svg";
 import chevronDownIcon from "../assets/icon/chevron-down.svg";
-import { allProduct } from "../data";
+import {
+  allProduct,
+  Kursi,
+  Meja,
+  Multimedia,
+  Perlengkapan,
+  Tenda,
+} from "../dataProduk";
 
 function Catalog() {
   const [selectedCategory, setSelectedCategory] = useState("Semua Kategori");
   const [dropDownOpen, setDropDownOpen] = useState(false);
-  const categories = ["Semua Kategori", "Tenda", "Perlengkapan", "Multimedia", "Meja", "Kursi"];
-  const filteredProducts = selectedCategory === "Semua Kategori"
-    ? allProduct
-    : allProduct.filter(product => product.category === selectedCategory.toLowerCase());
+  const categories = [
+    "Semua Kategori",
+    "Tenda",
+    "Perlengkapan",
+    "Multimedia",
+    "Meja",
+    "Kursi",
+  ];
+  let filteredProducts = [];
+  switch (selectedCategory) {
+    case "Semua Kategori":
+      filteredProducts = allProduct;
+      break;
+    case "Tenda":
+      filteredProducts = Tenda;
+      break;
+    case "Perlengkapan":
+      filteredProducts = Perlengkapan;
+      break;
+    case "Multimedia":
+      filteredProducts = Multimedia;
+      break;
+    case "Meja":
+      filteredProducts = Meja;
+      break;
+    case "Kursi":
+      filteredProducts = Kursi;
+      break;
+    default:
+      break;
+  }
 
   const handleCategorySelect = (category) => {
     setSelectedCategory(category);
@@ -21,21 +55,31 @@ function Catalog() {
     <Layout>
       <div className="py-10">
         <div className="w-max sm:mx-auto mb-4 px-3 md:px-10">
-          <h1 className="text-2xl text-[#2F4C23] font-bold mb-1">Katalog Produk</h1>
+          <h1 className="text-2xl text-[#2F4C23] font-bold mb-1">
+            Katalog Produk
+          </h1>
           <div className="bg-[#2F4C23] w-[65%] sm:mx-auto h-[2px] rounded-full" />
         </div>
         <div className="mb-4 px-3 md:px-10 flex items-center justify-between max-w-screen-xl mx-auto">
           <div className="flex gap-3 items-center px-3">
-            <img src={filterIcon} alt="Filter Icon" className="w-8 aspect-square" />
+            <img
+              src={filterIcon}
+              alt="Filter Icon"
+              className="w-8 aspect-square"
+            />
             Filter
           </div>
           <div className="relative inline-block text-left">
             <button
               className="flex gap-3 items-center border border-black rounded-full px-4 py-2"
-              onClick={() => setDropDownOpen(!dropDownOpen)} 
+              onClick={() => setDropDownOpen(!dropDownOpen)}
             >
               {selectedCategory}
-              <img src={chevronDownIcon} alt="Arrow Down Icon" className="w-4" />
+              <img
+                src={chevronDownIcon}
+                alt="Arrow Down Icon"
+                className="w-4"
+              />
             </button>
             {dropDownOpen && (
               <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg">
@@ -59,18 +103,19 @@ function Catalog() {
             <a href={`/catalog/${item.id}`} key={index}>
               <div
                 style={{
-                  background: `url(${item.img})`,
+                  backgroundImage: `url(${item.images[0]})`,
                   backgroundSize: "cover",
                   backgroundPosition: "center",
                 }}
                 className="bg-black/10 aspect-square rounded-lg"
               />
               <div>
-                <h1 className="text-lg font-bold mb-2">{item.title}</h1>
+                <h1 className="text-lg font-bold mb-2">{item.name}</h1>
                 <p className="text-sm mb-2">{item.desc}</p>
                 <div>
-                  <p className="font-semibold mb-1">
-                    Rp{Intl.NumberFormat(["id"]).format(item.fee)}
+                  <p className="font-semibold mb-1 truncate">
+                    Rp{Intl.NumberFormat(["id"]).format(item.fee)}/
+                    {item.feeMeasurement ? item.feeMeasurement : "pcs"}
                   </p>
                   <p className="text-xs text-end">Disewa {item.timesRented}x</p>
                 </div>

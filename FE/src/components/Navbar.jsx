@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 import logo from "../assets/logo.png";
 import menuIcon from "../assets/icon/menu.svg";
 import searchIcon from "../assets/icon/search.svg";
-import { allProduct } from "../data";
+import { allProduct } from "../dataProduk";
 
 function SearchEl() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -47,9 +47,7 @@ function SearchEl() {
                 key={product.id}
                 className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
               >
-                <a href={`/catalog/${product.id}`}>
-                  {product.title}
-                </a>
+                <a href={`/catalog/${product.id}`}>{product.title}</a>
               </li>
             ))}
           </ul>
@@ -126,18 +124,21 @@ function Navbar() {
         </div>
         {isOpen && (
           <div className="absolute top-full inset-x-0 bg-white grid grid-cols-1 pb-8 border">
-            <a className={`nav-link ${pathname == "/" && "bg-[#2F4C23]"}`} href="/">
+            <a
+              className={`nav-link ${pathname == "/" && "bg-[#2F4C23] text-white"}`}
+              href="/"
+            >
               Home
             </a>
             <a
-              className={`nav-link ${pathname == "/about-us" && "bg-[#2F4C23]"}`}
+              className={`nav-link ${pathname == "/about-us" && "bg-[#2F4C23] text-white"}`}
               href="/about-us"
             >
               Tentang Kami
             </a>
             <a
               className={`nav-link ${
-                catalogRegex.test(pathname) && "bg-[#2F4C23]"
+                catalogRegex.test(pathname) && "bg-[#2F4C23] text-white"
               }`}
               href="/catalog"
             >
@@ -145,14 +146,14 @@ function Navbar() {
             </a>
             <a
               className={`nav-link ${
-                pathname == "/portofolio" && "bg-[#2F4C23]"
+                pathname == "/portofolio" && "bg-[#2F4C23] text-white"
               }`}
               href="/portofolio"
             >
               Portofolio
             </a>
             <a
-              className={`nav-link ${pathname == "/contact" && "bg-[#2F4C23]"}`}
+              className={`nav-link ${pathname == "/contact" && "bg-[#2F4C23] text-white"}`}
               href="/contact"
             >
               Kontak

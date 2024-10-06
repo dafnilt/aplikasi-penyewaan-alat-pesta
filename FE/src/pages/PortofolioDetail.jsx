@@ -1,10 +1,6 @@
-import React from "react";
 import { useParams, Link } from "react-router-dom";
 import Layout from "../layout/Layout";
 import { allPortofolio } from "../data";
-import catalog1 from "../assets/catalog/catalog-1.jpeg";
-import catalog2 from "../assets/catalog/catalog-2.jpeg";
-import catalog3 from "../assets/catalog/catalog-3.jpeg";
 import { FaCircleChevronLeft, FaCircleChevronRight } from "react-icons/fa6";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
@@ -17,12 +13,6 @@ function PortfolioDetail() {
   if (!portfolio) {
     return <p>Portfolio not found</p>;
   }
-
-  const documentationImages = [
-    { src: catalog1, alt: "Dokumentasi 1", caption: "Dokumentasi 1" },
-    { src: catalog2, alt: "Dokumentasi 2", caption: "Dokumentasi 2" },
-    { src: catalog3, alt: "Dokumentasi 3", caption: "Dokumentasi 3" },
-  ];
 
   return (
     <Layout>

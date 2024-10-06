@@ -2,7 +2,7 @@ import { Navigate, useParams } from "react-router-dom";
 import Layout from "../layout/Layout";
 import Carousel from "react-multi-carousel";
 
-import { allProduct } from "../data";
+import { allProduct } from "../dataProduk";
 
 import chevronBackIcon from "../assets/icon/chevron-back.svg";
 import eyeIcon from "../assets/icon/eye.svg";
@@ -11,6 +11,7 @@ import starIcon from "../assets/icon/star.svg";
 import starColorIcon from "../assets/icon/star-color.svg";
 import whatsappIcon from "../assets/icon/whatsapp.svg";
 import whatsappColorIcon from "../assets/icon/whatsapp-color.svg";
+import { useEffect, useState } from "react";
 
 function Product() {
   const productResponsive = {
@@ -32,9 +33,24 @@ function Product() {
   };
 
   const { productId } = useParams();
-  const catalogProduct = [...allProduct];
 
-  const product = catalogProduct.find((item) => item.id == productId);
+  const product = allProduct.find((item) => item.id == productId);
+
+  const [fee, setFee] = useState([]);
+
+  const handleSetVariant = (variantName, option) => {
+    if (option.fee) {
+      setFee(option.fee);
+    }
+  };
+
+  useEffect(() => {
+    if (!product.fee) {
+      setFee(product.variant[0].option[0].fee);
+    } else {
+      setFee(product.fee);
+    }
+  }, [product]);
 
   const whatsappNumber = "6288210335073";
 
@@ -64,7 +80,7 @@ function Product() {
             <div className="lg:w-1/3">
               <div
                 style={{
-                  background: `url(${product.img})`,
+                  backgroundImage: `url(${product.images[0]})`,
                   backgroundSize: "cover",
                   backgroundPosition: "center",
                 }}
@@ -82,25 +98,23 @@ function Product() {
                   containerClass="mb-4"
                   itemClass="aspect-square lg:aspect-[4/3] pr-2"
                 >
-                  <div
-                    style={{
-                      background: `url(${product.img})`,
-                      backgroundSize: "cover",
-                      backgroundPosition: "center",
-                    }}
-                    className="product-item"
-                  ></div>
-                  <div className="product-item"></div>
-                  <div className="product-item"></div>
-                  <div className="product-item"></div>
-                  <div className="product-item"></div>
-                  <div className="product-item"></div>
+                  {product.images.map((image, i) => (
+                    <div
+                      key={i}
+                      style={{
+                        background: `url(${product.images[i]})`,
+                        backgroundSize: "cover",
+                        backgroundPosition: "center",
+                      }}
+                      className="product-item"
+                    ></div>
+                  ))}
                 </Carousel>
               </div>
             </div>
             <div className="lg:w-2/3 px-3 lg:px-0 lg:flex lg:flex-col lg:justify-between">
               <div>
-                <h1 className="text-2xl font-bold mb-4">{product.title}</h1>
+                <h1 className="text-2xl font-bold mb-4">{product.name}</h1>
                 <p className="mb-2">{product.desc}</p>
                 <div className="text-xs font-thin flex items-center gap-3 mb-4 text-[#c8c8c8]">
                   <div className="flex items-center gap-1">
@@ -128,12 +142,36 @@ function Product() {
                 </div>
               </div>
               <div>
+                {product.variant && (
+                  <div className="mb-3">
+                    {product.variant.map((variantItem, i) => (
+                      <div key={i} className="flex flex-col gap-1">
+                        <p>{variantItem.name} :</p>
+                        <div className="flex gap-1">
+                          {variantItem.option.map((option, i) => (
+                            <button
+                              key={i}
+                              className={`px-3 py-2 rounded-full border hover:bg-black/5`}
+                              onClick={() =>
+                                handleSetVariant(variantItem.name, option)
+                              }
+                            >
+                              {option.name}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
                 <div className="flex justify-end mb-4">
                   <p className="text-xs">Rp</p>
                   <p className="text-xl font-bold">
-                    {Intl.NumberFormat(["id"]).format(product.fee)}
+                    {Intl.NumberFormat(["id"]).format(fee)}
                   </p>
-                  <p className="text-sm self-end">/Hari</p>
+                  <p className="text-sm self-end">
+                    /{product.feeMeasurement || "pcs"}
+                  </p>
                 </div>
                 <div className="flex items-center justify-end gap-2">
                   <a
@@ -166,29 +204,19 @@ function Product() {
               </div>
             </div>
           </div>
-          <div className="px-3 sm:px-10 pt-8 pb-3 mb-10 max-w-screen-lg mx-auto">
-            <h2 className="text-xl font-bold mb-4 ">Spesifikasi :</h2>
-            <div className="grid grid-cols-2 border-b py-2">
-              <div>Panjang :</div>
-              <div>1 Meter</div>
+          {product.specs ? (
+            <div className="px-3 sm:px-10 pt-8 pb-3 mb-10 max-w-screen-lg mx-auto">
+              <h2 className="text-xl font-bold mb-4 ">Spesifikasi :</h2>
+              {product.specs.map((spec, i) => (
+                <div key={i} className="grid grid-cols-2 border-b py-2">
+                  <div>{spec.name} :</div>
+                  <div>{spec.keterangan}</div>
+                </div>
+              ))}
             </div>
-            <div className="grid grid-cols-2 border-b py-2">
-              <div>Lebar :</div>
-              <div>2 Meter</div>
-            </div>
-            <div className="grid grid-cols-2 border-b py-2">
-              <div>Tinggi :</div>
-              <div>3 Meter</div>
-            </div>
-            <div className="grid grid-cols-2 border-b py-2">
-              <div>Bahan :</div>
-              <div>Stainless Steel, Terpal</div>
-            </div>
-            <div className="grid grid-cols-2 py-2">
-              <div>Kapasitas:</div>
-              <div>4-5 Orang</div>
-            </div>
-          </div>
+          ) : (
+            <div className="mb-10" />
+          )}
         </>
       ) : (
         <Navigate to="/catalog" />
