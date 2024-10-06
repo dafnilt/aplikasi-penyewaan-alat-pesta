@@ -16,7 +16,7 @@ function Catalog() {
       <div className="py-10">
         <div className="w-max sm:mx-auto mb-4 px-3 md:px-10">
           <h1 className="text-2xl font-bold mb-1">Katalog Produk</h1>
-          <div className="bg-black w-[65%] sm:mx-auto h-[2px] rounded-full" />
+          <div className="bg-[#59903E] w-[65%] sm:mx-auto h-[2px] rounded-full" />
         </div>
         <div className="mb-4 px-3 md:px-10 flex items-center justify-between max-w-screen-xl mx-auto">
           <div className="flex gap-3 items-center px-3">

@@ -9,7 +9,7 @@ function Portofolio() {
         <h1 className="text-3xl font-bold mx-auto w-fit text-center mt-12">
           Portofolio Kami
         </h1>
-        <div className="mx-auto mb-8 w-[150px] border-b-4 border-black"></div>
+        <div className="mx-auto mt-2 mb-8 w-[150px] border-b-2 border-[#59903E]"></div>
 
         <div className="max-w-screen-2xl mx-auto flex flex-wrap">
           {allPortofolio.map((item, i) => (

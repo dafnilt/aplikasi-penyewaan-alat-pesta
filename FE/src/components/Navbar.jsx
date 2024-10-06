@@ -36,31 +36,31 @@ function Navbar() {
           <img src={logo} className="h-8" alt="Logo Sewa Pesta Kita" />
           <div className="navbar-container hidden lg:flex gap-2">
             <a
-              className={`nav-link ${pathname == "/" && "nav-active"}`}
+              className={`nav-link ${pathname == "/" && "nav-active bg-[#2F4C23]"}`}
               href="/"
             >
               Home
             </a>
             <a
-              className={`nav-link ${pathname == "/about-us" && "nav-active"}`}
+              className={`nav-link ${pathname == "/about-us" && "nav-active bg-[#2F4C23]"}`}
               href="/about-us"
             >
               Tentang Kami
             </a>
             <a
-              className={`nav-link ${catalogRegex.test(pathname) && "nav-active"}`}
+              className={`nav-link ${catalogRegex.test(pathname) && "nav-active bg-[#2F4C23]"}`}
               href="/catalog"
             >
               Katalog Produk
             </a>
             <a
-              className={`nav-link ${/\/portofolio/.test(pathname) && "nav-active"}`}
+              className={`nav-link ${/\/portofolio/.test(pathname) && "nav-active bg-[#2F4C23]"}`}
               href="/portofolio"
             >
               Portofolio
             </a>
             <a
-              className={`nav-link ${pathname == "/contact" && "nav-active"}`}
+              className={`nav-link ${pathname == "/contact" && "nav-active bg-[#2F4C23]"}`}
               href="/contact"
             >
               Kontak
@@ -81,31 +81,31 @@ function Navbar() {
         {isOpen && (
           <div className="absolute top-full inset-x-0 bg-white grid grid-cols-1 pb-8 border">
             <a
-              className={`nav-link ${pathname == "/" && "bg-black/10"}`}
+              className={`nav-link ${pathname == "/" && "bg-[#2F4C23]"}`}
               href="/"
             >
               Home
             </a>
             <a
-              className={`nav-link ${pathname == "/about-us" && "bg-black/10"}`}
+              className={`nav-link ${pathname == "/about-us" && "bg-[#2F4C23]"}`}
               href="/about-us"
             >
               Tentang Kami
             </a>
             <a
-              className={`nav-link ${catalogRegex.test(pathname) && "bg-black/10"}`}
+              className={`nav-link ${catalogRegex.test(pathname) && "bg-[#2F4C23]"}`}
               href="/catalog"
             >
               Katalog Produk
             </a>
             <a
-              className={`nav-link ${pathname == "/portofolio" && "bg-black/10"}`}
+              className={`nav-link ${pathname == "/portofolio" && "bg-[#2F4C23]"}`}
               href="/portofolio"
             >
               Portofolio
             </a>
             <a
-              className={`nav-link ${pathname == "/contact" && "bg-black/10"}`}
+              className={`nav-link ${pathname == "/contact" && "bg-[#2F4C23]"}`}
               href="/contact"
             >
               Kontak

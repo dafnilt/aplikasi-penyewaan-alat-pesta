@@ -11,7 +11,7 @@ function Footer() {
         </div>
         <a href="#" className="flex gap-2 items-center mb-3">
           <img src={phoneIcon} alt="Phone Icon" className="h-4" />
-          10825252677
+          0881080222617
         </a>
         <a href="#" className="flex gap-2 items-center mb-4">
           <img src={mailIcon} alt="Phone Icon" className="h-4" />

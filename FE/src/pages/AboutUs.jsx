@@ -9,23 +9,21 @@ function AboutUs() {
   return (
     <Layout>
       <div className="mx-2 md:mx-8">
-        <div className="py-10 max-w-screen-md mx-auto">
+        <div className="py-10 max-w-screen-lg mx-auto px-6">
           <div className="w-max mb-4 px-2 sm:px-10">
             <h1 className="text-2xl font-bold mb-1">Tentang Kami</h1>
-            <div className="bg-black w-[65%] h-[2px] rounded-full" />
+            <div className="bg-[#59903E] w-[65%] h-[2px] rounded-full" />
           </div>
           <p className="text-sm px-2 sm:px-10">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce
-            hendrerit lacus vitae nisl porta, eget molestie dui ornare.
-            Suspendisse quis ipsum non orci condimentum dapibus vel sit amet
-            nibh. Nam ac imperdiet eros. Duis tempor, augue ut ornare viverra,
-            odio tellus fermentum ex, non venenatis lectus sapien vel diam.
-            Etiam et metus porta, ornare quam ut, ultricies sem. Aenean sagittis
-            mauris eget neque rutrum, sit amet elementum diam tempor. Nulla
-            lacinia euismod tellus vitae ornare. Nunc vitae ornare elit. Etiam
-            cursus libero in risus bibendum, id maximus dolor venenatis. Nam
-            mollis posuere tristique. Aenean fringilla condimentum magna eu
-            fermentum. Nunc non varius est. Morbi sit amet urna massa.
+            Selamat datang di Sewapestakita, penyedia layanan penyewaan alat pesta terlengkap dan terpercaya! Kami hadir untuk membantu Anda mewujudkan acara impian, mulai dari pernikahan, ulang tahun, hingga acara korporat. Dengan koleksi peralatan yang berkualitas, mulai dari tenda, kursi, meja, dekorasi, hingga panggung, kami siap memenuhi segala kebutuhan pesta Anda
+          </p>
+          <br />
+          <p className="text-sm px-2 sm:px-10">
+            Kami percaya bahwa setiap momen spesial patut dirayakan dengan sempurna. Itulah mengapa tim kami berdedikasi untuk memberikan layanan terbaik dan memastikan setiap detail terpenuhi dengan baik. Dengan pengalaman bertahun-tahun, kami bangga telah menjadi bagian dari banyak acara sukses dan tak terlupakan.
+          </p>
+          <br />
+          <p className="text-sm px-2 sm:px-10">
+            Di Sewapestakita, kepuasan pelanggan adalah prioritas kami. Kami berkomitmen untuk memberikan peralatan berkualitas tinggi dengan harga yang kompetitif, serta pelayanan yang ramah dan profesional.
           </p>
         </div>
         <div className="py-10">
@@ -53,12 +51,7 @@ function AboutUs() {
                 <div className="bg-black w-[65%] h-[2px] rounded-full" />
               </div>
               <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce
-                hendrerit lacus vitae nisl porta, eget molestie dui ornare.
-                Suspendisse quis ipsum non orci condimentum dapibus vel sit amet
-                nibh. Nam ac imperdiet eros. Duis tempor, augue ut ornare
-                viverra, odio tellus fermentum ex, non venenatis lectus sapien
-                vel diam. Etiam et metus porta, ornare quam ut, ultricies sem.
+                Menjadi penyedia penyewaan alat pesta terdepan dan terpercaya, dikenal karena kualitas produk dan layanan yang memuaskan, serta berkontribusi pada momen-momen berharga dalam kehidupan pelanggan.
               </p>
             </div>
             <div>
@@ -66,14 +59,12 @@ function AboutUs() {
                 <h1 className="text-2xl font-bold mb-1">Misi</h1>
                 <div className="bg-black w-[65%] h-[2px] rounded-full" />
               </div>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce
-                hendrerit lacus vitae nisl porta, eget molestie dui ornare.
-                Suspendisse quis ipsum non orci condimentum dapibus vel sit amet
-                nibh. Nam ac imperdiet eros. Duis tempor, augue ut ornare
-                viverra, odio tellus fermentum ex, non venenatis lectus sapien
-                vel diam. Etiam et metus porta, ornare quam ut, ultricies sem.{" "}
-              </p>
+              <ol>
+                <li>Menyediakan peralatan pesta berkualitas tinggi dengan beragam pilihan yang          memenuhi kebutuhan setiap acara.</li>
+                <li>Memberikan pelayanan pelanggan yang ramah, profesional, dan responsif untuk memastikan pengalaman penyewaan yang menyenangkan.</li>
+                <li>Menawarkan harga yang kompetitif tanpa mengorbankan kualitas, agar setiap orang dapat merayakan momen spesial mereka dengan nyaman.</li>
+                <li>Selalu berinovasi dan mengikuti tren terbaru dalam penyewaan alat pesta untuk memberikan solusi terbaik bagi pelanggan kami.</li>
+              </ol>
             </div>
           </div>
           <div className="">
@@ -83,7 +74,7 @@ function AboutUs() {
               className="max-w-80 mx-auto rounded-xl"
             />
             <p className="italic font-thin text-xs text-end p-2">Foto Owner</p>
-            <p className="text-center font-bold">Haikal Zimron</p>
+            <p className="text-center font-bold">Haikal Zimran</p>
           </div>
         </div>
         <div className="lg:flex items-center lg:mb-20 max-w-screen-xl mx-auto">
@@ -144,9 +135,9 @@ function AboutUs() {
             </p>
             <div className="font-bold flex flex-nowrap items-center gap-2 sm:gap-4 sm:text-lg">
               <p>Cepat</p>
-              <div className="bg-black w-2 sm:w-3 aspect-square rounded-full"></div>
+              <div className="bg-[#DDE460] w-2 sm:w-3 aspect-square rounded-full"></div>
               <p>Efisien</p>
-              <div className="bg-black w-2 sm:w-3 aspect-square rounded-full"></div>
+              <div className="bg-[#DDE460] w-2 sm:w-3 aspect-square rounded-full"></div>
               <p>Sesuai Ekspektasi</p>
             </div>
           </div>
