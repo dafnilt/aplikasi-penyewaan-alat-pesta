@@ -11,8 +11,8 @@ function AboutUs() {
       <div className="mx-2 md:mx-8">
         <div className="py-10 max-w-screen-lg mx-auto px-6">
           <div className="w-max mb-4 px-2 sm:px-10">
-            <h1 className="text-2xl font-bold mb-1">Tentang Kami</h1>
-            <div className="bg-[#59903E] w-[65%] h-[2px] rounded-full" />
+            <h1 className="text-2xl text-[#2F4C23] font-bold mb-1">Tentang Kami</h1>
+            <div className="bg-[#2F4C23] w-[65%] h-[2px] rounded-full" />
           </div>
           <p className="text-sm px-2 sm:px-10">
             Selamat datang di Sewapestakita, penyedia layanan penyewaan alat pesta terlengkap dan terpercaya! Kami hadir untuk membantu Anda mewujudkan acara impian, mulai dari pernikahan, ulang tahun, hingga acara korporat. Dengan koleksi peralatan yang berkualitas, mulai dari tenda, kursi, meja, dekorasi, hingga panggung, kami siap memenuhi segala kebutuhan pesta Anda

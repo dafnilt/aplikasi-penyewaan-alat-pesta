@@ -1,5 +1,6 @@
 import phoneIcon from "../assets/icon/phone.svg";
 import mailIcon from "../assets/icon/mail.svg";
+import { FiInstagram, FiFacebook, FiTwitter } from "react-icons/fi";
 
 function Footer() {
   return (
@@ -18,18 +19,15 @@ function Footer() {
           Sewapestakita@gmail.com
         </a>
         <div className="flex gap-2">
-          <div className="w-10 h-10 bg-white text-black text-xs flex justify-center items-center rounded-full">
-            Logo
-          </div>
-          <div className="w-10 h-10 bg-white text-black text-xs flex justify-center items-center rounded-full">
-            Logo
-          </div>
-          <div className="w-10 h-10 bg-white text-black text-xs flex justify-center items-center rounded-full">
-            Logo
-          </div>
-          <div className="w-10 h-10 bg-white text-black text-xs flex justify-center items-center rounded-full">
-            Logo
-          </div>
+          <a href="https://www.instagram.com/sewapestakita?igsh=a3Q4aXUwemJlMXE=" className="w-10 h-10 bg-white text-black text-xs flex justify-center items-center rounded-full">
+            <FiInstagram size={24} />
+          </a>
+          <a href="https://www.facebook.com/profile.php?id=61565367884791&mibextid=ZbWKwL" className="w-10 h-10 bg-white text-black text-xs flex justify-center items-center rounded-full">
+            <FiFacebook size={24} />
+          </a>
+          <a href="https://x.com/sewapestakita?t=nmSmAgSlkHs_qX7wdxqLMQ&s=09" className="w-10 h-10 bg-white text-black text-xs flex justify-center items-center rounded-full">
+            <FiTwitter size={24} />
+          </a>
         </div>
       </div>
       <div className="lg:ml-6">
@@ -38,10 +36,10 @@ function Footer() {
           <div className="bg-white w-[65%] h-[2px] rounded-full" />
         </div>
         <div className="flex flex-col gap-1">
-          <a href="#">Profil Perusahaan</a>
-          <a href="#">Portofolio</a>
-          <a href="#">Hubungi Kami</a>
-          <a href="#">Karir</a>
+          <a href="/">Profil Perusahaan</a>
+          <a href="/portofolio">Portofolio</a>
+          <a href="/contact">Hubungi Kami</a>
+          <a href="/">Karir</a>
         </div>
       </div>
       <div className="lg:ml-4">
@@ -50,10 +48,10 @@ function Footer() {
           <div className="bg-white w-[65%] h-[2px] rounded-full" />
         </div>
         <div className="flex flex-col gap-1">
-          <a href="#">Alat Wedding</a>
-          <a href="#">Alat Pesta</a>
-          <a href="#">Alat Acara Resmi</a>
-          <a href="#">Alat Konser</a>
+          <a href="/catalog">Alat Wedding</a>
+          <a href="/catalog">Alat Pesta</a>
+          <a href="/catalog">Alat Acara Resmi</a>
+          <a href="/catalog">Alat Konser</a>
         </div>
       </div>
       <div>
@@ -62,9 +60,9 @@ function Footer() {
           <div className="bg-white w-[65%] h-[2px] rounded-full" />
         </div>
         <div className="flex flex-col gap-1">
-          <a href="#">Jasa Pasang</a>
-          <a href="#">Jasa Antar</a>
-          <a href="#">Jasa Pinjam</a>
+          <a href="/catalog">Jasa Pasang</a>
+          <a href="/catalog">Jasa Antar</a>
+          <a href="/catalog">Jasa Pinjam</a>
         </div>
       </div>
       <div className="sm:col-span-2 flex flex-col gap-3">

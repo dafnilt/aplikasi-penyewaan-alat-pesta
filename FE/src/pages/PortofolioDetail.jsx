@@ -35,10 +35,10 @@ function PortfolioDetail() {
             <FaCircleChevronLeft className="mr-1" /> Back
           </Link>
           <div>
-            <h1 className="text-3xl font-bold mx-auto w-fit text-center mt-12">
+            <h1 className="text-3xl text-[#2F4C23] font-bold mx-auto w-fit text-center mt-12">
               Portofolio Kami
             </h1>
-            <div className="mx-auto mb-16 w-[150px] border-b-4 border-black"></div>
+            <div className="mx-auto mb-16 w-[150px] border-b-4 border-[#2F4C23]"></div>
           </div>
 
           <div className="flex justify-between flex-wrap max-h-[418px] mb-8">

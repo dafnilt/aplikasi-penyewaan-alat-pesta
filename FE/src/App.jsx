@@ -111,7 +111,7 @@ function App() {
           </div>
           <div className="flex justify-end mb-4 px-2">
             <a
-              href="#"
+              href="/catalog"
               className="underline underline-offset-2 hover:no-underline"
             >
               More &gt;&gt;
@@ -224,7 +224,7 @@ function App() {
         </div>
         <div className="flex justify-end mb-4 px-2">
           <a
-            href="#"
+            href="/portofolio"
             className="underline underline-offset-2 hover:no-underline"
           >
             More &gt;&gt;
@@ -291,7 +291,7 @@ function App() {
         <div className="absolute bottom-2 inset-x-0 z-[9998] flex justify-center">
           <div className="flex items-center gap-3 bg-white px-4 py-2 rounded-full border">
             <img className="h-8" src={locationIcon} alt="Location Icon" />
-            <p className="text-sm w-60">
+            <p className="text-sm w-96">
             Jl. Siti 1 No.40, RT.001/RW.008, Mustika Jaya, Kec. Mustika Jaya, Kota Bks, Jawa Barat 17158
             </p>
           </div>

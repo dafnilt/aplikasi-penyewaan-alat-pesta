@@ -144,6 +144,7 @@ export const allProduct = [
     fee: 35000,
     timesRented: 300,
     timesSeen: 1280,
+    category: 'tenda'
   },
   {
     id: "product2",
@@ -153,6 +154,7 @@ export const allProduct = [
     fee: 200000,
     timesRented: 300,
     timesSeen: 1280,
+    category: 'perlengkapan'
   },
   {
     id: "product3",
@@ -162,6 +164,7 @@ export const allProduct = [
     fee: 200000,
     timesRented: 300,
     timesSeen: 1280,
+    category: 'multimedia'
   },
   {
     id: "product4",
@@ -171,6 +174,7 @@ export const allProduct = [
     fee: 350000,
     timesRented: 300,
     timesSeen: 1280,
+    category: 'meja'
   },
   {
     id: "product5",
@@ -180,6 +184,7 @@ export const allProduct = [
     fee: 50000,
     timesRented: 300,
     timesSeen: 1280,
+    category: 'kursi'
   },
   {
     id: "product6",
@@ -189,6 +194,7 @@ export const allProduct = [
     fee: 150000,
     timesRented: 300,
     timesSeen: 1280,
+    category: 'kursi'
   },
 ];
 

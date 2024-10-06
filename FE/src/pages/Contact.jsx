@@ -9,8 +9,8 @@ function ContactPage() {
         <Layout>
             <div className="relative max-w-screen-2xl mx-auto px-8 py-12 overflow-hidden">
                 <div className="text-center mb-16">
-                    <h1 className="text-4xl font-bold">Kontak Kami</h1>
-                    <div className="mx-auto w-[150px] mt-2 border-b-2 border-[#59903E]"></div>
+                    <h1 className="text-4xl font-bold text-[#2F4C23]">Kontak Kami</h1>
+                    <div className="mx-auto w-[150px] mt-2 border-b-2 border-[#2F4C23]"></div>
                     <p className="text-gray-600 mt-2 max-w-[700px] mx-auto">
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce
                         hendrerit lacus vitae nisi porta, eget molestie dui ornare.
@@ -61,13 +61,13 @@ function ContactPage() {
                         <div className="mt-8">
                             <h3 className="font-semibold">Follow Us:</h3>
                             <div className="flex space-x-4 mt-4">
-                                <a href="#instagram" className="text-gray-600 hover:text-black">
+                                <a href="https://www.instagram.com/sewapestakita?igsh=a3Q4aXUwemJlMXE=" className="text-gray-600 hover:text-black">
                                     <FiInstagram size={24} />
                                 </a>
-                                <a href="#facebook" className="text-gray-600 hover:text-black">
+                                <a href="https://www.facebook.com/profile.php?id=61565367884791&mibextid=ZbWKwL" className="text-gray-600 hover:text-black">
                                     <FiFacebook size={24} />
                                 </a>
-                                <a href="#twitter" className="text-gray-600 hover:text-black">
+                                <a href="https://x.com/sewapestakita?t=nmSmAgSlkHs_qX7wdxqLMQ&s=09" className="text-gray-600 hover:text-black">
                                     <FiTwitter size={24} />
                                 </a>
                             </div>
@@ -151,8 +151,8 @@ function ContactPage() {
                     <div className="absolute bottom-2 inset-x-0 z-[9998] flex justify-center">
                         <div className="flex items-center gap-3 bg-white px-4 py-2 rounded-full border">
                             <img className="h-8" src={locationIcon} alt="Location Icon" />
-                            <p className="text-sm w-60">
-                            Jl. Siti 1 No.40, RT.001/RW.008, Mustika Jaya, Kec. Mustika Jaya, Kota Bks, Jawa Barat 17158                            </p>
+                            <p className="text-sm w-96">
+                                Jl. Siti 1 No.40, RT.001/RW.008, Mustika Jaya, Kec. Mustika Jaya, Kota Bks, Jawa Barat 17158                            </p>
                         </div>
                     </div>
                 </div>

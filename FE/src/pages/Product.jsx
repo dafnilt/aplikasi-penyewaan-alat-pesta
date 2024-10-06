@@ -36,6 +36,11 @@ function Product() {
 
   const product = catalogProduct.find((item) => item.id == productId);
 
+  const whatsappNumber = "6288210335073";
+
+  const waPesanUrl = `https://wa.me/${whatsappNumber}?text=Saya%20ingin%20memesan%20produk%20${encodeURIComponent(product?.title)}`;
+  const waTanyaUrl = `https://wa.me/${whatsappNumber}?text=Saya%20ingin%20bertanya%20tentang%20produk%20${encodeURIComponent(product?.title)}`;
+
   return (
     <Layout>
       {product ? (
@@ -132,8 +137,10 @@ function Product() {
                 </div>
                 <div className="flex items-center justify-end gap-2">
                   <a
-                    href="#"
+                    href={waTanyaUrl}
                     className="w-max bg-[#ebebeb] rounded-full flex items-center gap-2 px-4 py-2"
+                    target="_blank"
+                    rel="noopener noreferrer"
                   >
                     <img
                       src={whatsappIcon}
@@ -143,8 +150,10 @@ function Product() {
                     Tanya ?
                   </a>
                   <a
-                    href="#"
+                    href={waPesanUrl}
                     className="w-max bg-black text-white rounded-full flex items-center gap-2 px-4 py-2"
+                    target="_blank"
+                    rel="noopener noreferrer"
                   >
                     <img
                       src={whatsappColorIcon}

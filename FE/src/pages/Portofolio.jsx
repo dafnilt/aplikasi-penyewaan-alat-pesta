@@ -6,10 +6,10 @@ function Portofolio() {
   return (
     <Layout>
       <div className="mx-2 md:mx-8">
-        <h1 className="text-3xl font-bold mx-auto w-fit text-center mt-12">
+        <h1 className="text-3xl text-[#2F4C23] font-bold mx-auto w-fit text-center mt-12">
           Portofolio Kami
         </h1>
-        <div className="mx-auto mt-2 mb-8 w-[150px] border-b-2 border-[#59903E]"></div>
+        <div className="mx-auto mt-2 mb-8 w-[150px] border-b-2 border-[#2F4C23]"></div>
 
         <div className="max-w-screen-2xl mx-auto flex flex-wrap">
           {allPortofolio.map((item, i) => (

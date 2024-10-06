@@ -3,14 +3,33 @@ import { useLocation } from "react-router-dom";
 import logo from "../assets/logo.png";
 import menuIcon from "../assets/icon/menu.svg";
 import searchIcon from "../assets/icon/search.svg";
+import { allProduct } from "../data";
 
 function SearchEl() {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filteredProducts, setFilteredProducts] = useState([]);
+
+  const handleSearch = (e) => {
+    const query = e.target.value;
+    setSearchQuery(query);
+    if (query) {
+      const results = allProduct.filter((product) =>
+        product.title.toLowerCase().includes(query.toLowerCase())
+      );
+      setFilteredProducts(results);
+    } else {
+      setFilteredProducts([]);
+    }
+  };
+
   return (
-    <div className="relative w-max ">
+    <div className="relative w-max">
       <input
         type="text"
         name="search"
         id="search"
+        value={searchQuery}
+        onChange={handleSearch}
         placeholder="Search"
         className="bg-white rounded-full px-5 py-2 mx-3 my-1 border text-xs"
       />
@@ -19,6 +38,23 @@ function SearchEl() {
         alt="Search Icon"
         className="w-4 absolute right-8 top-1/2 -translate-y-1/2 hover:cursor-pointer opacity-50 hover:opacity-100 transition-all"
       />
+
+      {filteredProducts.length > 0 && (
+        <div className="absolute top-full mt-2 w-full bg-white border rounded-lg shadow-lg z-50">
+          <ul>
+            {filteredProducts.map((product) => (
+              <li
+                key={product.id}
+                className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+              >
+                <a href={`/catalog/${product.id}`}>
+                  {product.title}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   );
 }
@@ -36,31 +72,41 @@ function Navbar() {
           <img src={logo} className="h-8" alt="Logo Sewa Pesta Kita" />
           <div className="navbar-container hidden lg:flex gap-2">
             <a
-              className={`nav-link ${pathname == "/" && "nav-active bg-[#2F4C23]"}`}
+              className={`nav-link ${
+                pathname == "/" && "nav-active bg-[#2F4C23]"
+              }`}
               href="/"
             >
               Home
             </a>
             <a
-              className={`nav-link ${pathname == "/about-us" && "nav-active bg-[#2F4C23]"}`}
+              className={`nav-link ${
+                pathname == "/about-us" && "nav-active bg-[#2F4C23]"
+              }`}
               href="/about-us"
             >
               Tentang Kami
             </a>
             <a
-              className={`nav-link ${catalogRegex.test(pathname) && "nav-active bg-[#2F4C23]"}`}
+              className={`nav-link ${
+                catalogRegex.test(pathname) && "nav-active bg-[#2F4C23]"
+              }`}
               href="/catalog"
             >
               Katalog Produk
             </a>
             <a
-              className={`nav-link ${/\/portofolio/.test(pathname) && "nav-active bg-[#2F4C23]"}`}
+              className={`nav-link ${
+                /\/portofolio/.test(pathname) && "nav-active bg-[#2F4C23]"
+              }`}
               href="/portofolio"
             >
               Portofolio
             </a>
             <a
-              className={`nav-link ${pathname == "/contact" && "nav-active bg-[#2F4C23]"}`}
+              className={`nav-link ${
+                pathname == "/contact" && "nav-active bg-[#2F4C23]"
+              }`}
               href="/contact"
             >
               Kontak
@@ -80,10 +126,7 @@ function Navbar() {
         </div>
         {isOpen && (
           <div className="absolute top-full inset-x-0 bg-white grid grid-cols-1 pb-8 border">
-            <a
-              className={`nav-link ${pathname == "/" && "bg-[#2F4C23]"}`}
-              href="/"
-            >
+            <a className={`nav-link ${pathname == "/" && "bg-[#2F4C23]"}`} href="/">
               Home
             </a>
             <a
@@ -93,13 +136,17 @@ function Navbar() {
               Tentang Kami
             </a>
             <a
-              className={`nav-link ${catalogRegex.test(pathname) && "bg-[#2F4C23]"}`}
+              className={`nav-link ${
+                catalogRegex.test(pathname) && "bg-[#2F4C23]"
+              }`}
               href="/catalog"
             >
               Katalog Produk
             </a>
             <a
-              className={`nav-link ${pathname == "/portofolio" && "bg-[#2F4C23]"}`}
+              className={`nav-link ${
+                pathname == "/portofolio" && "bg-[#2F4C23]"
+              }`}
               href="/portofolio"
             >
               Portofolio
