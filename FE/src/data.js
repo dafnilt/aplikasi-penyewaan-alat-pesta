@@ -1,131 +1,131 @@
 // Portofolio
 // PT Bauer Petojo
-import bauer1 from "./assets/portofolio/bauer-petojo/img-1.jpeg";
-import bauer2 from "./assets/portofolio/bauer-petojo/img-2.jpeg";
-import bauer3 from "./assets/portofolio/bauer-petojo/img-3.jpeg";
+import bauer1 from "./assets/portofolio/bauer-petojo/img-1.webp";
+import bauer2 from "./assets/portofolio/bauer-petojo/img-2.webp";
+import bauer3 from "./assets/portofolio/bauer-petojo/img-3.webp";
 
 // Hambalang
-import hambalang1 from "./assets/portofolio/hambalang/img-1.jpeg";
-import hambalang2 from "./assets/portofolio/hambalang/img-2.jpeg";
-import hambalang3 from "./assets/portofolio/hambalang/img-3.jpeg";
-import hambalang4 from "./assets/portofolio/hambalang/img-4.jpeg";
+import hambalang1 from "./assets/portofolio/hambalang/img-1.webp";
+import hambalang2 from "./assets/portofolio/hambalang/img-2.webp";
+import hambalang3 from "./assets/portofolio/hambalang/img-3.webp";
+import hambalang4 from "./assets/portofolio/hambalang/img-4.webp";
 
 // Grand Kowloon
-import kowloon1 from "./assets/portofolio/grand-kowloon/img-1.jpeg";
-import kowloon2 from "./assets/portofolio/grand-kowloon/img-2.jpeg";
-import kowloon3 from "./assets/portofolio/grand-kowloon/img-3.jpeg";
+import kowloon1 from "./assets/portofolio/grand-kowloon/img-1.webp";
+import kowloon2 from "./assets/portofolio/grand-kowloon/img-2.webp";
+import kowloon3 from "./assets/portofolio/grand-kowloon/img-3.webp";
 
 // CIBIS NINE
-import cibis1 from "./assets/portofolio/cibis-nine/img-1.jpeg";
-import cibis2 from "./assets/portofolio/cibis-nine/img-2.jpeg";
+import cibis1 from "./assets/portofolio/cibis-nine/img-1.webp";
+import cibis2 from "./assets/portofolio/cibis-nine/img-2.webp";
 
 // Peruri
-import peruri1 from "./assets/portofolio/peruri/img-1.jpeg";
-import peruri2 from "./assets/portofolio/peruri/img-2.jpeg";
-import peruri3 from "./assets/portofolio/peruri/img-3.jpeg";
+import peruri1 from "./assets/portofolio/peruri/img-1.webp";
+import peruri2 from "./assets/portofolio/peruri/img-2.webp";
+import peruri3 from "./assets/portofolio/peruri/img-3.webp";
 
 // Krida Bakti
-import kridaBakti1 from "./assets/portofolio/krida-bakti/img-1.jpeg";
-import kridaBakti2 from "./assets/portofolio/krida-bakti/img-2.jpeg";
-import kridaBakti3 from "./assets/portofolio/krida-bakti/img-3.jpeg";
-import kridaBakti4 from "./assets/portofolio/krida-bakti/img-4.jpeg";
+import kridaBakti1 from "./assets/portofolio/krida-bakti/img-1.webp";
+import kridaBakti2 from "./assets/portofolio/krida-bakti/img-2.webp";
+import kridaBakti3 from "./assets/portofolio/krida-bakti/img-3.webp";
+import kridaBakti4 from "./assets/portofolio/krida-bakti/img-4.webp";
 
 // Asrama Haji
-import asramaHaji1 from "./assets/portofolio/asrama-haji/img-1.jpeg";
-import asramaHaji2 from "./assets/portofolio/asrama-haji/img-2.jpeg";
-import asramaHaji3 from "./assets/portofolio/asrama-haji/img-3.jpeg";
+import asramaHaji1 from "./assets/portofolio/asrama-haji/img-1.webp";
+import asramaHaji2 from "./assets/portofolio/asrama-haji/img-2.webp";
+import asramaHaji3 from "./assets/portofolio/asrama-haji/img-3.webp";
 
 // CFX Tower
-import cfxTower1 from "./assets/portofolio/cfx-tower/img-1.jpeg";
-import cfxTower2 from "./assets/portofolio/cfx-tower/img-2.jpeg";
-import cfxTower3 from "./assets/portofolio/cfx-tower/img-3.jpeg";
-import cfxTower4 from "./assets/portofolio/cfx-tower/img-4.jpeg";
+import cfxTower1 from "./assets/portofolio/cfx-tower/img-1.webp";
+import cfxTower2 from "./assets/portofolio/cfx-tower/img-2.webp";
+import cfxTower3 from "./assets/portofolio/cfx-tower/img-3.webp";
+import cfxTower4 from "./assets/portofolio/cfx-tower/img-4.webp";
 
 // Golf Island PIK
-import golfIsland1 from "./assets/portofolio/golf-island-pik/img-1.jpeg";
-import golfIsland2 from "./assets/portofolio/golf-island-pik/img-2.jpeg";
+import golfIsland1 from "./assets/portofolio/golf-island-pik/img-1.webp";
+import golfIsland2 from "./assets/portofolio/golf-island-pik/img-2.webp";
 
 // ICE BSD
-import iceBSD1 from "./assets/portofolio/ice-bsd/img-1.jpeg";
+import iceBSD1 from "./assets/portofolio/ice-bsd/img-1.webp";
 
 // Kantor Walikota
-import kantorWalkot1 from "./assets/portofolio/kantor-walkot/img-1.jpeg";
-import kantorWalkot2 from "./assets/portofolio/kantor-walkot/img-2.jpeg";
-import kantorWalkot3 from "./assets/portofolio/kantor-walkot/img-3.jpeg";
+import kantorWalkot1 from "./assets/portofolio/kantor-walkot/img-1.webp";
+import kantorWalkot2 from "./assets/portofolio/kantor-walkot/img-2.webp";
+import kantorWalkot3 from "./assets/portofolio/kantor-walkot/img-3.webp";
 
 // Kementrian Keuangan
-import kemenkeu1 from "./assets/portofolio/kemenkeu/img-1.jpeg";
-import kemenkeu2 from "./assets/portofolio/kemenkeu/img-2.jpeg";
-import kemenkeu3 from "./assets/portofolio/kemenkeu/img-3.jpeg";
+import kemenkeu1 from "./assets/portofolio/kemenkeu/img-1.webp";
+import kemenkeu2 from "./assets/portofolio/kemenkeu/img-2.webp";
+import kemenkeu3 from "./assets/portofolio/kemenkeu/img-3.webp";
 
 // Keraton Cirebon
-import keratonCirebon1 from "./assets/portofolio/keraton-cirebon/img-1.jpeg";
-import keratonCirebon2 from "./assets/portofolio/keraton-cirebon/img-2.jpeg";
-import keratonCirebon3 from "./assets/portofolio/keraton-cirebon/img-3.jpeg";
+import keratonCirebon1 from "./assets/portofolio/keraton-cirebon/img-1.webp";
+import keratonCirebon2 from "./assets/portofolio/keraton-cirebon/img-2.webp";
+import keratonCirebon3 from "./assets/portofolio/keraton-cirebon/img-3.webp";
 
 // Hotel Santika Mega
-import santikaMega1 from "./assets/portofolio/santika-mega/img-1.jpeg";
-import santikaMega2 from "./assets/portofolio/santika-mega/img-2.jpeg";
-import santikaMega3 from "./assets/portofolio/santika-mega/img-3.jpeg";
+import santikaMega1 from "./assets/portofolio/santika-mega/img-1.webp";
+import santikaMega2 from "./assets/portofolio/santika-mega/img-2.webp";
+import santikaMega3 from "./assets/portofolio/santika-mega/img-3.webp";
 
 // Sheraton Grand
-import sheratonGrand1 from "./assets/portofolio/sheraton-grand/img-1.jpeg";
+import sheratonGrand1 from "./assets/portofolio/sheraton-grand/img-1.webp";
 
 // PT Aifast Indonesia
-import aifastIndo1 from "./assets/portofolio/aifast-indonesia/img-1.jpeg";
-import aifastIndo2 from "./assets/portofolio/aifast-indonesia/img-2.jpeg";
-import aifastIndo3 from "./assets/portofolio/aifast-indonesia/img-3.jpeg";
+import aifastIndo1 from "./assets/portofolio/aifast-indonesia/img-1.webp";
+import aifastIndo2 from "./assets/portofolio/aifast-indonesia/img-2.webp";
+import aifastIndo3 from "./assets/portofolio/aifast-indonesia/img-3.webp";
 
 // Gedung DPR RI
-import gedungDPRRI1 from "./assets/portofolio/dpr-ri/img-1.jpeg";
-import gedungDPRRI2 from "./assets/portofolio/dpr-ri/img-2.jpeg";
-import gedungDPRRI3 from "./assets/portofolio/dpr-ri/img-3.jpeg";
+import gedungDPRRI1 from "./assets/portofolio/dpr-ri/img-1.webp";
+import gedungDPRRI2 from "./assets/portofolio/dpr-ri/img-2.webp";
+import gedungDPRRI3 from "./assets/portofolio/dpr-ri/img-3.webp";
 
 // Elnusa TB Simatupang
-import elnusaTBSimatupang1 from "./assets/portofolio/elnusa-tb-simatupang/img-1.jpeg";
-import elnusaTBSimatupang2 from "./assets/portofolio/elnusa-tb-simatupang/img-2.jpeg";
-import elnusaTBSimatupang3 from "./assets/portofolio/elnusa-tb-simatupang/img-3.jpeg";
+import elnusaTBSimatupang1 from "./assets/portofolio/elnusa-tb-simatupang/img-1.webp";
+import elnusaTBSimatupang2 from "./assets/portofolio/elnusa-tb-simatupang/img-2.webp";
+import elnusaTBSimatupang3 from "./assets/portofolio/elnusa-tb-simatupang/img-3.webp";
 
 // Gedung Gnarli
-import gedungGnarli1 from "./assets/portofolio/gedung-gnarli/img-1.jpeg";
-import gedungGnarli2 from "./assets/portofolio/gedung-gnarli/img-2.jpeg";
+import gedungGnarli1 from "./assets/portofolio/gedung-gnarli/img-1.webp";
+import gedungGnarli2 from "./assets/portofolio/gedung-gnarli/img-2.webp";
 
 // Golf Island PIK 2
-import golfIsland2img1 from "./assets/portofolio/golf-island-pik-2/img-1.jpeg";
-import golfIsland2img2 from "./assets/portofolio/golf-island-pik-2/img-2.jpeg";
-import golfIsland2img3 from "./assets/portofolio/golf-island-pik-2/img-3.jpeg";
+import golfIsland2img1 from "./assets/portofolio/golf-island-pik-2/img-1.webp";
+import golfIsland2img2 from "./assets/portofolio/golf-island-pik-2/img-2.webp";
+import golfIsland2img3 from "./assets/portofolio/golf-island-pik-2/img-3.webp";
 
 // Kementrian PUPR
-import kementrianPUPR1 from "./assets/portofolio/kementrian-pupr/img-1.jpeg";
-import kementrianPUPR2 from "./assets/portofolio/kementrian-pupr/img-2.jpeg";
-import kementrianPUPR3 from "./assets/portofolio/kementrian-pupr/img-3.jpeg";
+import kementrianPUPR1 from "./assets/portofolio/kementrian-pupr/img-1.webp";
+import kementrianPUPR2 from "./assets/portofolio/kementrian-pupr/img-2.webp";
+import kementrianPUPR3 from "./assets/portofolio/kementrian-pupr/img-3.webp";
 
 // Permata Gandaria
-import permataGandaria1 from "./assets/portofolio/permata-gandaria/img-1.jpeg";
+import permataGandaria1 from "./assets/portofolio/permata-gandaria/img-1.webp";
 
 // PIK 2
-import PIKimg1 from "./assets/portofolio/pik-2/img-1.jpeg";
-import PIKimg2 from "./assets/portofolio/pik-2/img-2.jpeg";
-import PIKimg3 from "./assets/portofolio/pik-2/img-3.jpeg";
+import PIKimg1 from "./assets/portofolio/pik-2/img-1.webp";
+import PIKimg2 from "./assets/portofolio/pik-2/img-2.webp";
+import PIKimg3 from "./assets/portofolio/pik-2/img-3.webp";
 
 // Plaza Mandiri
-import plazaMandiri1 from "./assets/portofolio/plaza-mandiri/img-1.jpeg";
-import plazaMandiri2 from "./assets/portofolio/plaza-mandiri/img-2.jpeg";
+import plazaMandiri1 from "./assets/portofolio/plaza-mandiri/img-1.webp";
+import plazaMandiri2 from "./assets/portofolio/plaza-mandiri/img-2.webp";
 
 // Sarana Multi
-import saranaMulti1 from "./assets/portofolio/sarana-multi/img-1.jpeg";
-import saranaMulti2 from "./assets/portofolio/sarana-multi/img-2.jpeg";
-import saranaMulti3 from "./assets/portofolio/sarana-multi/img-3.jpeg";
+import saranaMulti1 from "./assets/portofolio/sarana-multi/img-1.webp";
+import saranaMulti2 from "./assets/portofolio/sarana-multi/img-2.webp";
+import saranaMulti3 from "./assets/portofolio/sarana-multi/img-3.webp";
 
 // TNI Cilangkap
-import TNICilangkap1 from "./assets/portofolio/tni-cilangkap/img-1.jpeg";
-import TNICilangkap2 from "./assets/portofolio/tni-cilangkap/img-2.jpeg";
-import TNICilangkap3 from "./assets/portofolio/tni-cilangkap/img-3.jpeg";
+import TNICilangkap1 from "./assets/portofolio/tni-cilangkap/img-1.webp";
+import TNICilangkap2 from "./assets/portofolio/tni-cilangkap/img-2.webp";
+import TNICilangkap3 from "./assets/portofolio/tni-cilangkap/img-3.webp";
 
 // Toyota Astra
-import toyotaAstra1 from "./assets/portofolio/toyota-astra/img-1.jpeg";
-import toyotaAstra2 from "./assets/portofolio/toyota-astra/img-2.jpeg";
-import toyotaAstra3 from "./assets/portofolio/toyota-astra/img-3.jpeg";
+import toyotaAstra1 from "./assets/portofolio/toyota-astra/img-1.webp";
+import toyotaAstra2 from "./assets/portofolio/toyota-astra/img-2.webp";
+import toyotaAstra3 from "./assets/portofolio/toyota-astra/img-3.webp";
 
 export const allPortofolio = [
   {

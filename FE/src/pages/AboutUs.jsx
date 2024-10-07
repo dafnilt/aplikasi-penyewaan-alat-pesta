@@ -1,9 +1,9 @@
 import Layout from "../layout/Layout";
-import bannerAbout from "../assets/banner-about-us.jpeg";
-import team1 from "../assets/team/team-1.jpeg";
-import team2 from "../assets/team/team-2.jpeg";
-import team3 from "../assets/team/team-3.jpeg";
-import team4 from "../assets/team/team-4.jpeg";
+import bannerAbout from "../assets/banner-about-us.webp";
+import team1 from "../assets/team/team-1.webp";
+import team2 from "../assets/team/team-2.webp";
+import team3 from "../assets/team/team-3.webp";
+import team4 from "../assets/team/team-4.webp";
 
 function AboutUs() {
   return (

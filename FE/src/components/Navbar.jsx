@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
-import logo from "../assets/logo.png";
+import logo from "../assets/logo.webp";
 import menuIcon from "../assets/icon/menu.svg";
 import searchIcon from "../assets/icon/search.svg";
 import { allProduct } from "../dataProduk";

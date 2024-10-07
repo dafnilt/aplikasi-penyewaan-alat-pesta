@@ -1,6 +1,6 @@
 import Layout from "./layout/Layout";
 import Carousel from "react-multi-carousel";
-import banner from "./assets/banner.jpeg";
+import banner from "./assets/banner.webp";
 import locationIcon from "./assets/icon/location.svg";
 import { allPortofolio } from "./data";
 import Maps from "./components/Maps";
