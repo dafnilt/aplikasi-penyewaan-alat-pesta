@@ -53,7 +53,8 @@ function ContactPage() {
                                 </div>
                                 <div>
                                     <p className="font-semibold">E-Mail</p>
-                                    <p>sewapestakaita@gmail.com</p>
+                                    <p>sewapestakaita
+                                        @gmail.com</p>
                                 </div>
                             </div>
                         </div>
@@ -151,7 +152,7 @@ function ContactPage() {
                     <div className="absolute bottom-2 inset-x-0 z-[9998] flex justify-center">
                         <div className="flex items-center gap-3 bg-white px-4 py-2 rounded-full border">
                             <img className="h-8" src={locationIcon} alt="Location Icon" />
-                            <p className="text-sm w-96">
+                            <p className="text-sm w-auto md:w-96">
                                 Jl. Siti 1 No.40, RT.001/RW.008, Mustika Jaya, Kec. Mustika Jaya, Kota Bks, Jawa Barat 17158                            </p>
                         </div>
                     </div>

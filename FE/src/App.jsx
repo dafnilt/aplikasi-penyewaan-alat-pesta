@@ -4,7 +4,7 @@ import banner from "./assets/banner.jpeg";
 import locationIcon from "./assets/icon/location.svg";
 import { allPortofolio } from "./data";
 import Maps from "./components/Maps";
-import { allProduct } from "./dataProduk";
+import { allProduct, Kursi, Meja, Multimedia, Perlengkapan, Tenda  } from "./dataProduk";
 
 function App() {
   const catalogResponsive = {
@@ -51,30 +51,29 @@ function App() {
       partialVisibilityGutter: 30,
     },
   };
-
   const categories = [
     {
       name: "Kursi",
-      img: allProduct.kursi[0].images[0],
+      img: Kursi[0].images[0],
     },
     {
       name: "Meja",
-      img: allProduct.meja[0].images[0],
+      img: Meja[0]?.images[0],
     },
     {
       name: "Multimedia",
-      img: allProduct.multimedia[0].images[0],
+      img: Multimedia[0]?.images[0],
     },
     {
       name: "Perlengkapan",
-      img: allProduct.perlengkapan[0].images[0],
+      img: Perlengkapan[0]?.images[0],
     },
     {
       name: "Tenda",
-      img: allProduct.tenda[0].images[0],
+      img: Tenda[0]?.images[0],
     },
   ];
-  console.log(allProduct.tenda[0].images[0]);
+  console.log(Tenda[0]?.images[0]);
 
   const portoItems = [
     allPortofolio[13],
@@ -241,7 +240,7 @@ function App() {
         <div className="absolute bottom-2 inset-x-0 z-[9998] flex justify-center">
           <div className="flex items-center gap-3 bg-white px-4 py-2 rounded-full border">
             <img className="h-8" src={locationIcon} alt="Location Icon" />
-            <p className="text-sm w-96">
+            <p className="text-sm w-auto md:w-96">
               Jl. Siti 1 No.40, RT.001/RW.008, Mustika Jaya, Kec. Mustika Jaya,
               Kota Bks, Jawa Barat 17158
             </p>
