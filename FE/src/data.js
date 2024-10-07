@@ -322,3 +322,4 @@ export const allPortofolio = [
     dokumentasi: [gedungGnarli1, gedungGnarli2],
   },
 ];
+
