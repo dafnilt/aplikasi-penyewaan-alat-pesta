@@ -73,8 +73,7 @@ function App() {
       img: Tenda[0]?.images[0],
     },
   ];
-  console.log(Tenda[0]?.images[0]);
-
+  
   const portoItems = [
     allPortofolio[13],
     { ...allPortofolio[2], img: allPortofolio[2].dokumentasi[0] },

@@ -14,7 +14,7 @@ function SearchEl() {
     setSearchQuery(query);
     if (query) {
       const results = allProduct.filter((product) =>
-        product.title.toLowerCase().includes(query.toLowerCase())
+        product?.name?.toLowerCase().includes(query.toLowerCase())
       );
       setFilteredProducts(results);
     } else {
@@ -47,7 +47,7 @@ function SearchEl() {
                 key={product.id}
                 className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
               >
-                <a href={`/catalog/${product.id}`}>{product.title}</a>
+                <a href={`/catalog/${product.id}`}>{product.name}</a>
               </li>
             ))}
           </ul>

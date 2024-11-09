@@ -12,9 +12,7 @@ function ContactPage() {
                     <h1 className="text-4xl font-bold text-[#2F4C23]">Kontak Kami</h1>
                     <div className="mx-auto w-[150px] mt-2 border-b-2 border-[#2F4C23]"></div>
                     <p className="text-gray-600 mt-2 max-w-[700px] mx-auto">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce
-                        hendrerit lacus vitae nisi porta, eget molestie dui ornare.
-                        Suspendisse quis ipsum non orci condimentum.
+                        Tanyakan apapun mengenai apa yang Anda butuhkan. Kami akan carikan solusinya!
                     </p>
                 </div>
 
@@ -23,8 +21,7 @@ function ContactPage() {
                     <div className="p-8 bg-white shadow-lg rounded-lg">
                         <h2 className="text-2xl font-bold mb-6">Get In Touch</h2>
                         <p className="text-gray-600 mb-6">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce
-                            hendrerit lacus vitae nisi porta, eget molestie dui ornare.
+                            Tanyakan apapun mengenai apa yang Anda butuhkan. Kami akan carikan solusinya!
                         </p>
                         <div className="space-y-6">
                             <div className="flex items-center">
@@ -124,10 +121,7 @@ function ContactPage() {
                                 ></textarea>
                             </div>
                             <p>
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                                Nostrum libero qui enim pariatur, dolores facilis aspernatur
-                                numquam voluptatibus dolor quae ipsum consequatur esse at iure
-                                alias nulla deleniti ducimus ea.
+                                Tanyakan apapun mengenai apa yang Anda butuhkan. Kami akan carikan solusinya!
                             </p>
                             <div className="flex justify-end">
                                 <button

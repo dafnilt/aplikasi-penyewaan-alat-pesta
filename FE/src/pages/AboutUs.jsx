@@ -4,6 +4,7 @@ import team1 from "../assets/team/team-1.webp";
 import team2 from "../assets/team/team-2.webp";
 import team3 from "../assets/team/team-3.webp";
 import team4 from "../assets/team/team-4.webp";
+import team5 from "../assets/team/team-5.webp";
 
 function AboutUs() {
   return (
@@ -15,16 +16,13 @@ function AboutUs() {
             <div className="bg-[#2F4C23] w-[65%] h-[2px] rounded-full" />
           </div>
           <p className="text-sm px-2 sm:px-10">
-            Selamat datang di Sewapestakita, penyedia layanan penyewaan alat pesta terlengkap dan terpercaya! Kami hadir untuk membantu Anda mewujudkan acara impian, mulai dari pernikahan, ulang tahun, hingga acara korporat. Dengan koleksi peralatan yang berkualitas, mulai dari tenda, kursi, meja, dekorasi, hingga panggung, kami siap memenuhi segala kebutuhan pesta Anda
+            Kami memahami bahwa setiap acara memiliki kebutuhan khusus dan jadwal yang ketat. Oleh karena itu, tim kami selalu berkomitmen untuk memberikan layanan terbaik dengan kecepatan, ketelitian, dan ketepatan waktu dalam setiap proses. Mulai dari persiapan hingga pengiriman alat pesta dan event, kami bekerja maksimal untuk memastikan semuanya tiba di lokasi dengan kondisi sempurna dan sesuai dengan permintaan Anda.
           </p>
           <br />
           <p className="text-sm px-2 sm:px-10">
-            Kami percaya bahwa setiap momen spesial patut dirayakan dengan sempurna. Itulah mengapa tim kami berdedikasi untuk memberikan layanan terbaik dan memastikan setiap detail terpenuhi dengan baik. Dengan pengalaman bertahun-tahun, kami bangga telah menjadi bagian dari banyak acara sukses dan tak terlupakan.
+            Dengan tenaga kerja yang profesional, berpengalaman, dan dilengkapi dengan peralatan berkualitas, kami memastikan setiap detail terselesaikan tepat waktu, tanpa mengurangi kualitas layanan kami. Kepercayaan Anda adalah prioritas kami, dan kami berdedikasi untuk menjaga agar setiap acara berjalan lancar, sukses, dan berkesan.
           </p>
           <br />
-          <p className="text-sm px-2 sm:px-10">
-            Di Sewapestakita, kepuasan pelanggan adalah prioritas kami. Kami berkomitmen untuk memberikan peralatan berkualitas tinggi dengan harga yang kompetitif, serta pelayanan yang ramah dan profesional.
-          </p>
         </div>
         <div className="py-10">
           <div
@@ -94,7 +92,15 @@ function AboutUs() {
                   backgroundSize: "cover",
                   backgroundPosition: "center",
                 }}
-                className="absolute top-[calc(58.333333%+4px)] left-0 h-[calc(41.666667%-4px)] w-[calc(50%-4px)] rounded-lg"
+                className="absolute top-[calc(58.333333%+4px)] left-0 h-[calc(55.666667%-4px)] w-[calc(50%-4px)] rounded-lg"
+              ></div>
+              <div
+                style={{
+                  background: `url(${team5})`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                }}
+                className="absolute top-0 right-0 h-[calc(58.333333%-4px)] w-[calc(50%-4px)] rounded-lg"
               ></div>
               <div
                 style={{
@@ -102,7 +108,7 @@ function AboutUs() {
                   backgroundSize: "cover",
                   backgroundPosition: "center",
                 }}
-                className="absolute top-1/2 -translate-y-1/2 right-0 aspect-[3/4] w-[calc(50%-4px)] rounded-lg"
+                className="absolute top-[calc(58.333333%+4px)] right-0 h-[calc(55.666667%-4px)] w-[calc(50%-4px)] rounded-lg"
               ></div>
             </div>
           </div>
@@ -112,26 +118,10 @@ function AboutUs() {
               <div className="bg-black w-[65%] h-[2px] rounded-full" />
             </div>
             <p className="mb-3">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce
-              hendrerit lacus vitae nisl porta, eget molestie dui ornare.
-              Suspendisse quis ipsum non orci condimentum dapibus vel sit amet
-              nibh. Nam ac imperdiet eros. Duis tempor, augue ut ornare viverra,
-              odio tellus fermentum ex, non venenatis lectus sapien vel diam.
-              Etiam et metus porta, ornare quam ut, ultricies sem. Aenean
-              sagittis mauris eget neque rutrum, sit amet elementum diam tempor.
+              Kami memahami bahwa setiap acara memiliki kebutuhan khusus dan jadwal yang ketat. Oleh karena itu, tim kami selalu berkomitmen untuk memberikan layanan terbaik dengan kecepatan, ketelitian, dan ketepatan waktu dalam setiap proses. Mulai dari persiapan hingga pengiriman alat pesta dan event, kami bekerja maksimal untuk memastikan semuanya tiba di lokasi dengan kondisi sempurna dan sesuai dengan permintaan Anda.
             </p>
             <p className="mb-4">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce
-              hendrerit lacus vitae nisl porta, eget molestie dui ornare.
-              Suspendisse quis ipsum non orci condimentum dapibus vel sit amet
-              nibh. Nam ac imperdiet eros. Duis tempor, augue ut ornare viverra,
-              odio tellus fermentum ex, non venenatis lectus sapien vel diam.
-              Etiam et metus porta, ornare quam ut, ultricies sem. Aenean
-              sagittis mauris eget neque rutrum, sit amet elementum diam tempor.
-              Nulla lacinia euismod tellus vitae ornare. Nunc vitae ornare elit.
-              Etiam cursus libero in risus bibendum, id maximus dolor venenatis.
-              Nam mollis posuere tristique. Aenean fringilla condimentum magna
-              eu fermentum. Nunc non varius est. Morbi sit amet urna massa.
+              Dengan tenaga kerja yang profesional, berpengalaman, dan dilengkapi dengan peralatan berkualitas, kami memastikan setiap detail terselesaikan tepat waktu, tanpa mengurangi kualitas layanan kami. Kepercayaan Anda adalah prioritas kami, dan kami berdedikasi untuk menjaga agar setiap acara berjalan lancar, sukses, dan berkesan.
             </p>
             <div className="font-bold flex flex-nowrap items-center gap-2 sm:gap-4 sm:text-lg">
               <p>Cepat</p>
