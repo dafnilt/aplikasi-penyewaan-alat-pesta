@@ -35,7 +35,8 @@ function Product() {
   const { productId } = useParams();
 
   const product = allProduct.find((item) => item.id == productId);
-
+  console.log(product);
+  
   const [fee, setFee] = useState([]);
 
   const handleSetVariant = (variantName, option) => {
@@ -45,17 +46,17 @@ function Product() {
   };
 
   useEffect(() => {
-    if (!product.fee) {
-      setFee(product.variant[0].option[0].fee);
+    if (!product?.fee) {
+      setFee(product?.variant[0].option[0].fee);
     } else {
-      setFee(product.fee);
+      setFee(product?.fee);
     }
   }, [product]);
 
-  const whatsappNumber = "6288210335073";
+  const whatsappNumber = "62881080222617";
 
-  const waPesanUrl = `https://wa.me/${whatsappNumber}?text=Saya%20ingin%20memesan%20produk%20${encodeURIComponent(product?.title)}`;
-  const waTanyaUrl = `https://wa.me/${whatsappNumber}?text=Saya%20ingin%20bertanya%20tentang%20produk%20${encodeURIComponent(product?.title)}`;
+  const waPesanUrl = `https://wa.me/${whatsappNumber}?text=Apakah%20masih%20tersedia%20${encodeURIComponent(product?.name)}?`;
+  const waTanyaUrl = `https://wa.me/${whatsappNumber}?text=Apakah%20masih%20tersedia%20${encodeURIComponent(product?.name)}?`;
 
   return (
     <Layout>
@@ -80,7 +81,7 @@ function Product() {
             <div className="lg:w-1/3">
               <div
                 style={{
-                  backgroundImage: `url(${product.images[0]})`,
+                  backgroundImage: `url(${product?.images[0]})`,
                   backgroundSize: "cover",
                   backgroundPosition: "center",
                 }}
@@ -98,11 +99,11 @@ function Product() {
                   containerClass="mb-4"
                   itemClass="aspect-square lg:aspect-[4/3] pr-2"
                 >
-                  {product.images.map((image, i) => (
+                  {product?.images.map((image, i) => (
                     <div
                       key={i}
                       style={{
-                        background: `url(${product.images[i]})`,
+                        background: `url(${product?.images[i]})`,
                         backgroundSize: "cover",
                         backgroundPosition: "center",
                       }}
@@ -114,12 +115,12 @@ function Product() {
             </div>
             <div className="lg:w-2/3 px-3 lg:px-0 lg:flex lg:flex-col lg:justify-between">
               <div>
-                <h1 className="text-2xl font-bold mb-4">{product.name}</h1>
-                <p className="mb-2">{product.desc}</p>
+                <h1 className="text-2xl font-bold mb-4">{product?.name}</h1>
+                <p className="mb-2">{product?.desc}</p>
                 <div className="text-xs font-thin flex items-center gap-3 mb-4 text-[#c8c8c8]">
                   <div className="flex items-center gap-1">
                     <img src={eyeIcon} alt="Seen Icon" className="w-3" />
-                    {product.timesSeen}
+                    {product?.timesSeen}
                   </div>
                   <div className="flex items-center gap-1">
                     <img
@@ -127,7 +128,7 @@ function Product() {
                       alt="Open Box Icon"
                       className="w-3"
                     />
-                    {product.timesRented}
+                    {product?.timesRented}
                   </div>
                 </div>
                 <div className="star-container flex items-end gap-1 mb-4">
@@ -142,9 +143,9 @@ function Product() {
                 </div>
               </div>
               <div>
-                {product.variant && (
+                {product?.variant && (
                   <div className="mb-3">
-                    {product.variant.map((variantItem, i) => (
+                    {product?.variant.map((variantItem, i) => (
                       <div key={i} className="flex flex-col gap-1">
                         <p>{variantItem.name} :</p>
                         <div className="flex gap-1">
@@ -170,7 +171,7 @@ function Product() {
                     {Intl.NumberFormat(["id"]).format(fee)}
                   </p>
                   <p className="text-sm self-end">
-                    /{product.feeMeasurement || "pcs"}
+                    /{product?.feeMeasurement || "pcs"}
                   </p>
                 </div>
                 <div className="flex items-center justify-end gap-2">
@@ -204,10 +205,10 @@ function Product() {
               </div>
             </div>
           </div>
-          {product.specs ? (
+          {product?.specs ? (
             <div className="px-3 sm:px-10 pt-8 pb-3 mb-10 max-w-screen-lg mx-auto">
               <h2 className="text-xl font-bold mb-4 ">Spesifikasi :</h2>
-              {product.specs.map((spec, i) => (
+              {product?.specs.map((spec, i) => (
                 <div key={i} className="grid grid-cols-2 border-b py-2">
                   <div>{spec.name} :</div>
                   <div>{spec.keterangan}</div>
