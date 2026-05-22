@@ -1,8 +1,0 @@
-const AboutUsPage = () => {
-
-    return(
-        <>
-        
-        </>
-    )
-}
