@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import logo from "../assets/logo.webp";
 import menuIcon from "../assets/icon/menu.svg";
 import searchIcon from "../assets/icon/search.svg";
+import cartIcon from "../assets/icon/cart.png";
 import { allProduct } from "../dataProduk";
 
 function SearchEl() {
@@ -14,7 +15,7 @@ function SearchEl() {
     setSearchQuery(query);
     if (query) {
       const results = allProduct.filter((product) =>
-        product?.name?.toLowerCase().includes(query.toLowerCase())
+        product?.name?.toLowerCase().includes(query.toLowerCase()),
       );
       setFilteredProducts(results);
     } else {
@@ -23,36 +24,44 @@ function SearchEl() {
   };
 
   return (
-    <div className="relative w-max">
-      <input
-        type="text"
-        name="search"
-        id="search"
-        value={searchQuery}
-        onChange={handleSearch}
-        placeholder="Search"
-        className="bg-white rounded-full px-5 py-2 mx-3 my-1 border text-xs"
-      />
-      <img
-        src={searchIcon}
-        alt="Search Icon"
-        className="w-4 absolute right-8 top-1/2 -translate-y-1/2 hover:cursor-pointer opacity-50 hover:opacity-100 transition-all"
-      />
+    <div className="flex items-center gap-3">
+      <div className="relative w-max">
+        <input
+          type="text"
+          name="search"
+          id="search"
+          value={searchQuery}
+          onChange={handleSearch}
+          placeholder="Search"
+          className="bg-white rounded-full pl-3 pr-10 py-2 border border-[#2F4C23] text-xs"
+        />
 
-      {filteredProducts.length > 0 && (
-        <div className="absolute top-full mt-2 w-full bg-white border rounded-lg shadow-lg z-50">
-          <ul>
-            {filteredProducts.map((product) => (
-              <li
-                key={product.id}
-                className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
-              >
-                <a href={`/catalog/${product.id}`}>{product.name}</a>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
+        <img
+          src={searchIcon}
+          alt="Search Icon"
+          className="w-4 absolute right-3 top-1/2 -translate-y-1/2 hover:cursor-pointer opacity-50 hover:opacity-100 transition-all"
+        />
+
+        {filteredProducts.length > 0 && (
+          <div className="absolute top-full mt-2 w-full bg-white border rounded-lg shadow-lg z-50">
+            <ul>
+              {filteredProducts.map((product) => (
+                <li
+                  key={product.id}
+                  className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                >
+                  <a href={`/catalog/${product.id}`}>{product.name}</a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </div>
+      <img
+        src={cartIcon}
+        alt="Cart Icon"
+        className="w-5 hover:cursor-pointer opacity-70 hover:opacity-100 transition-all"
+      />
     </div>
   );
 }
@@ -66,9 +75,9 @@ function Navbar() {
   return (
     <div className="bg-white fixed top-0 inset-x-0 z-[9999]">
       <div className="h-[66px] max-w-screen-2xl mx-auto p-3 xl:border-b xl:border-black">
-        <div className="h-full flex items-center justify-between">
-          <img src={logo} className="h-8" alt="Logo Sewa Pesta Kita" />
-          <div className="navbar-container hidden lg:flex gap-2">
+        <div className="h-full flex items-center justify-start">
+          <img src={logo} className="h-10" alt="Logo Sewa Pesta Kita" />
+          <div className="navbar-container hidden lg:flex gap-2 ml-6">
             <a
               className={`nav-link ${
                 pathname == "/" && "nav-active bg-[#2F4C23]"
@@ -110,7 +119,7 @@ function Navbar() {
               Kontak
             </a>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 ml-auto">
             <div className="hidden sm:block">
               <SearchEl />
             </div>
