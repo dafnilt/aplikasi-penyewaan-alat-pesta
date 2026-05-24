@@ -83,7 +83,7 @@ function Catalog() {
   };
 
   return (
-    <Layout>
+    <Layout className="bg-[#f3f3f3]">
       <CalendarModal
         isOpen={isCalendarOpen}
         onClose={() => setIsCalendarOpen(false)}
@@ -94,6 +94,7 @@ function Catalog() {
         setEndDate={setEndDate}
         isLoading={isFetching && !isError}
       />
+
       <div className="bg-[#f3f3f3]">
         <div className="mb-4 px-4 md:px-6 lg:px-8 mx-auto max-w-6xl">
           {/* Filter */}
@@ -113,6 +114,7 @@ function Catalog() {
                 alt="Arrow Down"
                 className="w-4 opacity-70"
               />
+
               {isOpen && (
                 <div className="absolute mt-2 bg-white border border-gray-200 rounded-2xl shadow-md w-40 overflow-hidden z-50">
                   {categoryList.map((item, index) => (
@@ -130,6 +132,7 @@ function Catalog() {
                 </div>
               )}
             </div>
+
             <div className="bg-white rounded-full flex items-center gap-3 px-2 py-1 border border-gray-300 w-max">
               <img
                 src={calenderIcon}
@@ -153,22 +156,25 @@ function Catalog() {
               />
             </div>
           </div>
-          {isError && (
+
+          {/* {isError && (
             <div className="mb-4 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
               Gagal memuat data produk. Cek endpoint mockoon dan coba lagi.
             </div>
           )}
+          
           {!isFetching && products.length === 0 ? (
             <div className="rounded-2xl border border-dashed border-gray-300 bg-white px-6 py-12 text-center text-sm text-gray-500">
               Pilih tanggal lalu tekan Simpan untuk memuat produk dari API.
             </div>
-          ) : null}
+          ) : null} */}
+
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
             {products.map((product) => (
               <div
                 key={product.id}
                 className="bg-white rounded-2xl p-3 shadow-sm hover:shadow-md transition"
-              >
+              > 
                 <div className="w-full aspect-square rounded-xl bg-gray-100 overflow-hidden flex items-center justify-center">
                   {product.image ? (
                     <img

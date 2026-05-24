@@ -1,227 +1,235 @@
-import { Navigate, useParams } from "react-router-dom";
+import { useState } from "react";
+import { Box, Grid, Divider } from "@mui/material";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import Layout from "../layout/Layout";
-import Carousel from "react-multi-carousel";
-
-import { allProduct } from "../dataProduk";
-
-import chevronBackIcon from "../assets/icon/chevron-back.svg";
-import eyeIcon from "../assets/icon/eye.svg";
-import openBoxIcon from "../assets/icon/open-box.svg";
-import starIcon from "../assets/icon/star.svg";
-import starColorIcon from "../assets/icon/star-color.svg";
-import whatsappIcon from "../assets/icon/whatsapp.svg";
-import whatsappColorIcon from "../assets/icon/whatsapp-color.svg";
-import { useEffect, useState } from "react";
 
 function Product() {
-  const productResponsive = {
-    lg: {
-      breakpoint: { max: 10000, min: 1024 },
-      items: 3,
-      partialVisibilityGutter: 8,
-    },
-    md: {
-      breakpoint: { max: 1023, min: 640 },
-      items: 2,
-      partialVisibilityGutter: 30,
-    },
-    sm: {
-      breakpoint: { max: 639, min: 0 },
-      items: 1,
-      partialVisibilityGutter: 30,
-    },
-  };
+  const images = [
+    "/catalog/kursi/kursi-anak/foto-1.jpeg",
+    "/catalog/kursi/kursi-anak/foto-2.jpeg",
+  ];
+  const [selectedImage, setSelectedImage] = useState(images[0]);
 
-  const { productId } = useParams();
+  const colors = [
+    "#c62828",
+    "#1565c0",
+    "#2e7d32",
+    "#f9a825",
+    "#6a1b9a",
+    "#000000",
+  ];
+  const [selectedColor, setSelectedColor] = useState(colors[0]);
 
-  const product = allProduct.find((item) => item.id == productId);
-  console.log(product);
-  
-  const [fee, setFee] = useState([]);
+  const options = ["Polos", "Cover", "Cover + Pita"];
+  const [selectedOption, setSelectedOption] = useState(options[0]);
 
-  const handleSetVariant = (variantName, option) => {
-    if (option.fee) {
-      setFee(option.fee);
+  const productDetails = [
+    "Ukuran dudukan : 40x40cm",
+    "Ukuran senderan : 35x43,5cm",
+    "Ukuran dari dudukan ke bawah : 39x47,5cm",
+  ];
+  const [openDetail, setOpenDetail] = useState(false);
+
+  const [qty, setQty] = useState(15);
+  const decreaseQty = () => {
+    if (qty > 1) {
+      setQty(qty - 1);
     }
   };
-
-  useEffect(() => {
-    if (!product?.fee) {
-      setFee(product?.variant[0].option[0].fee);
-    } else {
-      setFee(product?.fee);
-    }
-  }, [product]);
-
-  const whatsappNumber = "62881080222617";
-
-  const waPesanUrl = `https://wa.me/${whatsappNumber}?text=Apakah%20masih%20tersedia%20${encodeURIComponent(product?.name)}?`;
-  const waTanyaUrl = `https://wa.me/${whatsappNumber}?text=Apakah%20masih%20tersedia%20${encodeURIComponent(product?.name)}?`;
+  const increaseQty = () => {
+    setQty(qty + 1);
+  };
 
   return (
     <Layout>
-      {product ? (
-        <>
-          <div className="max-w-screen-lg mx-auto pt-10">
-            <a
-              href="/catalog"
-              className="flex items-center gap-2 hover:underline w-max mb-4 mx-3 sm:mx-10"
-            >
-              <div className="bg-black/50 rounded-full">
-                <img
-                  src={chevronBackIcon}
-                  alt="Chevron Back Icon"
-                  className="w-6 aspect-square p-1 pl-[2px]"
+      <div className="grid grid-cols-[1.2fr_2fr_1.2fr] gap-6 py-6">
+        {/* Grid 1 */}
+        <Box>
+          <Box
+            component="img"
+            src={selectedImage}
+            alt="Product"
+            sx={{
+              width: 250,
+              height: 250,
+              objectFit: "cover",
+              borderRadius: 3,
+            }}
+          />
+
+          <Grid container spacing={1} sx={{ mt: 1 }}>
+            {images.map((img, index) => (
+              <Grid item key={index}>
+                <Box
+                  component="img"
+                  src={img}
+                  alt={`Thumbnail ${index}`}
+                  onClick={() => setSelectedImage(img)}
+                  sx={{
+                    width: 70,
+                    height: 70,
+                    objectFit: "cover",
+                    borderRadius: 2,
+                    cursor: "pointer",
+                    border:
+                      selectedImage === img
+                        ? "3px solid #1976d2"
+                        : "2px solid transparent",
+                    transition: "0.2s",
+                  }}
                 />
-              </div>
-              Back
-            </a>
+              </Grid>
+            ))}
+          </Grid>
+        </Box>
+
+        {/* Grid 2 */}
+        <div className="flex flex-col gap-4">
+          {/* Section 1 */}
+          <div className="flex flex-col gap-1 text-xs">
+            <div className="text-lg font-semibold">Kursi Futura</div>
+            <div className="">Kursi lipat sederhana tanpa cover</div>
+            <div className="flex items-center pt-2 gap-2">
+              <img
+                className="w-6 h-6"
+                src="src\assets\icon\price-tag.svg"
+                alt="Price Tag"
+              />
+              <div className="text-lg font-semibold">Rp 10.000 - 15.000</div>
+              <div className="text-sm self-end">/pcs</div>
+            </div>
+            <Divider className="py-2"></Divider>
           </div>
-          <div className="px-3 sm:px-10 lg:flex lg:gap-20 max-w-screen-lg mx-auto">
-            <div className="lg:w-1/3">
-              <div
-                style={{
-                  backgroundImage: `url(${product?.images[0]})`,
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
-                }}
-                className="hidden lg:block aspect-square rounded-lg mb-2"
-              ></div>
-              <div>
-                <Carousel
-                  responsive={productResponsive}
-                  swipeable={true}
-                  draggable={true}
-                  autoPlay={false}
-                  autoPlaySpeed={5000}
-                  removeArrowOnDeviceType={["sm"]}
-                  partialVisible={true}
-                  containerClass="mb-4"
-                  itemClass="aspect-square lg:aspect-[4/3] pr-2"
+
+          {/* Section 2 */}
+          <div className="flex flex-col gap-1 text-xs gap-2">
+            <div className="flex items-center gap-2">
+              <div className="">Tanggal : </div>
+              <div className="border border-[#B9B9B9] bg-[#F5F5F5] px-3 py-0.5 rounded-xl">
+                1 Maret 2026 - 7 Maret 2026
+              </div>
+            </div>
+
+            <div className="pt-4">Option : </div>
+            <div className="flex items-center gap-2">
+              {options.map((option, index) => (
+                <button
+                  key={index}
+                  onClick={() => setSelectedOption(option)}
+                  className={`
+              text-xs px-3 py-1 rounded-xl border transition-all duration-200
+              ${
+                selectedOption === option
+                  ? "bg-[#74B559] text-white border-[#74B559]"
+                  : "bg-white text-black border-gray-400 hover:border-[#74B559] hover:cursor-pointer"
+              }
+            `}
                 >
-                  {product?.images.map((image, i) => (
-                    <div
-                      key={i}
-                      style={{
-                        background: `url(${product?.images[i]})`,
-                        backgroundSize: "cover",
-                        backgroundPosition: "center",
-                      }}
-                      className="product-item"
-                    ></div>
-                  ))}
-                </Carousel>
-              </div>
-            </div>
-            <div className="lg:w-2/3 px-3 lg:px-0 lg:flex lg:flex-col lg:justify-between">
-              <div>
-                <h1 className="text-2xl font-bold mb-4">{product?.name}</h1>
-                <p className="mb-2">{product?.desc}</p>
-                <div className="text-xs font-thin flex items-center gap-3 mb-4 text-[#c8c8c8]">
-                  <div className="flex items-center gap-1">
-                    <img src={eyeIcon} alt="Seen Icon" className="w-3" />
-                    {product?.timesSeen}
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <img
-                      src={openBoxIcon}
-                      alt="Open Box Icon"
-                      className="w-3"
-                    />
-                    {product?.timesRented}
-                  </div>
-                </div>
-                <div className="star-container flex items-end gap-1 mb-4">
-                  <img src={starColorIcon} alt="Star Icon" />
-                  <img src={starColorIcon} alt="Star Icon" />
-                  <img src={starColorIcon} alt="Star Icon" />
-                  <img src={starColorIcon} alt="Star Icon" />
-                  <img src={starIcon} alt="Star Icon" />
-                  <p className="text-xs leading-none font-thin text-[#c8c8c8]">
-                    0.4 / 100 Reviews
-                  </p>
-                </div>
-              </div>
-              <div>
-                {product?.variant && (
-                  <div className="mb-3">
-                    {product?.variant.map((variantItem, i) => (
-                      <div key={i} className="flex flex-col gap-1">
-                        <p>{variantItem.name} :</p>
-                        <div className="flex gap-1">
-                          {variantItem.option.map((option, i) => (
-                            <button
-                              key={i}
-                              className={`px-3 py-2 rounded-full border hover:bg-black/5`}
-                              onClick={() =>
-                                handleSetVariant(variantItem.name, option)
-                              }
-                            >
-                              {option.name}
-                            </button>
-                          ))}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                )}
-                <div className="flex justify-end mb-4">
-                  <p className="text-xs">Rp</p>
-                  <p className="text-xl font-bold">
-                    {Intl.NumberFormat(["id"]).format(fee)}
-                  </p>
-                  <p className="text-sm self-end">
-                    /{product?.feeMeasurement || "pcs"}
-                  </p>
-                </div>
-                <div className="flex items-center justify-end gap-2">
-                  <a
-                    href={waTanyaUrl}
-                    className="w-max bg-[#ebebeb] rounded-full flex items-center gap-2 px-4 py-2"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <img
-                      src={whatsappIcon}
-                      alt="Whatsapp Icon"
-                      className="w-6"
-                    />
-                    Tanya ?
-                  </a>
-                  <a
-                    href={waPesanUrl}
-                    className="w-max bg-black text-white rounded-full flex items-center gap-2 px-4 py-2"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <img
-                      src={whatsappColorIcon}
-                      alt="Whatsapp Icon"
-                      className="w-6"
-                    />
-                    Pesan
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-          {product?.specs ? (
-            <div className="px-3 sm:px-10 pt-8 pb-3 mb-10 max-w-screen-lg mx-auto">
-              <h2 className="text-xl font-bold mb-4 ">Spesifikasi :</h2>
-              {product?.specs.map((spec, i) => (
-                <div key={i} className="grid grid-cols-2 border-b py-2">
-                  <div>{spec.name} :</div>
-                  <div>{spec.keterangan}</div>
-                </div>
+                  {option}
+                </button>
               ))}
             </div>
-          ) : (
-            <div className="mb-10" />
-          )}
-        </>
-      ) : (
-        <Navigate to="/catalog" />
-      )}
+
+            <div className="pt-4">Warna : </div>
+            <div className="flex items-center gap-4">
+              {colors.map((color, index) => (
+                <Box
+                  key={index}
+                  onClick={() => setSelectedColor(color)}
+                  sx={{
+                    width: 20,
+                    height: 20,
+                    borderRadius: "50%",
+                    bgcolor: color,
+                    cursor: "pointer",
+                    border:
+                      selectedColor === color
+                        ? "3px solid #2A2A2A"
+                        : "2px solid #ccc",
+                    transition: "0.2s",
+                    transform:
+                      selectedColor === color ? "scale(1.1)" : "scale(1)",
+                  }}
+                />
+              ))}
+            </div>
+
+            <Divider sx={{ my: 2 }} />
+
+            <div className="flex flex-col gap-2">
+              <button
+                onClick={() => setOpenDetail(!openDetail)}
+                className="flex items-center justify-between w-full"
+              >
+                <div className="font-bold text-[#5B8E47]">Detail Produk</div>
+
+                <KeyboardArrowDownIcon
+                  className={`transition-transform duration-300 ${
+                    openDetail ? "rotate-180" : ""
+                  }`}
+                />
+              </button>
+              <div
+                className={`
+      overflow-hidden transition-all duration-300
+      ${openDetail ? "max-h-40 opacity-100 mt-2" : "max-h-0 opacity-0"}
+    `}
+              >
+                <div className="flex flex-col gap-1 text-[#2A2A2A]">
+                  {productDetails.map((detail, index) => (
+                    <div key={index}>{detail}</div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {/* Grid 3 */}
+        <div className="flex flex-col gap-3 text-xs border border-[#B9B9B9] rounded-xl p-4 self-start">
+          <div className="">Atur Jumlah :</div>
+          <div className="">Polos, Merah</div>
+          <div className="flex items-center gap-2">
+            <div className="flex items-center justify-between w-[50%] px-4 border border-[#B9B9B9] rounded-xl">
+              <button
+                onClick={decreaseQty}
+                className="
+          text-[#74B559]
+          text-sm
+          font-bold
+          hover:scale-110
+          transition
+          cursor-pointer
+        "
+              >
+                -
+              </button>
+              <div className="text-sm text-[#4A4A4A]">{qty}</div>
+              <button
+                onClick={increaseQty}
+                className="
+          text-[#74B559]
+          text-sm
+          font-bold
+          hover:scale-110
+          transition
+          cursor-pointer
+        "
+              >
+                +
+              </button>
+            </div>
+            <div className="font-semibold text-[#74B559]">Stok : 20</div>
+          </div>
+          <div>Total Hari : 7</div>
+          <div className="grid grid-cols-2 items-center gap-2">
+            <div>Subtotal : </div>
+            <div className="text-base font-semibold">Rp. 1.050.000</div>
+          </div>
+          <button className="bg-[#74B559] text-white font-semibold py-2 px-4 rounded-xl hover:bg-[#5B8E47] transition">
+            Masukkan ke keranjang
+          </button>
+        </div>
+      </div>
     </Layout>
   );
 }
