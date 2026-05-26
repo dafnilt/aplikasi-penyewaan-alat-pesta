@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import "react-multi-carousel/lib/styles.css";
 import "./index.css";
 import App from "./App";
+import Login from "./pages/Login";
 import AboutUs from "./pages/AboutUs";
 import Catalog from "./pages/Catalog";
 import Product from "./pages/Product";
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
+  },
+  {
+    path: "/login",
+    element: <Login />
   },
   {
     path: "/about-us",
