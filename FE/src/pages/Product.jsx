@@ -1,235 +1,262 @@
-import { useState } from "react";
-import { Box, Grid, Divider } from "@mui/material";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import { useEffect, useState } from "react";
+
 import Layout from "../layout/Layout";
 
+import ProductGallery from "../components/ProductGalery";
+import ProductInfo from "../components/ProductInfo";
+import ProductSummary from "../components/ProductSummary";
+import UpsellModal from "../components/UpsellModal";
+
+import { useAddToCart } from "../hooks/useAddToCart";
+import { useProductPage } from "../hooks/useProductPage";
+import { useProductDetail } from "../hooks/useProductDetail";
+
+const fallbackImages = [
+  "/catalog/kursi/kursi-anak/foto-1.jpeg",
+  "/catalog/kursi/kursi-anak/foto-2.jpeg",
+];
+
+const MS_PER_DAY = 1000 * 60 * 60 * 24;
+
+const parseDateTime = (value) => {
+  if (!value) {
+    return null;
+  }
+
+  const normalizedValue = value.includes(" ") ? value.replace(" ", "T") : value;
+
+  const parsedDate = new Date(normalizedValue);
+
+  return Number.isNaN(parsedDate.getTime()) ? null : parsedDate;
+};
+
 function Product() {
-  const images = [
-    "/catalog/kursi/kursi-anak/foto-1.jpeg",
-    "/catalog/kursi/kursi-anak/foto-2.jpeg",
-  ];
-  const [selectedImage, setSelectedImage] = useState(images[0]);
+  const { productId, startDate, endDate } = useProductPage();
 
-  const colors = [
-    "#c62828",
-    "#1565c0",
-    "#2e7d32",
-    "#f9a825",
-    "#6a1b9a",
-    "#000000",
-  ];
-  const [selectedColor, setSelectedColor] = useState(colors[0]);
+  const {
+    data: productDetail,
+    isFetching,
+    isError,
+  } = useProductDetail({
+    productId,
+    startDate,
+    endDate,
+  });
 
-  const options = ["Polos", "Cover", "Cover + Pita"];
-  const [selectedOption, setSelectedOption] = useState(options[0]);
+  const { mutateAsync: addToCart, isPending: isAddingToCart } = useAddToCart();
 
-  const productDetails = [
-    "Ukuran dudukan : 40x40cm",
-    "Ukuran senderan : 35x43,5cm",
-    "Ukuran dari dudukan ke bawah : 39x47,5cm",
-  ];
+  const {
+    gallery: images = fallbackImages,
+    variantTypes = [],
+    variantCombinations = [],
+    specifications: productDetails = [],
+    thumbnail,
+    productName,
+    productDescription,
+    priceRange,
+    unitPrice,
+  } = productDetail || {};
+
+  const firstImage = thumbnail || images[0] || fallbackImages[0];
+
+  const [selectedImage, setSelectedImage] = useState(firstImage);
+
+  useEffect(() => {
+    setSelectedImage(firstImage);
+  }, [firstImage]);
+
   const [openDetail, setOpenDetail] = useState(false);
 
-  const [qty, setQty] = useState(15);
+  const [openUpsellModal, setOpenUpsellModal] = useState(false);
+  const [upsellMessage, setUpsellMessage] = useState("");
+  const [upsellCartId, setUpsellCartId] = useState("");
+
+  const [qty, setQty] = useState(1);
+
+  const [selectedVariantOptionIds, setSelectedVariantOptionIds] = useState({});
+
+  useEffect(() => {
+    const initialVariants = variantTypes.reduce((acc, variant) => {
+      if (variant.options?.[0]) {
+        acc[variant.idVariant] = variant.options[0].idOption;
+      }
+
+      return acc;
+    }, {});
+
+    setSelectedVariantOptionIds(initialVariants);
+  }, [variantTypes]);
+
+  const handleVariantSelect = (variantId, optionId) => {
+    setSelectedVariantOptionIds((current) => ({
+      ...current,
+      [variantId]: optionId,
+    }));
+  };
+
+  const selectedVariantCombination = variantCombinations.find((combination) => {
+    const selectedOptionIds = Object.values(selectedVariantOptionIds);
+
+    return selectedOptionIds.every((optionId) =>
+      combination.options.includes(optionId),
+    );
+  });
+  const availableStock = selectedVariantCombination?.stock ?? 0;
+
+  const productPrice =
+    selectedVariantCombination?.price ?? priceRange?.min ?? 0;
+
+  const productMaxPrice = priceRange?.max ?? 0;
+
+  const hasSelectedAllVariants =
+    Object.keys(selectedVariantOptionIds).length === variantTypes.length;
+
+  const totalDays = (() => {
+    const start = parseDateTime(startDate);
+    const end = parseDateTime(endDate);
+
+    if (!start || !end) {
+      return 0;
+    }
+
+    const diffDays = Math.ceil((end.getTime() - start.getTime()) / MS_PER_DAY);
+
+    return Math.max(1, diffDays);
+  })();
+
+  const subtotal = productPrice * qty * totalDays;
+
+  const selectedCombinationId =
+    selectedVariantCombination?.idCombination ??
+    selectedVariantCombination?.combinationId ??
+    selectedVariantCombination?.idVariantCombination;
+
+  const increaseQty = () => {
+    if (qty < availableStock) {
+      setQty(qty + 1);
+    }
+  };
+
+  const handleQtyChange = (nextQty) => {
+    const numericQty = Number(nextQty);
+
+    if (Number.isNaN(numericQty)) {
+      setQty(1);
+      return;
+    }
+
+    setQty(Math.min(Math.max(1, numericQty), availableStock || 1));
+  };
+
   const decreaseQty = () => {
     if (qty > 1) {
       setQty(qty - 1);
     }
   };
-  const increaseQty = () => {
-    setQty(qty + 1);
+
+  const selectedVariantText = Object.entries(selectedVariantOptionIds)
+    .map(([variantId, optionId]) => {
+      const variant = variantTypes.find(
+        (item) => item.idVariant === Number(variantId),
+      );
+
+      const option = variant?.options.find(
+        (item) => item.idOption === optionId,
+      );
+
+      return option?.valueOption;
+    })
+    .filter(Boolean)
+    .join(", ");
+
+  const handleAddToCart = async () => {
+    const existingGuestId = localStorage.getItem("guestId");
+    const guestId = existingGuestId || crypto.randomUUID();
+
+    if (!existingGuestId) {
+      localStorage.setItem("guestId", guestId);
+    }
+
+    if (!productId || !selectedCombinationId) {
+      return;
+    }
+
+    setUpsellMessage("Sedang menambahkan item ke keranjang...");
+    setUpsellCartId("");
+    setOpenUpsellModal(true);
+
+    try {
+      const response = await addToCart({
+        guestId,
+        idProduct: productId,
+        combinationId: selectedCombinationId,
+        quantity: qty,
+      });
+
+      if (response?.success) {
+        setUpsellMessage(
+          response.message || "Item berhasil ditambahkan ke keranjang.",
+        );
+        setUpsellCartId(response?.data?.cartId ?? "");
+      }
+    } catch (error) {
+      setUpsellMessage("Gagal menambahkan item ke keranjang.");
+      console.error("Gagal menambahkan produk ke keranjang", error);
+    }
   };
 
   return (
     <Layout>
       <div className="grid grid-cols-[1.2fr_2fr_1.2fr] gap-6 py-6">
-        {/* Grid 1 */}
-        <Box>
-          <Box
-            component="img"
-            src={selectedImage}
-            alt="Product"
-            sx={{
-              width: 250,
-              height: 250,
-              objectFit: "cover",
-              borderRadius: 3,
-            }}
-          />
+        {isFetching && <div>Loading...</div>}
 
-          <Grid container spacing={1} sx={{ mt: 1 }}>
-            {images.map((img, index) => (
-              <Grid item key={index}>
-                <Box
-                  component="img"
-                  src={img}
-                  alt={`Thumbnail ${index}`}
-                  onClick={() => setSelectedImage(img)}
-                  sx={{
-                    width: 70,
-                    height: 70,
-                    objectFit: "cover",
-                    borderRadius: 2,
-                    cursor: "pointer",
-                    border:
-                      selectedImage === img
-                        ? "3px solid #1976d2"
-                        : "2px solid transparent",
-                    transition: "0.2s",
-                  }}
-                />
-              </Grid>
-            ))}
-          </Grid>
-        </Box>
+        {isError && <div>Error mengambil data</div>}
 
-        {/* Grid 2 */}
-        <div className="flex flex-col gap-4">
-          {/* Section 1 */}
-          <div className="flex flex-col gap-1 text-xs">
-            <div className="text-lg font-semibold">Kursi Futura</div>
-            <div className="">Kursi lipat sederhana tanpa cover</div>
-            <div className="flex items-center pt-2 gap-2">
-              <img
-                className="w-6 h-6"
-                src="src\assets\icon\price-tag.svg"
-                alt="Price Tag"
-              />
-              <div className="text-lg font-semibold">Rp 10.000 - 15.000</div>
-              <div className="text-sm self-end">/pcs</div>
-            </div>
-            <Divider className="py-2"></Divider>
-          </div>
+        <ProductGallery
+          images={images}
+          selectedImage={selectedImage}
+          setSelectedImage={setSelectedImage}
+        />
 
-          {/* Section 2 */}
-          <div className="flex flex-col gap-1 text-xs gap-2">
-            <div className="flex items-center gap-2">
-              <div className="">Tanggal : </div>
-              <div className="border border-[#B9B9B9] bg-[#F5F5F5] px-3 py-0.5 rounded-xl">
-                1 Maret 2026 - 7 Maret 2026
-              </div>
-            </div>
+        <ProductInfo
+          productName={productName}
+          productDescription={productDescription}
+          productPrice={productPrice}
+          productMaxPrice={productMaxPrice}
+          productPriceUnit={unitPrice}
+          variantTypes={variantTypes}
+          selectedVariantOptionIds={selectedVariantOptionIds}
+          handleVariantSelect={handleVariantSelect}
+          openDetail={openDetail}
+          setOpenDetail={setOpenDetail}
+          productDetails={productDetails}
+          startDate={startDate}
+          endDate={endDate}
+          hasSelectedAllVariants={hasSelectedAllVariants}
+        />
 
-            <div className="pt-4">Option : </div>
-            <div className="flex items-center gap-2">
-              {options.map((option, index) => (
-                <button
-                  key={index}
-                  onClick={() => setSelectedOption(option)}
-                  className={`
-              text-xs px-3 py-1 rounded-xl border transition-all duration-200
-              ${
-                selectedOption === option
-                  ? "bg-[#74B559] text-white border-[#74B559]"
-                  : "bg-white text-black border-gray-400 hover:border-[#74B559] hover:cursor-pointer"
-              }
-            `}
-                >
-                  {option}
-                </button>
-              ))}
-            </div>
-
-            <div className="pt-4">Warna : </div>
-            <div className="flex items-center gap-4">
-              {colors.map((color, index) => (
-                <Box
-                  key={index}
-                  onClick={() => setSelectedColor(color)}
-                  sx={{
-                    width: 20,
-                    height: 20,
-                    borderRadius: "50%",
-                    bgcolor: color,
-                    cursor: "pointer",
-                    border:
-                      selectedColor === color
-                        ? "3px solid #2A2A2A"
-                        : "2px solid #ccc",
-                    transition: "0.2s",
-                    transform:
-                      selectedColor === color ? "scale(1.1)" : "scale(1)",
-                  }}
-                />
-              ))}
-            </div>
-
-            <Divider sx={{ my: 2 }} />
-
-            <div className="flex flex-col gap-2">
-              <button
-                onClick={() => setOpenDetail(!openDetail)}
-                className="flex items-center justify-between w-full"
-              >
-                <div className="font-bold text-[#5B8E47]">Detail Produk</div>
-
-                <KeyboardArrowDownIcon
-                  className={`transition-transform duration-300 ${
-                    openDetail ? "rotate-180" : ""
-                  }`}
-                />
-              </button>
-              <div
-                className={`
-      overflow-hidden transition-all duration-300
-      ${openDetail ? "max-h-40 opacity-100 mt-2" : "max-h-0 opacity-0"}
-    `}
-              >
-                <div className="flex flex-col gap-1 text-[#2A2A2A]">
-                  {productDetails.map((detail, index) => (
-                    <div key={index}>{detail}</div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        {/* Grid 3 */}
-        <div className="flex flex-col gap-3 text-xs border border-[#B9B9B9] rounded-xl p-4 self-start">
-          <div className="">Atur Jumlah :</div>
-          <div className="">Polos, Merah</div>
-          <div className="flex items-center gap-2">
-            <div className="flex items-center justify-between w-[50%] px-4 border border-[#B9B9B9] rounded-xl">
-              <button
-                onClick={decreaseQty}
-                className="
-          text-[#74B559]
-          text-sm
-          font-bold
-          hover:scale-110
-          transition
-          cursor-pointer
-        "
-              >
-                -
-              </button>
-              <div className="text-sm text-[#4A4A4A]">{qty}</div>
-              <button
-                onClick={increaseQty}
-                className="
-          text-[#74B559]
-          text-sm
-          font-bold
-          hover:scale-110
-          transition
-          cursor-pointer
-        "
-              >
-                +
-              </button>
-            </div>
-            <div className="font-semibold text-[#74B559]">Stok : 20</div>
-          </div>
-          <div>Total Hari : 7</div>
-          <div className="grid grid-cols-2 items-center gap-2">
-            <div>Subtotal : </div>
-            <div className="text-base font-semibold">Rp. 1.050.000</div>
-          </div>
-          <button className="bg-[#74B559] text-white font-semibold py-2 px-4 rounded-xl hover:bg-[#5B8E47] transition">
-            Masukkan ke keranjang
-          </button>
-        </div>
+        <ProductSummary
+          qty={qty}
+          increaseQty={increaseQty}
+          decreaseQty={decreaseQty}
+          onQtyChange={handleQtyChange}
+          availableStock={availableStock}
+          selectedVariantText={selectedVariantText}
+          totalDays={totalDays}
+          subtotal={subtotal}
+          productId={productId}
+          onAddToCart={handleAddToCart}
+          isAddingToCart={isAddingToCart}
+          canAddToCart={Boolean(productId && selectedCombinationId && qty > 0)}
+        />
       </div>
+
+      <UpsellModal
+        isOpen={openUpsellModal}
+        onClose={() => setOpenUpsellModal(false)}
+        message={upsellMessage}
+        cartId={upsellCartId}
+      />
     </Layout>
   );
 }

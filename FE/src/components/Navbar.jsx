@@ -3,8 +3,9 @@ import { useLocation } from "react-router-dom";
 import logo from "../assets/logo.webp";
 import menuIcon from "../assets/icon/menu.svg";
 import searchIcon from "../assets/icon/search.svg";
-import cartIcon from "../assets/icon/cart.png";
 import { allProduct } from "../dataProduk";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import { IconButton, Badge } from "@mui/material";
 
 function SearchEl() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -57,11 +58,22 @@ function SearchEl() {
           </div>
         )}
       </div>
-      <img
-        src={cartIcon}
-        alt="Cart Icon"
-        className="w-5 hover:cursor-pointer opacity-70 hover:opacity-100 transition-all"
-      />
+      <IconButton onClick={() => setLoading(true)}>
+        <Badge
+          badgeContent={2}
+          sx={{
+            "& .MuiBadge-badge": {
+              backgroundColor: "#74B559",
+              color: "white",
+              fontSize: "0.6rem",
+              minWidth: "16px",
+              height: "16px",
+            },
+          }}
+        >
+          <ShoppingCartIcon sx={{ fontSize: 22 }} />
+        </Badge>
+      </IconButton>
     </div>
   );
 }
