@@ -42,7 +42,7 @@ function Login() {
 
   return (
     <div className="min-h-screen bg-[#F3F3F3] flex items-center justify-center px-4 py-10">
-      <div className="w-full max-w-lg overflow-hidden rounded-3xl bg-white">
+      <div className="w-full max-w-lg overflow-hidden rounded-lg bg-white">
           <div className="p-8 sm:p-10 md:p-12">
             <div className="mb-8">
               <img src={logo} alt="Logo" className="h-12 w-auto mx-auto" />
@@ -78,13 +78,13 @@ function Login() {
               </div>
 
               {errorMessage ? (
-                <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+                <div className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
                   {errorMessage}
                 </div>
               ) : null}
 
               {successMessage ? (
-                <div className="rounded-xl border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-700">
+                <div className="rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-700">
                   {successMessage}
                 </div>
               ) : null}
@@ -92,7 +92,7 @@ function Login() {
               <button
                 type="submit"
                 disabled={loginMutation.isPending}
-                className="w-full rounded-xl bg-[#53823F] px-4 py-3 font-semibold text-white transition hover:bg-[#243b1b] disabled:cursor-not-allowed disabled:opacity-70"
+                className="w-full rounded-lg bg-[#53823F] px-4 py-3 font-semibold text-white transition hover:bg-[#243b1b] disabled:cursor-not-allowed disabled:opacity-70"
               >
                 {loginMutation.isPending ? "Memproses..." : "Login"}
               </button>
