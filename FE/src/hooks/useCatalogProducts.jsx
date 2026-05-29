@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 
-import { privateApi } from "../utils/axios";
+import { privateApi } from "../utils/axios.js";
 
 export function useCatalogProducts(requestParams) {
   const {
@@ -16,7 +16,7 @@ export function useCatalogProducts(requestParams) {
       const guestId = localStorage.getItem("guestId") || "";
 
       const response = await privateApi.post(
-        import.meta.env.VITE_PRODUCTS_API_PATH || "/products/",
+        "/products/",
         {
           ...requestParams,
           guestId,

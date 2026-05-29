@@ -10,6 +10,7 @@ import UpsellModal from "../components/UpsellModal";
 import { useAddToCart } from "../hooks/useAddToCart";
 import { useProductPage } from "../hooks/useProductPage";
 import { useProductDetail } from "../hooks/useProductDetail";
+import { useUpsellRecommendations } from "../hooks/useUpsellRecommendations";
 
 const fallbackImages = [
   "/catalog/kursi/kursi-anak/foto-1.jpeg",
@@ -44,6 +45,10 @@ function Product() {
   });
 
   const { mutateAsync: addToCart, isPending: isAddingToCart } = useAddToCart();
+  const {
+    mutateAsync: fetchUpsellRecommendations,
+    isPending: isFetchingUpsell,
+  } = useUpsellRecommendations();
 
   const {
     gallery: images = fallbackImages,
@@ -70,6 +75,7 @@ function Product() {
   const [openUpsellModal, setOpenUpsellModal] = useState(false);
   const [upsellMessage, setUpsellMessage] = useState("");
   const [upsellCartId, setUpsellCartId] = useState("");
+  const [upsellProduct, setUpsellProduct] = useState(null);
 
   const [qty, setQty] = useState(1);
 
@@ -154,6 +160,45 @@ function Product() {
     }
   };
 
+  const handleOpenUpsellModal = async () => {
+    if (!productId || !selectedCombinationId) {
+      return;
+    }
+
+    const guestId = localStorage.getItem("guestId");
+
+    if (!guestId) {
+      localStorage.setItem("guestId", guestId);
+    }
+
+    try {
+      const recommendations = await fetchUpsellRecommendations({
+        idProduct: productId,
+        idVariantCombination: selectedCombinationId,
+        startDate,
+        endDate,
+        quantity: qty,
+        guestId,
+      });
+
+      const recommendedProduct = recommendations?.[0] ?? null;
+
+      if (!recommendedProduct) {
+        setOpenUpsellModal(false);
+        setUpsellProduct(null);
+        await handleAddToCart();
+        return;
+      }
+
+      setUpsellProduct(recommendedProduct);
+      setUpsellMessage("");
+      setUpsellCartId("");
+      setOpenUpsellModal(true);
+    } catch (error) {
+      console.error("Gagal mengambil rekomendasi upsell", error);
+    }
+  };
+
   const selectedVariantText = Object.entries(selectedVariantOptionIds)
     .map(([variantId, optionId]) => {
       const variant = variantTypes.find(
@@ -170,10 +215,9 @@ function Product() {
     .join(", ");
 
   const handleAddToCart = async () => {
-    const existingGuestId = localStorage.getItem("guestId");
-    const guestId = existingGuestId || crypto.randomUUID();
+    const guestId = localStorage.getItem("guestId");
 
-    if (!existingGuestId) {
+    if (!guestId) {
       localStorage.setItem("guestId", guestId);
     }
 
@@ -183,7 +227,6 @@ function Product() {
 
     setUpsellMessage("Sedang menambahkan item ke keranjang...");
     setUpsellCartId("");
-    setOpenUpsellModal(true);
 
     try {
       const response = await addToCart({
@@ -191,6 +234,8 @@ function Product() {
         idProduct: productId,
         combinationId: selectedCombinationId,
         quantity: qty,
+        startDate,
+        endDate,
       });
 
       if (response?.success) {
@@ -244,9 +289,7 @@ function Product() {
           selectedVariantText={selectedVariantText}
           totalDays={totalDays}
           subtotal={subtotal}
-          productId={productId}
-          onAddToCart={handleAddToCart}
-          isAddingToCart={isAddingToCart}
+          onOpenUpsellModal={handleOpenUpsellModal}
           canAddToCart={Boolean(productId && selectedCombinationId && qty > 0)}
         />
       </div>
@@ -254,8 +297,12 @@ function Product() {
       <UpsellModal
         isOpen={openUpsellModal}
         onClose={() => setOpenUpsellModal(false)}
-        message={upsellMessage}
-        cartId={upsellCartId}
+        onAddToCart={handleAddToCart}
+        isAddingToCart={isAddingToCart}
+        canAddToCart={Boolean(productId && selectedCombinationId && qty > 0)}
+        upsellProduct={upsellProduct}
+        startDate={startDate}
+        endDate={endDate}
       />
     </Layout>
   );

@@ -10,8 +10,7 @@ function ProductSummary({
   selectedVariantText,
   totalDays,
   subtotal,
-  onAddToCart,
-  isAddingToCart,
+  onOpenUpsellModal,
   canAddToCart,
 }) {
   const stock = selectedVariantStock ?? availableStock;
@@ -74,13 +73,13 @@ function ProductSummary({
           Rp. {formatPrice(subtotal)}
         </div>
       </div>
-
+    
       <button
-        onClick={onAddToCart}
-        disabled={!canAddToCart || isAddingToCart}
+        onClick={onOpenUpsellModal}
+        disabled={!canAddToCart}
         className="bg-[#74B559] text-white font-semibold py-2 px-4 rounded-xl hover:bg-[#5B8E47] transition disabled:cursor-not-allowed disabled:opacity-60"
       >
-        {isAddingToCart ? "Menambahkan..." : "Masukkan ke keranjang"}
+        Masukkan ke keranjang
       </button>
     </div>
   );

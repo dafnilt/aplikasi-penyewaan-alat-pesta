@@ -1,8 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
-import { privateApi } from "../utils/axios";
+import { privateApi } from "../utils/axios.js";
 
 export function useProductDetail({ productId, startDate, endDate }) {
-
   return useQuery({
     queryKey: ["product-detail", productId, startDate, endDate],
 
@@ -10,7 +9,7 @@ export function useProductDetail({ productId, startDate, endDate }) {
 
     queryFn: async ({ signal }) => {
       const response = await privateApi.post(
-        import.meta.env.VITE_PRODUCTS_DETAIL_API_PATH || "/products/detail/",
+        "/products/detail/",
         {
           idProduct: productId,
           startDate,
