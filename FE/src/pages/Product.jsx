@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-
 import Layout from "../layout/Layout";
 
 import ProductGallery from "../components/ProductGalery";
@@ -10,26 +9,13 @@ import UpsellModal from "../components/UpsellModal";
 import { useAddToCart } from "../hooks/useAddToCart";
 import { useProductPage } from "../hooks/useProductPage";
 import { useProductDetail } from "../hooks/useProductDetail";
+import { getTotalDays } from "../utils/getTotalDays";
 import { useUpsellRecommendations } from "../hooks/useUpsellRecommendations";
 
 const fallbackImages = [
   "/catalog/kursi/kursi-anak/foto-1.jpeg",
   "/catalog/kursi/kursi-anak/foto-2.jpeg",
 ];
-
-const MS_PER_DAY = 1000 * 60 * 60 * 24;
-
-const parseDateTime = (value) => {
-  if (!value) {
-    return null;
-  }
-
-  const normalizedValue = value.includes(" ") ? value.replace(" ", "T") : value;
-
-  const parsedDate = new Date(normalizedValue);
-
-  return Number.isNaN(parsedDate.getTime()) ? null : parsedDate;
-};
 
 function Product() {
   const { productId, startDate, endDate } = useProductPage();
@@ -117,18 +103,7 @@ function Product() {
   const hasSelectedAllVariants =
     Object.keys(selectedVariantOptionIds).length === variantTypes.length;
 
-  const totalDays = (() => {
-    const start = parseDateTime(startDate);
-    const end = parseDateTime(endDate);
-
-    if (!start || !end) {
-      return 0;
-    }
-
-    const diffDays = Math.ceil((end.getTime() - start.getTime()) / MS_PER_DAY);
-
-    return Math.max(1, diffDays);
-  })();
+  const totalDays = getTotalDays(startDate, endDate);
 
   const subtotal = productPrice * qty * totalDays;
 

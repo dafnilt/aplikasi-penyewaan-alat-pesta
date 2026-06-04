@@ -1,4 +1,5 @@
 import { formatPrice } from "../utils/formatPrice";
+import QuantitySelector from "./QuantitySelector";
 
 function ProductSummary({
   qty,
@@ -22,44 +23,12 @@ function ProductSummary({
       <div>{selectedVariantText}</div>
 
       <div className="flex items-center gap-2">
-        <div className="flex items-center justify-between w-[50%] px-4 border border-[#B9B9B9] rounded-xl">
-          <button
-            onClick={decreaseQty}
-            className="
-              text-[#74B559]
-              text-sm
-              font-bold
-              hover:scale-110
-              transition
-              cursor-pointer
-            "
-          >
-            -
-          </button>
-
-          <input
-            type="text"
-            inputMode="numeric"
-            pattern="[0-9]*"
-            value={qty}
-            onChange={(event) => onQtyChange(event.target.value)}
-            className="w-14 text-center text-sm text-[#4A4A4A] bg-transparent outline-none"
-          />
-
-          <button
-            onClick={increaseQty}
-            className="
-              text-[#74B559]
-              text-sm
-              font-bold
-              hover:scale-110
-              transition
-              cursor-pointer
-            "
-          >
-            +
-          </button>
-        </div>
+        <QuantitySelector
+          qty={qty}
+          onIncrease={increaseQty}
+          onDecrease={decreaseQty}
+          onChange={onQtyChange}
+        />
 
         <div className="font-semibold text-[#74B559]">Stok : {stock}</div>
       </div>
@@ -73,7 +42,7 @@ function ProductSummary({
           Rp. {formatPrice(subtotal)}
         </div>
       </div>
-    
+
       <button
         onClick={onOpenUpsellModal}
         disabled={!canAddToCart}

@@ -13,12 +13,12 @@ function ProductCard({ product, requestParams }) {
 
       endDate: requestParams?.endDate,
     });
-  };
+  }; 
 
   return (
     <button
       onClick={() => handleNavigateProduct(product.id)}
-      className="bg-white rounded-2xl p-3 shadow-sm hover:shadow-md transition text-left"
+      className="bg-white border border-gray-200 rounded-2xl p-3 shadow-sm hover:shadow-md transition text-left"
     >
       <div className="w-full aspect-square rounded-xl overflow-hidden">
         <img

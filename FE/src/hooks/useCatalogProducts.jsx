@@ -9,12 +9,9 @@ export function useCatalogProducts(requestParams) {
     isError,
   } = useQuery({
     queryKey: ["products", requestParams],
-
     enabled: !!requestParams,
-
     queryFn: async ({ signal }) => {
       const guestId = localStorage.getItem("guestId") || "";
-
       const response = await privateApi.post(
         "/products/",
         {

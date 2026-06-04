@@ -11,7 +11,7 @@ export function useUpsellRecommendations() {
       endDate,
       quantity,
       guestId,
-      fromRecommendation,
+      isFromRecommendation,
     }) => {
       await privateApi.post("/carts/upsert/", {
         guestId,
@@ -25,7 +25,7 @@ export function useUpsellRecommendations() {
         startDate,
         endDate,
         quantity,
-        fromRecommendation,
+        isFromRecommendation,
       });
 
       return response.data?.data ?? [];
