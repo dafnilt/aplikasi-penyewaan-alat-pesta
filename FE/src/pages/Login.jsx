@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useLogin } from "../hooks/useLogin";
 import logo from "../assets/logo.webp";
+import Skeleton from "@mui/material/Skeleton";
 
 const getLoginErrorMessage = (error) => {
   const status = error?.response?.status;
@@ -89,13 +90,25 @@ function Login() {
                 </div>
               ) : null}
 
-              <button
-                type="submit"
-                disabled={loginMutation.isPending}
-                className="w-full rounded-lg bg-[#53823F] px-4 py-3 font-semibold text-white transition hover:bg-[#243b1b] disabled:cursor-not-allowed disabled:opacity-70"
-              >
-                {loginMutation.isPending ? "Memproses..." : "Login"}
-              </button>
+            <button
+              type="submit"
+              disabled={loginMutation.isPending}
+              className="w-full rounded-lg bg-[#53823F] px-4 py-3 font-semibold text-white transition hover:bg-[#243b1b] disabled:cursor-not-allowed disabled:opacity-70"
+            >
+              {loginMutation.isPending ? (
+                <Skeleton
+                  variant="text"
+                  width={80}
+                  height={24}
+                  sx={{
+                    bgcolor: "rgba(255,255,255,0.3)",
+                    margin: "0 auto",
+                  }}
+                />
+              ) : (
+                "Login"
+              )}
+            </button>
             </form>
           </div>
         </div>
