@@ -1,5 +1,7 @@
 import LayoutAdmin from "../layout/LayoutAdmin";
 import SortableTable from "../components/SortableTable";
+import { getStatusColor } from "../utils/getStatusColor";
+import { getStatusText } from "../utils/getStatusText";
 
 const columns = [
   { id: "id", label: "ID Pesanan" },
@@ -14,7 +16,22 @@ const columns = [
   },
   {
     id: "status",
-    label: "Status"
+    label: "Status",
+    render: (value) => (
+      <span
+        style={{
+          backgroundColor: getStatusColor(value),
+          padding: "4px 12px",
+          borderRadius: "999px",
+          display: "inline-block",
+          fontSize: "12px",
+          fontWeight: 500,
+          color: "#fff",
+        }}
+      >
+        {getStatusText(value)}
+      </span>
+    ),
   }
 ];
 
