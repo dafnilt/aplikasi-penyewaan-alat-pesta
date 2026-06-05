@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { NavLink } from "react-router-dom";
 
 import MenuIcon from "@mui/icons-material/Menu";
@@ -11,17 +10,16 @@ const adminMenus = [
 		to: "/pesanan",
 	},
 	{
-		label: "Test",
+		label: "Akun Admin",
 		to: "/login",
 	},
 ];
 
-function NavbarAdmin() {
-	const [isOpen, setIsOpen] = useState(true);
+function NavbarAdmin({ isOpen, setIsOpen }) {
 
 	return (
 		<>
-			<div className="fixed top-4 left-1 z-50">
+			<div className="fixed top-3 left-1 z-50">
 				<IconButton
 					onClick={() => setIsOpen(!isOpen)}
 					sx={{
