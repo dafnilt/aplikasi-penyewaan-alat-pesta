@@ -9,6 +9,7 @@ import AboutUs from "./pages/AboutUs";
 import Catalog from "./pages/Catalog";
 import Product from "./pages/Product";
 import Cart from "./pages/Cart";
+import Checkout from "./pages/Checkout";
 import Portofolio from "./pages/Portofolio";
 import PortofolioDetail from "./pages/PortofolioDetail";
 import Contact from "./pages/Contact";
@@ -44,9 +45,13 @@ const router = createBrowserRouter([
     path: "/product/:idProduct",
     element: <Product />,
   },
-    {
+  {
     path: "/cart",
     element: <Cart />,
+  },
+  {
+    path: "/checkout",
+    element: <Checkout />,
   },
   {
     path: "/portofolio",
