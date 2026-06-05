@@ -10,7 +10,7 @@ function HeaderAdmin({ isSidebarOpen }) {
                 pr-4 py-3 shadow-sm transition-all duration-300
             `}
         >
-			<div className={`flex items-center gap-3 transition-all duration-300 ${isSidebarOpen ? "pl-24 md:pl-28" : "pl-8 md:pl-12"}`}>
+			<div className={`flex items-center gap-3 transition-all duration-300 ${isSidebarOpen ? "pl-24 md:pl-5" : "pl-8 md:pl-12"}`}>
 				<img
 					src={Logo}
 					alt="Logo"

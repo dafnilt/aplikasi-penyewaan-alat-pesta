@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
@@ -7,15 +7,18 @@ import IconButton from "@mui/material/IconButton";
 const adminMenus = [
 	{
 		label: "Pesanan",
-		to: "/pesanan",
-	},
-	{
-		label: "Akun Admin",
-		to: "/login",
+		to: "/orders",
 	},
 ];
 
 function NavbarAdmin({ isOpen, setIsOpen }) {
+	const navigate = useNavigate();
+
+	const handleLogout = () => {
+		localStorage.removeItem("accessToken");
+		localStorage.removeItem("refreshToken");
+		navigate("/login");
+	};
 
 	return (
 		<>
@@ -56,6 +59,14 @@ function NavbarAdmin({ isOpen, setIsOpen }) {
 								{menu.label}
 							</NavLink>
 						))}
+
+						<button
+							type="button"
+							onClick={handleLogout}
+							className="block w-full px-4 py-3 text-left text-sm text-[#1f1f1f] transition-colors hover:bg-[#5B9941] hover:text-white"
+						>
+							Logout
+						</button>
 					</nav>
 				</div>
 			</aside>

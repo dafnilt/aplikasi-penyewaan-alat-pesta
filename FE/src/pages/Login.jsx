@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useLogin } from "../hooks/useLogin";
 import logo from "../assets/logo.webp";
 import Skeleton from "@mui/material/Skeleton";
+import { useNavigate } from "react-router-dom";
 
 const getLoginErrorMessage = (error) => {
   const status = error?.response?.status;
@@ -17,6 +18,7 @@ function Login() {
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const loginMutation = useLogin();
+  const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -30,9 +32,18 @@ function Login() {
       });
 
       const accessToken = response?.access || response?.token || response?.accessToken;
+      const refreshToken = response?.refresh || response?.refreshToken;
 
       if (accessToken) {
         localStorage.setItem("accessToken", accessToken);
+      }
+
+      if (refreshToken) {
+        localStorage.setItem("refreshToken", refreshToken);
+      }
+
+      if (accessToken) {
+        navigate("/orders");
       }
 
       setSuccessMessage("Login berhasil.");
