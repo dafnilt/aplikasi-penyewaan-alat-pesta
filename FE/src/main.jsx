@@ -9,7 +9,7 @@ import AboutUs from "./pages/AboutUs";
 import Catalog from "./pages/Catalog";
 import Product from "./pages/Product";
 import Cart from "./pages/Cart";
-import Checkout from "./pages/Checkout";
+import Order from "./pages/Order";
 import Portofolio from "./pages/Portofolio";
 import PortofolioDetail from "./pages/PortofolioDetail";
 import Contact from "./pages/Contact";
@@ -50,8 +50,8 @@ const router = createBrowserRouter([
     element: <Cart />,
   },
   {
-    path: "/checkout",
-    element: <Checkout />,
+    path: "/order",
+    element: <Order />,
   },
   {
     path: "/portofolio",
