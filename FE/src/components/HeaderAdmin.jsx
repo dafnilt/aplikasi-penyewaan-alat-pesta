@@ -1,8 +1,11 @@
 import Logo from "../assets/logo.webp";
 
 import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
+import { useLogin } from "../hooks/useLogin";
 
 function HeaderAdmin({ isSidebarOpen }) {
+	const { user } = useLogin();
+
 	return (
 		<header
             className={`
@@ -29,11 +32,11 @@ function HeaderAdmin({ isSidebarOpen }) {
 
 				<div className="text-right pr-2">
 					<div className="text-sm font-medium text-[#1f1f1f]">
-						Haya Qonita
+						{user?.username}
 					</div>
 
 					<div className="text-xs text-gray-500">
-						Administrator
+						{user?.groups?.includes("Admin") ? "Admin" : "Masih salah"}
 					</div>
 				</div>
 			</div>

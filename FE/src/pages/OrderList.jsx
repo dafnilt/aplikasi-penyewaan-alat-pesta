@@ -34,8 +34,8 @@ function OrderList() {
       label: "Tanggal Penyewaan",
       render: (_, row) => (
         <div className="flex flex-col">
-          <span>{formatDateTimeOrder(row.rentalStart)} -</span>
-          <span>{formatDateTimeOrder(row.rentalEnd)}</span>
+          <div>{formatDateTimeOrder(row.rentalStart)} -</div>
+          <div>{formatDateTimeOrder(row.rentalEnd)}</div>
         </div>
       ),
     },
@@ -49,12 +49,12 @@ function OrderList() {
       id: "status",
       label: "Status",
       render: (value) => (
-        <span
-          className="px-3 py-1 rounded-full text-xs text-white"
+        <div
+          className="px-3 py-1 rounded-full text-xs text-white text-center"
           style={{ backgroundColor: getStatusColor(value) }}
         >
           {getStatusText(value)}
-        </span>
+        </div>
       ),
     },
     {

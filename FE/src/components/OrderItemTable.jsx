@@ -24,7 +24,7 @@ function OrderItemTable({ items = [] }) {
             <TableRow>
               <TableCell className="py-3">No</TableCell>
               <TableCell>Nama Produk</TableCell>
-              <TableCell>Pilihan Produk</TableCell>
+              <TableCell>Varian Produk</TableCell>
               <TableCell>Jumlah</TableCell>
               <TableCell>Harga Satuan</TableCell>
               <TableCell>Subtotal</TableCell>
