@@ -1,10 +1,10 @@
 export const getStatusText = (status) => {
   switch (status) {
-    case "Pending":
+    case "Pending Payment":
       return "Belum Bayar";
-    case "DP":
+    case "Down Payment 50%":
       return "Bayar 50%";
-    case "Paid":
+    case "Fully Paid":
       return "Bayar Lunas";
     case "Completed":
       return "Completed";

@@ -1,10 +1,10 @@
 export const getStatusColor = (status) => {
   switch (status) {
-    case "Pending":
+    case "Pending Payment":
       return "#E53935";
-    case "DP":
+    case "Down Payment 50%":
       return "#FDD835";
-    case "Paid":
+    case "Fully Paid":
       return "#43A047";
     case "Completed":
       return "#43A047";

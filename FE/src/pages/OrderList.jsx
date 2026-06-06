@@ -1,75 +1,61 @@
+import { useEffect, useState } from "react";
+import { useOrderPage } from "../hooks/useOrderPage";
 import LayoutAdmin from "../layout/LayoutAdmin";
 import SortableTable from "../components/SortableTable";
 import { getStatusColor } from "../utils/getStatusColor";
 import { getStatusText } from "../utils/getStatusText";
+import { formatPrice } from "../utils/formatPrice";
+import { formatDateTimeOrder } from "../utils/formatDateTime";
+import Skeleton from "@mui/material/Skeleton";
 
 const columns = [
-  { id: "id", label: "ID Pesanan" },
-  { id: "customerName", label: "Nama Pelanggan" },
-  { id: "rentalDate", label: "Tanggal Penyewaan" },
+  { id: "idOrder", label: "ID Pesanan" },
+  { id: "recipientName", label: "Nama Pelanggan" },
+  { id: "rentalStart", label: "Tanggal Penyewaan",
+    render: (_,row) => 
+      <div className="flex flex-col">
+        <span>{formatDateTimeOrder(row.rentalStart)} -</span>
+        <span>{formatDateTimeOrder(row.rentalEnd)}</span>
+      </div>
+  },
   { id: "phoneNumber", label: "Nomor Telepon" },
-  { id: "address", label: "Alamat" },
+  // { id: "shippingAddress", label: "Alamat" },
   {
     id: "totalPrice",
     label: "Total Harga",
-    render: (value) => `Rp ${value.toLocaleString("id-ID")}`,
+    render: (value) => `Rp ${formatPrice(value)}`,
   },
   {
-    id: "status",
-    label: "Status",
-    render: (value) => (
-      <span
-        style={{
-          backgroundColor: getStatusColor(value),
-          padding: "4px 12px",
-          borderRadius: "999px",
-          display: "inline-block",
-          fontSize: "12px",
-          fontWeight: 500,
-          color: "#fff",
-        }}
-      >
-        {getStatusText(value)}
-      </span>
-    ),
-  }
-];
-
-const rows = [
-  {
-    id: 1,
-    customerName: "Haya Qonita",
-    rentalDate: "2026-01-01",
-    phoneNumber: "08123456789",
-    product: "Meja",
-    address: "Bandung",
-    totalPrice: 100000,
-    status: "Pending",
-  },
-  {
-    id: 2,
-    customerName: "Amani",
-    rentalDate: "2026-01-02",
-    phoneNumber: "08123456789",
-    product: "Kursi",
-    address: "Bandung",
-    totalPrice: 150000,
-    status: "DP",
-  },
-  {
-    id: 3,
-    customerName: "Hehe",
-    rentalDate: "2026-01-03",
-    phoneNumber: "08123456789",
-    product: "Tenda",
-    address: "Bandung",
-    totalPrice: 80000,
-    status: "Completed",
-  },
+  id: "status",
+  label: "Status",
+  render: (value) => (
+    <span
+      className="px-3 py-1 rounded-full text-xs text-white"
+      style={{
+        backgroundColor: getStatusColor(value),
+      }}
+    >
+    {getStatusText(value)}
+    </span>
+  ),
+}
 ];
 
 function OrderList() {
+  const [rows, setRows] = useState([]);
+  useEffect(() => {
+  const fetchOrders = async () => {
+    try {
+      const response = await useOrderPage();
 
+      setRows(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  fetchOrders();
+}, []);
   return (
     <LayoutAdmin className="bg-[#F3F3F3] min-h-screen">
       <div>
