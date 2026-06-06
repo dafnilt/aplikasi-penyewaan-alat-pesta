@@ -12,7 +12,7 @@ export function useCatalogProducts(requestParams) {
     enabled: !!requestParams,
     queryFn: async ({ signal }) => {
       const guestId = localStorage.getItem("guestId") || "";
-      const response = await privateApi.post(
+      const response = await privateApi.get(
         "/products/",
         {
           ...requestParams,

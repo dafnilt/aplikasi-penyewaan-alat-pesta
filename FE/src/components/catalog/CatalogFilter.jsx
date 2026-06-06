@@ -14,44 +14,88 @@ function CatalogFilter({ startDate, endDate, setStartDate, setEndDate }) {
   const categoryList = ["All Kategori", "Tenda", "Kursi", "Meja"];
 
   return (
-    <div className="flex py-4 gap-4">
-      <div
-        onClick={() => setIsOpen(!isOpen)}
-        className="bg-white rounded-full flex items-center gap-3 px-2 py-1 border border-gray-300 relative"
-      >
-        <img src={filterIcon} className="w-4" />
+    <div className="flex py-2 gap-4">
+      <div className="relative inline-block">
+        <button
+          type="button"
+          onClick={() => setIsOpen(!isOpen)}
+          className="
+      flex items-center gap-2
+      rounded-full border border-gray-300
+      bg-white px-4 py-1
+      text-sm text-gray-700
+      shadow-sm
+      hover:border-[#74B559]
+      hover:bg-[#F8FCF6]
+      transition-all duration-200
+      cursor-pointer
+    "
+        >
+          <img src={filterIcon} alt="Filter" className="w-4 h-4" />
 
-        <div className="text-sm">{category}</div>
+          <span>{category}</span>
 
-        <img src={arrowDownIcon} className="w-4" />
+          <img
+            src={arrowDownIcon}
+            alt="Arrow"
+            className={`w-4 h-4 transition-transform duration-100 ${
+              isOpen ? "rotate-180" : ""
+            }`}
+          />
+        </button>
 
         {isOpen && (
-          <div className="absolute mt-2 bg-white border rounded-2xl shadow-md w-40 overflow-hidden z-50">
-            {categoryList.map((item, index) => (
-              <div
-                key={index}
+          <div
+            className="
+        absolute left-0 top-[calc(100%+8px)]
+        w-48
+        overflow-hidden
+        rounded-2xl
+        border border-gray-200
+        bg-white
+        shadow-lg
+        z-50
+      "
+          >
+            {categoryList.map((item) => (
+              <button
+                key={item}
+                type="button"
                 onClick={() => {
                   setCategory(item);
-
                   setIsOpen(false);
                 }}
-                className="px-4 py-2 text-sm hover:bg-gray-100"
+                className="
+            w-full px-4 py-3
+            text-left text-sm text-gray-700
+            hover:bg-[#F8FCF6]
+            hover:text-[#74B559]
+            transition-colors
+          "
               >
                 {item}
-              </div>
+              </button>
             ))}
           </div>
         )}
       </div>
 
-      <div className="bg-white rounded-full flex items-center gap-3 px-2 py-1 border border-gray-300">
-        <img src={calenderIcon} className="w-4" />
+      <div
+        className="
+    flex items-center gap-2
+    rounded-full border border-gray-300
+    bg-white px-4
+    hover:border-[#74B559]
+    hover:bg-[#F8FCF6]
+    transition-all duration-200
+  "
+      >
+        <img src={calenderIcon} alt="Calendar" className="w-4 h-4 shrink-0" />
 
         <DatePicker
           selected={startDate}
           onChange={(dates) => {
             const [start, end] = dates;
-
             setStartDate(start);
             setEndDate(end);
           }}
@@ -60,7 +104,12 @@ function CatalogFilter({ startDate, endDate, setStartDate, setEndDate }) {
           selectsRange
           showTimeSelect
           dateFormat="dd MMM yyyy HH:mm"
-          className="outline-none text-sm"
+          className="
+      bg-transparent
+      outline-none
+      text-sm
+      min-w-[250px]
+    "
         />
       </div>
     </div>

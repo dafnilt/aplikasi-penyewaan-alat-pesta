@@ -36,8 +36,6 @@ function Catalog() {
         setEndDate={setEndDate}
         isLoading={isFetching}
       />
-
-      <div className="mb-4 px-4 md:px-6 lg:px-8 mx-auto max-w-6xl">
         <CatalogFilter
           startDate={startDate}
           endDate={endDate}
@@ -45,9 +43,9 @@ function Catalog() {
           setEndDate={setEndDate}
         />
 
-        {isError && <div>Gagal memuat produk</div>}
+        {/* {isError && <div>Gagal memuat produk</div>} */}
 
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
           {products.map((product) => (
             <ProductCard
               key={product.id}
@@ -56,7 +54,6 @@ function Catalog() {
             />
           ))}
         </div>
-      </div>
     </Layout>
   );
 }
