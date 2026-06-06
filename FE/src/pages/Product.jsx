@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-
 import Layout from "../layout/Layout";
 
 import ProductGallery from "../components/ProductGalery";
@@ -10,25 +9,13 @@ import UpsellModal from "../components/UpsellModal";
 import { useAddToCart } from "../hooks/useAddToCart";
 import { useProductPage } from "../hooks/useProductPage";
 import { useProductDetail } from "../hooks/useProductDetail";
+import { getTotalDays } from "../utils/getTotalDays";
+import { useUpsellRecommendations } from "../hooks/useUpsellRecommendations";
 
 const fallbackImages = [
   "/catalog/kursi/kursi-anak/foto-1.jpeg",
   "/catalog/kursi/kursi-anak/foto-2.jpeg",
 ];
-
-const MS_PER_DAY = 1000 * 60 * 60 * 24;
-
-const parseDateTime = (value) => {
-  if (!value) {
-    return null;
-  }
-
-  const normalizedValue = value.includes(" ") ? value.replace(" ", "T") : value;
-
-  const parsedDate = new Date(normalizedValue);
-
-  return Number.isNaN(parsedDate.getTime()) ? null : parsedDate;
-};
 
 function Product() {
   const { productId, startDate, endDate } = useProductPage();
@@ -44,6 +31,10 @@ function Product() {
   });
 
   const { mutateAsync: addToCart, isPending: isAddingToCart } = useAddToCart();
+  const {
+    mutateAsync: fetchUpsellRecommendations,
+    isPending: isFetchingUpsell,
+  } = useUpsellRecommendations();
 
   const {
     gallery: images = fallbackImages,
@@ -70,6 +61,7 @@ function Product() {
   const [openUpsellModal, setOpenUpsellModal] = useState(false);
   const [upsellMessage, setUpsellMessage] = useState("");
   const [upsellCartId, setUpsellCartId] = useState("");
+  const [upsellProduct, setUpsellProduct] = useState(null);
 
   const [qty, setQty] = useState(1);
 
@@ -111,18 +103,7 @@ function Product() {
   const hasSelectedAllVariants =
     Object.keys(selectedVariantOptionIds).length === variantTypes.length;
 
-  const totalDays = (() => {
-    const start = parseDateTime(startDate);
-    const end = parseDateTime(endDate);
-
-    if (!start || !end) {
-      return 0;
-    }
-
-    const diffDays = Math.ceil((end.getTime() - start.getTime()) / MS_PER_DAY);
-
-    return Math.max(1, diffDays);
-  })();
+  const totalDays = getTotalDays(startDate, endDate);
 
   const subtotal = productPrice * qty * totalDays;
 
@@ -154,6 +135,45 @@ function Product() {
     }
   };
 
+  const handleOpenUpsellModal = async () => {
+    if (!productId || !selectedCombinationId) {
+      return;
+    }
+
+    const guestId = localStorage.getItem("guestId");
+
+    if (!guestId) {
+      localStorage.setItem("guestId", guestId);
+    }
+
+    try {
+      const recommendations = await fetchUpsellRecommendations({
+        idProduct: productId,
+        idVariantCombination: selectedCombinationId,
+        startDate,
+        endDate,
+        quantity: qty,
+        guestId,
+      });
+
+      const recommendedProduct = recommendations?.[0] ?? null;
+
+      if (!recommendedProduct) {
+        setOpenUpsellModal(false);
+        setUpsellProduct(null);
+        await handleAddToCart();
+        return;
+      }
+
+      setUpsellProduct(recommendedProduct);
+      setUpsellMessage("");
+      setUpsellCartId("");
+      setOpenUpsellModal(true);
+    } catch (error) {
+      console.error("Gagal mengambil rekomendasi upsell", error);
+    }
+  };
+
   const selectedVariantText = Object.entries(selectedVariantOptionIds)
     .map(([variantId, optionId]) => {
       const variant = variantTypes.find(
@@ -170,10 +190,9 @@ function Product() {
     .join(", ");
 
   const handleAddToCart = async () => {
-    const existingGuestId = localStorage.getItem("guestId");
-    const guestId = existingGuestId || crypto.randomUUID();
+    const guestId = localStorage.getItem("guestId");
 
-    if (!existingGuestId) {
+    if (!guestId) {
       localStorage.setItem("guestId", guestId);
     }
 
@@ -183,7 +202,6 @@ function Product() {
 
     setUpsellMessage("Sedang menambahkan item ke keranjang...");
     setUpsellCartId("");
-    setOpenUpsellModal(true);
 
     try {
       const response = await addToCart({
@@ -191,6 +209,8 @@ function Product() {
         idProduct: productId,
         combinationId: selectedCombinationId,
         quantity: qty,
+        startDate,
+        endDate,
       });
 
       if (response?.success) {
@@ -244,9 +264,7 @@ function Product() {
           selectedVariantText={selectedVariantText}
           totalDays={totalDays}
           subtotal={subtotal}
-          productId={productId}
-          onAddToCart={handleAddToCart}
-          isAddingToCart={isAddingToCart}
+          onOpenUpsellModal={handleOpenUpsellModal}
           canAddToCart={Boolean(productId && selectedCombinationId && qty > 0)}
         />
       </div>
@@ -254,8 +272,12 @@ function Product() {
       <UpsellModal
         isOpen={openUpsellModal}
         onClose={() => setOpenUpsellModal(false)}
-        message={upsellMessage}
-        cartId={upsellCartId}
+        onAddToCart={handleAddToCart}
+        isAddingToCart={isAddingToCart}
+        canAddToCart={Boolean(productId && selectedCombinationId && qty > 0)}
+        upsellProduct={upsellProduct}
+        startDate={startDate}
+        endDate={endDate}
       />
     </Layout>
   );

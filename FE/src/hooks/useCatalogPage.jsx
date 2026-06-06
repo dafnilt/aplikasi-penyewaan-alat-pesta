@@ -28,9 +28,7 @@ export function useCatalogPage() {
 
     if (!guestId) {
       guestId = crypto.randomUUID();
-
       localStorage.setItem("guestId", guestId);
-
       return;
     }
 

@@ -1,31 +1,24 @@
 import { useNavigate } from "react-router-dom";
-
 import { formatPrice } from "../utils/formatPrice";
+import { navigateToProduct } from "../utils/navigateToProduct";
 
 function ProductCard({ product, requestParams }) {
   const navigate = useNavigate();
 
-  const handleOpenProductDetail = () => {
-    if (!requestParams) return;
+  const handleNavigateProduct = (idProduct) => {
+    navigateToProduct({
+      navigate,
+      idProduct,
+      startDate: requestParams?.startDate,
 
-    const queryString = new URLSearchParams({
-      startDate: requestParams.startDate,
-
-      endDate: requestParams.endDate,
-    }).toString();
-
-    navigate(`/product/${product.id}?${queryString}`, {
-      state: {
-        idProduct: product.id,
-        ...requestParams,
-      },
+      endDate: requestParams?.endDate,
     });
-  };
+  }; 
 
   return (
     <button
-      onClick={handleOpenProductDetail}
-      className="bg-white rounded-2xl p-3 shadow-sm hover:shadow-md transition text-left"
+      onClick={() => handleNavigateProduct(product.id)}
+      className="bg-white border border-gray-200 rounded-2xl p-3 shadow-sm hover:shadow-md transition text-left"
     >
       <div className="w-full aspect-square rounded-xl overflow-hidden">
         <img

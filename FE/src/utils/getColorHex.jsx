@@ -1,6 +1,6 @@
 export function getColorHex(colorName) {
   const colors = {
-    merah: "#E53935",
+    // merah: "#E53935",
     biru: "#1E88E5",
     hijau: "#43A047",
     kuning: "#FDD835",
