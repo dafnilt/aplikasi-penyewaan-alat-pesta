@@ -15,7 +15,7 @@ const columns = [
     render: (_,row) => 
       <div className="flex flex-col">
         <span>{formatDateTimeOrder(row.rentalStart)} -</span>
-        <span>{formatDateTimeOrder(row.rentalEnd)}</span>
+        <span>{formatDateTimeOrder (row.rentalEnd)}</span>
       </div>
   },
   { id: "phoneNumber", label: "Nomor Telepon" },
@@ -38,7 +38,10 @@ const columns = [
     {getStatusText(value)}
     </span>
   ),
-}
+  },
+  {
+    id: "", label: "Aksi",
+  }
 ];
 
 function OrderList() {
@@ -64,7 +67,7 @@ function OrderList() {
         <SortableTable
           columns={columns}
           rows={rows}
-          defaultOrderBy="id"
+          defaultOrderBy="createdAt"
           emptyMessage="Belum ada data pesanan"
         />
       </div>

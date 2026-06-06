@@ -8,6 +8,7 @@ import {
   TableRow,
   TableSortLabel,
   Paper,
+  TablePagination,
 } from "@mui/material";
 
 function SortableTable({
@@ -18,7 +19,9 @@ function SortableTable({
 }) {
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState(defaultOrderBy || columns[0]?.id);
-
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  
   const handleRequestSort = (property) => {
     const isAsc = orderBy === property && order === "asc";
 
@@ -44,6 +47,20 @@ function SortableTable({
     });
   }, [rows, order, orderBy]);
 
+  const paginatedRows = sortedRows.slice(
+    page * rowsPerPage,
+    page * rowsPerPage + rowsPerPage
+  );
+
+  const handleChangePage = (_, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+
   return (
     <TableContainer component={Paper} sx={{ borderRadius: 2, boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)" }}>
       <Table>
@@ -64,8 +81,8 @@ function SortableTable({
         </TableHead>
 
         <TableBody>
-          {sortedRows.length > 0 ? (
-            sortedRows.map((row, rowIndex) => (
+          {paginatedRows.length > 0 ? (
+            paginatedRows.map((row, rowIndex) => (
               <TableRow key={row.id || rowIndex}>
                 {columns.map((column) => (
                   <TableCell key={column.id}>
@@ -85,6 +102,16 @@ function SortableTable({
           )}
         </TableBody>
       </Table>
+      <TablePagination
+        component="div"
+        count={rows.length}
+        page={page}
+        rowsPerPage={rowsPerPage}
+        rowsPerPageOptions={[5, 10, 25]}
+        onPageChange={handleChangePage}
+        onRowsPerPageChange={handleChangeRowsPerPage}
+        labelRowsPerPage="Data per halaman"
+      />
     </TableContainer>
   );
 }
