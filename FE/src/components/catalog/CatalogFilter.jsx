@@ -6,7 +6,14 @@ import filterIcon from "../../assets/icon/filter.svg";
 import calenderIcon from "../../assets/icon/calender.svg";
 import arrowDownIcon from "../../assets/icon/arrow-down.svg";
 
-function CatalogFilter({ startDate, endDate, setStartDate, setEndDate, category, setCategory }) {
+function CatalogFilter({
+  startDate,
+  endDate,
+  setStartDate,
+  setEndDate,
+  category,
+  setCategory,
+}) {
   const [isOpen, setIsOpen] = useState(false);
 
   const categoryList = ["Semua Kategori", "Tenda", "Kursi", "Meja"];
@@ -96,6 +103,13 @@ function CatalogFilter({ startDate, endDate, setStartDate, setEndDate, category,
             const [start, end] = dates;
             setStartDate(start);
             setEndDate(end);
+            if (start) {
+              localStorage.setItem("lastStartDate", start.toISOString());
+            }
+
+            if (end) {
+              localStorage.setItem("lastEndDate", end.toISOString());
+            }
           }}
           startDate={startDate}
           endDate={endDate}
@@ -106,7 +120,7 @@ function CatalogFilter({ startDate, endDate, setStartDate, setEndDate, category,
       bg-transparent
       outline-none
       text-sm
-      min-w-[250px]
+      min-w-[270px]
     "
         />
       </div>

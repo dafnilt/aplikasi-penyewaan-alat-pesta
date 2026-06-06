@@ -21,7 +21,11 @@ function Catalog() {
     handleSaveCalendar,
   } = useCatalogPage();
 
-  const { products, isFetching, isError } = useCatalogProducts(requestParams);
+  const {
+  products,
+  isFetching,
+  isError,
+} = useCatalogProducts(startDate, endDate);
 
   const [selectedCategory, setSelectedCategory] = useState("Semua Kategori");
 
