@@ -1,9 +1,8 @@
+import { useMemo, useState } from "react";
 import Layout from "../layout/Layout";
-
 import CalendarModal from "../components/catalog/CalendarModal";
 import CatalogFilter from "../components/catalog/CatalogFilter";
 import ProductCard from "../components/catalog/ProductCard";
-
 import { useCatalogPage } from "../hooks/useCatalogPage";
 import { useCatalogProducts } from "../hooks/useCatalogProducts";
 
@@ -24,6 +23,16 @@ function Catalog() {
 
   const { products, isFetching, isError } = useCatalogProducts(requestParams);
 
+  const [selectedCategory, setSelectedCategory] = useState("Semua Kategori");
+
+  const filteredProducts = useMemo(() => {
+    if (selectedCategory === "Semua Kategori") {
+      return products;
+    }
+
+    return products.filter((product) => product.category === selectedCategory);
+  }, [products, selectedCategory]);
+
   return (
     <Layout className="bg-[#f3f3f3]">
       <CalendarModal
@@ -36,24 +45,26 @@ function Catalog() {
         setEndDate={setEndDate}
         isLoading={isFetching}
       />
-        <CatalogFilter
-          startDate={startDate}
-          endDate={endDate}
-          setStartDate={setStartDate}
-          setEndDate={setEndDate}
-        />
+      <CatalogFilter
+        category={selectedCategory}
+        setCategory={setSelectedCategory}
+        startDate={startDate}
+        endDate={endDate}
+        setStartDate={setStartDate}
+        setEndDate={setEndDate}
+      />
 
-        {/* {isError && <div>Gagal memuat produk</div>} */}
+      {/* {isError && <div>Gagal memuat produk</div>} */}
 
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-          {products.map((product) => (
-            <ProductCard
-              key={product.id}
-              product={product}
-              requestParams={requestParams}
-            />
-          ))}
-        </div>
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+        {filteredProducts.map((product) => (
+          <ProductCard
+            key={product.id}
+            product={product}
+            requestParams={requestParams}
+          />
+        ))}
+      </div>
     </Layout>
   );
 }

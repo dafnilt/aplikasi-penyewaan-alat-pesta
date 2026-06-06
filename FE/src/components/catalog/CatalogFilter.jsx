@@ -6,12 +6,10 @@ import filterIcon from "../../assets/icon/filter.svg";
 import calenderIcon from "../../assets/icon/calender.svg";
 import arrowDownIcon from "../../assets/icon/arrow-down.svg";
 
-function CatalogFilter({ startDate, endDate, setStartDate, setEndDate }) {
+function CatalogFilter({ startDate, endDate, setStartDate, setEndDate, category, setCategory }) {
   const [isOpen, setIsOpen] = useState(false);
 
-  const [category, setCategory] = useState("All Kategori");
-
-  const categoryList = ["All Kategori", "Tenda", "Kursi", "Meja"];
+  const categoryList = ["Semua Kategori", "Tenda", "Kursi", "Meja"];
 
   return (
     <div className="flex py-2 gap-4">
