@@ -7,6 +7,7 @@ import "./index.css";
 import App from "./App";
 import Login from "./pages/Login";
 import OrderList from "./pages/OrderList";
+import OrderDetail from "./pages/OrderDetail";
 import AboutUs from "./pages/AboutUs";
 import Catalog from "./pages/Catalog";
 import Product from "./pages/Product";
@@ -40,6 +41,10 @@ const router = createBrowserRouter([
   {
     path: "/orders",
     element: <OrderList />
+  },
+  {
+    path: "/orders/:orderId",
+    element: <OrderDetail />
   },
   {
     path: "/about-us",
