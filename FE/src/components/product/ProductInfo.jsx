@@ -1,9 +1,9 @@
 import { Divider, Box } from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import { formatPrice } from "../utils/formatPrice";
-import priceTagIcon from "../assets/icon/price-tag.svg";
-import { formatDateTime } from "../utils/formatDateTime";
-import { getColorHex } from "../utils/getColorHex";
+import { formatPrice } from "../../utils/formatPrice";
+import priceTagIcon from "../../assets/icon/price-tag.svg";
+import { formatDateTime } from "../../utils/formatDateTime";
+import { getColorHex } from "../../utils/getColorHex";
 
 function ProductInfo({
   productName,

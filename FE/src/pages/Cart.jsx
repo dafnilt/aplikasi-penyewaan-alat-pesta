@@ -1,10 +1,10 @@
 import Layout from "../layout/Layout";
-import CartList from "../components/CartList";
+import CartList from "../components/cart/CartList";
 import { formatDateTime } from "../utils/formatDateTime";
 import { formatPrice } from "../utils/formatPrice";
 import { useCartDetail } from "../hooks/useCart";
-import ProductCard from "../components/ProductCard";
-import CartSummary from "../components/CartSummary";
+import ProductCard from "../components/catalog/ProductCard";
+import CartSummary from "../components/cart/CartSummary";
 import { getTotalDays } from "../utils/getTotalDays";
 import { useCrossSellRecommendations } from "../hooks/useCrossSellRecommendations";
 import { useMemo, useState, useEffect } from "react";

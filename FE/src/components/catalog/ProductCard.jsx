@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import { formatPrice } from "../utils/formatPrice";
-import { navigateToProduct } from "../utils/navigateToProduct";
+import { formatPrice } from "../../utils/formatPrice";
+import { navigateToProduct } from "../../utils/navigateToProduct";
 
 function ProductCard({ product, requestParams }) {
   const navigate = useNavigate();

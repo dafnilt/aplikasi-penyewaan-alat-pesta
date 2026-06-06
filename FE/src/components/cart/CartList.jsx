@@ -1,9 +1,9 @@
 import { useEffect, useMemo, useState } from "react";
-import QuantitySelector from "./QuantitySelector";
-import { formatPrice } from "../utils/formatPrice";
-import { useUpdateCartItem } from "../hooks/useCart";
-import DeleteIcon from "../assets/icon/delete.svg";
-import { useDeleteCartItem } from "../hooks/useCart";
+import QuantitySelector from "../QuantitySelector";
+import { formatPrice } from "../../utils/formatPrice";
+import { useUpdateCartItem } from "../../hooks/useCart";
+import DeleteIcon from "../../assets/icon/delete.svg";
+import { useDeleteCartItem } from "../../hooks/useCart";
 
 function CartList({ items, setItems }) {
   const { mutate: updateCartItem } = useUpdateCartItem();
@@ -69,15 +69,13 @@ function CartList({ items, setItems }) {
   }, [items]);
 
   const handleDelete = (idCartItem) => {
-  setItems((prev) =>
-    prev.filter((item) => item.idCartItem !== idCartItem),
-  );
+    setItems((prev) => prev.filter((item) => item.idCartItem !== idCartItem));
 
-  deleteCartItem({
-    guestId: localStorage.getItem("guestId"),
-    idCartItem,
-  });
-};
+    deleteCartItem({
+      guestId: localStorage.getItem("guestId"),
+      idCartItem,
+    });
+  };
 
   return (
     <div>

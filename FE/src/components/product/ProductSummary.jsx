@@ -1,5 +1,5 @@
-import { formatPrice } from "../utils/formatPrice";
-import QuantitySelector from "./QuantitySelector";
+import { formatPrice } from "../../utils/formatPrice";
+import QuantitySelector from "../QuantitySelector";
 
 function ProductSummary({
   qty,

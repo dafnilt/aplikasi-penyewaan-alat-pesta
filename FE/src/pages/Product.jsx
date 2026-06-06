@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import Layout from "../layout/Layout";
 
-import ProductGallery from "../components/ProductGalery";
-import ProductInfo from "../components/ProductInfo";
-import ProductSummary from "../components/ProductSummary";
-import UpsellModal from "../components/UpsellModal";
+import ProductGallery from "../components/product/ProductGalery";
+import ProductInfo from "../components/product/ProductInfo";
+import ProductSummary from "../components/product/ProductSummary";
+import UpsellModal from "../components/product/UpsellModal";
 
 import { useAddToCart } from "../hooks/useAddToCart";
 import { useProductPage } from "../hooks/useProductPage";

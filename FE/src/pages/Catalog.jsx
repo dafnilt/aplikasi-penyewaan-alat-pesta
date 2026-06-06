@@ -1,8 +1,8 @@
 import Layout from "../layout/Layout";
 
-import CalendarModal from "../components/CalendarModal";
-import CatalogFilter from "../components/CatalogFilter";
-import ProductCard from "../components/ProductCard";
+import CalendarModal from "../components/catalog/CalendarModal";
+import CatalogFilter from "../components/catalog/CatalogFilter";
+import ProductCard from "../components/catalog/ProductCard";
 
 import { useCatalogPage } from "../hooks/useCatalogPage";
 import { useCatalogProducts } from "../hooks/useCatalogProducts";

@@ -1,4 +1,4 @@
-import calenderIcon from "../assets/icon/calender.svg";
+import calenderIcon from "../../assets/icon/calender.svg";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 

@@ -2,9 +2,9 @@ import { useState } from "react";
 
 import DatePicker from "react-datepicker";
 
-import filterIcon from "../assets/icon/filter.svg";
-import calenderIcon from "../assets/icon/calender.svg";
-import arrowDownIcon from "../assets/icon/arrow-down.svg";
+import filterIcon from "../../assets/icon/filter.svg";
+import calenderIcon from "../../assets/icon/calender.svg";
+import arrowDownIcon from "../../assets/icon/arrow-down.svg";
 
 function CatalogFilter({ startDate, endDate, setStartDate, setEndDate }) {
   const [isOpen, setIsOpen] = useState(false);

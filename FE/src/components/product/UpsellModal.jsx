@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { navigateToProduct } from "../utils/navigateToProduct";
-import { formatPrice } from "../utils/formatPrice";
+import { navigateToProduct } from "../../utils/navigateToProduct";
+import { formatPrice } from "../../utils/formatPrice";
 
 function UpsellModal({
   isOpen,
