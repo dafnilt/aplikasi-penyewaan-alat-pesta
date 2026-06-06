@@ -22,8 +22,7 @@ function Order() {
 
   return (
     <Layout>
-      <div className="py-4 text-sm">
-        <div className="flex items-center justify-between gap-2 border-b border-gray-300 py-2">
+        <div className="pt-6 pb-2 text-sm flex items-center justify-between gap-2 border-b border-gray-300">
           <div className="text-lg font-semibold">Pesanan</div>
 
           <div className="text-sm text-gray-600">Tanggal Penyewaan :</div>
@@ -50,7 +49,6 @@ function Order() {
             />
           </div>
         </div>
-      </div>
     </Layout>
   );
 }

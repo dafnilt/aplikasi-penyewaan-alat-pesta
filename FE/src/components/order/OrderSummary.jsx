@@ -32,7 +32,10 @@ function OrderSummary({
         </div> */}
 
         <div className="border-b border-gray-300 pb-2 flex justify-between font-medium">
-          <div>Subtotal sebelum pengiriman</div>
+          <div>
+            <div>Subtotal sebelum pengiriman</div>
+            <div className="text-xs text-gray-500">(Rp 600.000 x 7 hari)</div>
+            </div>
           <div>Rp {formatPrice(totalProductPrice)}</div>
         </div>
 
