@@ -4,7 +4,7 @@ import NavbarAdmin from "../components/NavbarAdmin";
 import HeaderAdmin from "../components/HeaderAdmin";
 
 function LayoutAdmin({ children, className = "" }) {
-	const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+	const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
 	return (
 		<div className={`flex min-h-screen ${className}`}>

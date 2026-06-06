@@ -22,7 +22,7 @@ function NavbarAdmin({ isOpen, setIsOpen }) {
 
 	return (
 		<>
-			<div className="fixed top-3 left-1 z-50">
+			<div className="fixed top-2 left-1 z-50">
 				<IconButton
 					onClick={() => setIsOpen(!isOpen)}
 					sx={{

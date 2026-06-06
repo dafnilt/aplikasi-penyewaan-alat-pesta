@@ -50,7 +50,7 @@ function OrderDetail() {
                 Daftar pesanan
             </span>
             {" > "}
-            <span className="font-medium">
+            <span className="font-semibold">
                 Detail pesanan - {order?.idOrder} ({order?.recipientName})
             </span>
         </div>

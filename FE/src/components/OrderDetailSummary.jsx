@@ -6,12 +6,13 @@ function OrderDetailSummary({ order, totalDays }) {
     0
   );
 
-  const subtotalBeforeShipping = productPrice * totalDays;
-  const downPayment = subtotalBeforeShipping * 0.5;
+  const productTotal = order?.productTotal
+  const subtotalBeforeShipping = order?.subtotalBeforeShipping;
+  const subtotalBeforeShippingDP = order?.subtotalBeforeShippingDP;
   const shippingCost = order?.shippingCost || 0;
-  const totalAfterShipping = downPayment + shippingCost;
-  const remainingPayment = downPayment;
-  const totalPayment = totalAfterShipping + remainingPayment;
+  const totalDP = order?.totalDP;
+  const remainingPayment = order?.remainingPayment;
+  const totalPayment = order?.totalPrice;
 
   return (
     <div className="flex justify-end mt-8">
@@ -19,14 +20,14 @@ function OrderDetailSummary({ order, totalDays }) {
         <div className="flex justify-between">
           <div className="flex flex-col">
             <div>Subtotal sebelum pengiriman:</div>
-            <div className="text-xs text-gray-500">(Rp {formatPrice(productPrice)} x {totalDays} hari)</div>
+            <div className="text-xs text-gray-500">(Rp {formatPrice(productTotal)} x {totalDays} hari)</div>
           </div>
             <div>Rp {formatPrice(subtotalBeforeShipping)}</div>
         </div>
 
         <div className="flex justify-between">
           <div>Subtotal sebelum pengiriman (DP 50%):</div>
-          <div>Rp {formatPrice(downPayment)}</div>
+          <div>Rp {formatPrice(subtotalBeforeShippingDP)}</div>
         </div>
 
         <div className="border-t border-gray-300 pt-2 flex justify-between font-semibold">
@@ -37,9 +38,9 @@ function OrderDetailSummary({ order, totalDays }) {
         <div className="flex justify-between font-semibold">
           <div className="flex flex-col"> 
             <div>Total DP:</div>
-            <div className="text-xs text-gray-500 font-normal">(Rp {formatPrice(downPayment)} + Rp {formatPrice(shippingCost)} )</div>
+            <div className="text-xs text-gray-500 font-normal">(Rp {formatPrice(subtotalBeforeShippingDP)} + Rp {formatPrice(shippingCost)} )</div>
           </div>
-          <div>Rp {formatPrice(totalAfterShipping)}</div>
+          <div>Rp {formatPrice(totalDP)}</div>
         </div>
 
         <div className="flex justify-between font-semibold">

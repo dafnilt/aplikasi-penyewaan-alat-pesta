@@ -90,7 +90,7 @@ function OrderList() {
   if (loading) {
     return (
       <LayoutAdmin className="bg-[#F3F3F3] min-h-screen">
-        <div className="text-lg font-medium text-[#1f1f1f] mb-6">
+        <div className="text-sm font-semibold text-[#1f1f1f] mb-6">
           Daftar Pesanan
         </div>
         <Skeleton variant="rounded" height={350} />
@@ -100,7 +100,7 @@ function OrderList() {
   return (
     <LayoutAdmin className="bg-[#F3F3F3] min-h-screen">
       <div>
-        <div className="text-lg font-medium text-[#1f1f1f] mb-6">
+        <div className="text-sm font-semibold text-[#1f1f1f] mb-6">
           Daftar Pesanan
         </div>
 
