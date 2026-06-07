@@ -9,6 +9,10 @@ const adminMenus = [
 		label: "Pesanan",
 		to: "/orders",
 	},
+	{
+		label: "Akun Admin",
+		to: "/admin-accounts",
+	}
 ];
 
 function NavbarAdmin({ isOpen, setIsOpen }) {

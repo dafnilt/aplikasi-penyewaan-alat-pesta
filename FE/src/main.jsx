@@ -6,6 +6,7 @@ import "react-multi-carousel/lib/styles.css";
 import "./index.css";
 import App from "./App";
 import Login from "./pages/Login";
+import AdminAccounts from "./pages/AdminAccounts";
 import OrderList from "./pages/OrderList";
 import OrderDetail from "./pages/OrderDetail";
 import AboutUs from "./pages/AboutUs";
@@ -39,6 +40,10 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <Login />
+  },
+  {
+    path: "/admin-accounts",
+    element: <AdminAccounts />
   },
   {
     path: "/orders",
