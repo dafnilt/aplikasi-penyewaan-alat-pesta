@@ -87,7 +87,7 @@ function SortableTable({
                 {columns.map((column) => (
                   <TableCell key={column.id}>
                     {column.render
-                      ? column.render(row[column.id], row)
+                      ? column.render(row[column.id], row, page * rowsPerPage + rowIndex)
                       : row[column.id]}
                   </TableCell>
                 ))}
