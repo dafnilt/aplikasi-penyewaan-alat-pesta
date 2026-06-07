@@ -96,7 +96,6 @@ function Cart() {
             totalDays={totalDays}
             totalProducts={totalProducts}
             totalPrice={formatPrice(totalPrice)}
-            onCheckout={() => console.log("checkout")}
           />
         </div>
       </div>

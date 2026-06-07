@@ -1,15 +1,16 @@
 import { formatPrice } from "../../utils/formatPrice";
 
 function OrderSummary({
-  totalProducts,
-  totalProductPrice,
-  totalDays,
+  summary,
   shippingCost,
   onConfirm,
 }) {
-  const dpAmount = totalProductPrice * 0.5;
-  const totalPayment = dpAmount + shippingCost;
-  const remainingPayment = totalProductPrice - dpAmount;
+  const totalPricePerDay = summary?.totalPricePerDay ?? 0;
+  const totalDays = summary?.totalDays ?? 0;
+  const totalRentalAmount = summary?.totalRentalAmount ?? 0;
+  const downPayment = summary?.downPayment ?? 0;
+  const totalPayment = summary?.downPayment + shippingCost;
+  const remainingPayment = totalRentalAmount - totalPayment;
 
   return (
     <div className="border border-gray-300 rounded-lg p-4">
@@ -23,7 +24,7 @@ function OrderSummary({
 
         <div className="flex justify-between">
           <div>Total Harga Produk</div>
-          <div>Rp {formatPrice(totalProductPrice)}</div>
+          <div>Rp {formatPrice(totalRentalAmount)}</div>
         </div>
 
         <div className="border-b border-gray-300 pb-2 flex justify-between">
@@ -34,14 +35,14 @@ function OrderSummary({
         <div className="border-b border-gray-300 pb-2 flex justify-between font-medium">
           <div>
             <div>Subtotal sebelum pengiriman</div>
-            <div className="text-xs text-gray-500">(Rp 600.000 x 7 hari)</div>
+            <div className="text-xs text-gray-500">(Rp {formatPrice(totalPricePerDay)} x {totalDays} hari)</div>
             </div>
-          <div>Rp {formatPrice(totalProductPrice)}</div>
+          <div>Rp {formatPrice(totalRentalAmount)}</div>
         </div>
 
         <div className="flex justify-between">
           <div>Subtotal sebelum pengiriman (DP 50%)</div>
-          <div>Rp {formatPrice(dpAmount)}</div>
+          <div>Rp {formatPrice(downPayment)}</div>
         </div>
 
         <div className="border-b border-gray-300 pb-2 flex justify-between">

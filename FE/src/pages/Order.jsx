@@ -4,6 +4,8 @@ import Layout from "../layout/Layout";
 import CustomerForm from "../components/order/CustomerForm";
 import ShippingInfo from "../components/order/ShippingInfo";
 import OrderSummary from "../components/order/OrderSummary";
+import { useShipping } from "../hooks/useOrder";
+import { useOrderSummary } from "../hooks/useOrder";
 
 function Order() {
   const [form, setForm] = useState({
@@ -20,35 +22,36 @@ function Order() {
     phone: false,
   });
 
+  const { data: shippingInfo } = useShipping(form.city);
+  const { data: orderSummary } = useOrderSummary();
+
   return (
     <Layout>
-        <div className="pt-6 pb-2 text-sm flex items-center justify-between gap-2 border-b border-gray-300">
-          <div className="text-lg font-semibold">Pesanan</div>
+      <div className="pt-6 pb-2 text-sm flex items-center justify-between gap-2 border-b border-gray-300">
+        <div className="text-lg font-semibold">Pesanan</div>
 
-          <div className="text-sm text-gray-600">Tanggal Penyewaan :</div>
-        </div>
+        <div className="text-sm text-gray-600">Tanggal Penyewaan :</div>
+      </div>
 
-        <div className="grid grid-cols-2 gap-8 py-6">
-          <CustomerForm
-            form={form}
-            setForm={setForm}
-            touched={touched}
-            setTouched={setTouched}
-            onSave={() => console.log(form)}
+      <div className="grid grid-cols-2 gap-8 py-6">
+        <CustomerForm
+          form={form}
+          setForm={setForm}
+          touched={touched}
+          setTouched={setTouched}
+          onSave={() => console.log(form)}
+        />
+
+        <div className="flex flex-col gap-4">
+          <ShippingInfo shippingCost={shippingInfo?.shippingCost ?? 0} />
+
+          <OrderSummary
+            summary={orderSummary}
+            shippingCost={shippingInfo?.shippingCost ?? 0}
+            onConfirm={() => console.log("checkout")}
           />
-
-          <div className="flex flex-col gap-4">
-            <ShippingInfo shippingCost={120000} />
-
-            <OrderSummary
-              totalProducts={20}
-              totalProductPrice={4200000}
-              totalDays={7}
-              shippingCost={120000}
-              onConfirm={() => console.log("checkout")}
-            />
-          </div>
         </div>
+      </div>
     </Layout>
   );
 }

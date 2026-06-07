@@ -1,17 +1,35 @@
-export function useShipping() {
-  const [guestId, setGuestId] = useState("");
+import { useQuery } from "@tanstack/react-query";
+import { privateApi } from "../utils/axios.js";
 
-  useEffect(() => {
-    setGuestId(ensureGuestId());
-  }, []);
+export function useShipping(city) {
+  const guestId = localStorage.getItem("guestId");
 
   return useQuery({
-    queryKey: ["shipping-cost", guestId],
+    queryKey: ["shipping-cost", city],
+    queryFn: async () => {
+      const response = await privateApi.get("/orders/shipping", {
+        params: {
+          guestId,
+          city,
+        },
+      });
+
+      return response.data?.data ?? null;
+    },
+  });
+}
+
+export function useOrderSummary() {
+  const guestId = localStorage.getItem("guestId");
+  
+  return useQuery({
+    queryKey: ["order-summary", guestId],
     enabled: Boolean(guestId),
-    queryFn: async ({ guestId, city }) => {
-      const response = await privateApi.get("/orders/shipping/", {
-        guestId,
-        city,
+    queryFn: async () => {
+      const response = await privateApi.get("/orders/summary", {
+        params: {
+          guestId,
+        },
       });
 
       return response.data?.data ?? null;
