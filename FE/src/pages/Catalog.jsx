@@ -21,21 +21,27 @@ function Catalog() {
     handleSaveCalendar,
   } = useCatalogPage();
 
-  const {
-  products,
-  isFetching,
-  isError,
-} = useCatalogProducts(startDate, endDate);
+  const { products, isFetching, isError } = useCatalogProducts(
+    startDate,
+    endDate,
+  );
 
   const [selectedCategory, setSelectedCategory] = useState("Semua Kategori");
+  const [search, setSearch] = useState("");
 
   const filteredProducts = useMemo(() => {
-    if (selectedCategory === "Semua Kategori") {
-      return products;
-    }
+    return products.filter((product) => {
+      const matchCategory =
+        selectedCategory === "Semua Kategori" ||
+        product.category === selectedCategory;
 
-    return products.filter((product) => product.category === selectedCategory);
-  }, [products, selectedCategory]);
+      const matchSearch =
+        search.trim() === "" ||
+        product.name?.toLowerCase().includes(search.toLowerCase());
+
+      return matchCategory && matchSearch;
+    });
+  }, [products, selectedCategory, search]);
 
   return (
     <Layout className="bg-[#f3f3f3]">
@@ -56,6 +62,8 @@ function Catalog() {
         endDate={endDate}
         setStartDate={setStartDate}
         setEndDate={setEndDate}
+        search={search}
+        setSearch={setSearch}
       />
 
       {/* {isError && <div>Gagal memuat produk</div>} */}

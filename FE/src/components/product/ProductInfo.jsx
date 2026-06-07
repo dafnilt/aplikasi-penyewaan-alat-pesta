@@ -50,13 +50,11 @@ function ProductInfo({
 
       {/* Section 2 */}
       <div className="flex flex-col gap-2 text-sm">
-        <div className="flex items-center gap-2">
           <div>Tanggal :</div>
 
-          <div className="border border-[#B9B9B9] bg-[#F5F5F5] px-3 py-0.5 rounded-xl">
+          <div className="w-fit border border-[#B9B9B9] bg-[#F5F5F5] px-3 py-0.5 rounded-xl">
             {formatDateTime(startDate)} - {formatDateTime(endDate)}
           </div>
-        </div>
 
         {variantTypes.map((variantType) => (
           <div key={variantType.idVariant} className="flex flex-col gap-2 pt-4">
