@@ -7,14 +7,32 @@ import {
   Button,
 } from "@mui/material";
 import { useState } from "react";
+import { useChangeStatusOrder } from "../hooks/useChangeStatusOrder";
+import { useEffect } from "react";
 
-function ChangeStatusOrderModal({ open, onClose, orderId, currentStatus, onSave }) {
+function ChangeStatusOrderModal({ open, onClose, orderId, currentStatus, onSuccess }) {
   const [status, setStatus] = useState(currentStatus || "");
+  const [loading, setLoading] = useState(false);
 
-  const handleSave = () => {
-    onSave(status);
-    onClose();
+  useEffect(() => {
+    setStatus(currentStatus || "");
+  }, [currentStatus]);
+
+  const handleSave = async () => {
+    try {
+      setLoading(true);
+      await useChangeStatusOrder(orderId, status);
+      if (onSuccess) {
+        onSuccess();
+      }
+      onClose();
+    } catch (error) {
+      console.error("Gagal mengubah status pesanan:", error);
+    } finally {
+      setLoading(false);
+    }
   };
+
 
   return (
       <Dialog
@@ -54,10 +72,10 @@ function ChangeStatusOrderModal({ open, onClose, orderId, currentStatus, onSave 
               height: "40px",
             }}
           >
-            <MenuItem value="Pending Payment">Belum Bayar</MenuItem>
-            <MenuItem value="Down Payment 50%">Sudah bayar 50%</MenuItem>
-            <MenuItem value="Fully Paid">Sudah bayar lunas</MenuItem>
-            <MenuItem value="Completed">Completed</MenuItem>
+            <MenuItem value="1">Belum Bayar</MenuItem>
+            <MenuItem value="2">Sudah bayar 50%</MenuItem>
+            <MenuItem value="3">Sudah bayar lunas</MenuItem>
+            <MenuItem value="4">Completed</MenuItem>
           </Select>
         </FormControl>
 
@@ -83,6 +101,7 @@ function ChangeStatusOrderModal({ open, onClose, orderId, currentStatus, onSave 
           <Button
             variant="contained"
             onClick={handleSave}
+            disabled={loading}
             sx={{
               backgroundColor: "#72B957",
               borderRadius: "999px",
@@ -95,7 +114,7 @@ function ChangeStatusOrderModal({ open, onClose, orderId, currentStatus, onSave 
               },
             }}
           >
-            Simpan
+            {loading ? "Menyimpan..." : "Simpan"}
           </Button>
         </div>
       </DialogContent>

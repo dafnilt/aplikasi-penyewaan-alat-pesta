@@ -25,10 +25,6 @@ function OrderList() {
     setOpenStatusModal(true);
   };
 
-  const handleSaveStatus = (newStatus) => {
-    console.log("Status baru:", newStatus);
-  };
-
   const handleDetailOrder = async (orderId) => {
     try {
       navigate(`/orders/${orderId}`);
@@ -92,9 +88,9 @@ function OrderList() {
     },
   ];
 
-  useEffect(() => {
-    const fetchOrders = async () => {
+  const fetchOrders = async () => {
       try {
+        setLoading(true);
         const response = await useOrderPage();
         setRows(response.data);
       } catch (error) {
@@ -104,6 +100,7 @@ function OrderList() {
       }
     };
 
+  useEffect(() => {
     fetchOrders();
   }, []);
 
@@ -136,7 +133,7 @@ function OrderList() {
       onClose={() => setOpenStatusModal(false)}
       orderId={selectedOrder?.idOrder}
       currentStatus={selectedOrder?.status}
-      onSave={handleSaveStatus}
+      onSuccess={fetchOrders}
     />
     </LayoutAdmin>
   );
