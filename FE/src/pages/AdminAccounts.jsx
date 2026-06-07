@@ -7,10 +7,19 @@ import { getStatusColor} from "../utils/getStatusColor";
 import IconButton from "@mui/material/IconButton";
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import Button from "@mui/material/Button";
+import AddIcon from '@mui/icons-material/Add';
+import AddAdminModal from "../components/AddAdminModal";
 
 function AdminAccounts() {
-    const [rows, setRows] = useState([])
+    const [rows, setRows] = useState([]);
+    const [openAddModal, setOpenAddModal] = useState(false);
     const [loading, setLoading] = useState(false);
+
+    const handleOpenAddModal = () => {
+        setOpenAddModal(true);
+    };
+
     const columns = [
         { id: "no", label:"No.", 
             render: (_, __, index) => index + 1 },
@@ -78,13 +87,34 @@ function AdminAccounts() {
     return (
         <LayoutAdmin className = "bg-[#F3F3F3] min-h-screen">
             <div className="text-sm font-semibold text-[#1f1f1f] mb-6">
-                Daftar Akun Admin
+                <span>Daftar Admin</span>
+                <span className="float-right">
+                    <Button 
+                        variant="contained" 
+                        disableElevation
+                        size="small"
+                        sx={{
+                            backgroundColor: "#72B957",
+                            textTransform: "none",
+                            fontSize: "14px"
+                        }}
+                        startIcon={<AddIcon />}
+                        onClick={() => handleOpenAddModal()}
+                    >
+                        Tambah Admin
+                    </Button>
+                </span>
             </div>
             <SortableTable
                 columns={columns}
                 rows={rows}
                 defaultSort={{ columnId: "username", direction: "asc" }}
                 emptyMessage="Tidak ada akun admin yang tersedia."
+            />
+            <AddAdminModal
+                open={openAddModal}
+                onClose={() => setOpenAddModal(false)}
+                onSuccess={fetchAdminAccounts}
             />
         </LayoutAdmin>        
     )
