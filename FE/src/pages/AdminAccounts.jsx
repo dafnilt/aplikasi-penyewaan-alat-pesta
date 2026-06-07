@@ -10,14 +10,22 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import Button from "@mui/material/Button";
 import AddIcon from '@mui/icons-material/Add';
 import AddAdminModal from "../components/AddAdminModal";
+import ChangeAdminModal from "../components/ChangeAdminModal";
 
 function AdminAccounts() {
     const [rows, setRows] = useState([]);
     const [openAddModal, setOpenAddModal] = useState(false);
+    const [openChangeModal, setOpenChangeModal] = useState(false);
+    const [selectedAdmin, setSelectedAdmin] = useState(null);
     const [loading, setLoading] = useState(false);
 
     const handleOpenAddModal = () => {
         setOpenAddModal(true);
+    };
+
+    const handleOpenChangeModal = (admin) => {
+        setSelectedAdmin(admin);
+        setOpenChangeModal(true);
     };
 
     const columns = [
@@ -44,6 +52,7 @@ function AdminAccounts() {
                     <IconButton
                         size="small"
                         color="success"
+                        onClick={() => handleOpenChangeModal(row)}
                     >
                         <EditIcon fontSize="small" />
                     </IconButton>
@@ -116,6 +125,12 @@ function AdminAccounts() {
                 onClose={() => setOpenAddModal(false)}
                 onSuccess={fetchAdminAccounts}
             />
+            <ChangeAdminModal
+                open={openChangeModal}
+                onClose={() => setOpenChangeModal(false)}
+                onSuccess={fetchAdminAccounts}
+                adminData={selectedAdmin}
+            />    
         </LayoutAdmin>        
     )
 }

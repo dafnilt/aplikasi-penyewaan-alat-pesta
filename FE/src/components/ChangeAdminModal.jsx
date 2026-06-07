@@ -5,27 +5,32 @@ import {
   TextField,
   Checkbox,
 } from "@mui/material";
-import { useState } from "react";
-import { useAddAdmin } from "../hooks/useAddAdmin";
+import { useEffect, useState } from "react";
+import { useChangeAdmin } from "../hooks/useChangeAdmin";
 
-function AddAdminModal ({ open, onClose, onSuccess }) {
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
+function ChangeAdminModal ({ open, onClose, onSuccess, adminData }) {
+    const [id, setId] = useState("");
     const [fullName, setFullName] = useState("");
     const [isActive, setIsActive] = useState(true);
     const [loading, setLoading] = useState(false);
-    const addAdmin = useAddAdmin;
+    const changeAdmin = useChangeAdmin;
+
+    useEffect(() => {
+        setId(adminData?.id || "");
+        setFullName(adminData?.fullName || "");
+        setIsActive(adminData?.isActive || false);
+    }, [adminData]);
 
     const handleSave = async () => {
-        if (!username || !password || !fullName) return;
+        if (!id || !fullName) return;
 
         try {
             setLoading(true);
-            await addAdmin(username, password, fullName, isActive);
+            await changeAdmin(id, fullName, isActive);
             onSuccess();
             onClose();
         } catch (error) {
-            console.error("Gagal menambahkan admin:", error.response?.data || error);
+            console.error("Gagal mengubah admin:", error.response?.data || error);
         } finally {
             setLoading(false);
         }
@@ -48,7 +53,7 @@ function AddAdminModal ({ open, onClose, onSuccess }) {
         >
             <DialogContent>
                 <div className="text-center text-base font-medium mb-6">
-                    Tambah Admin
+                    Ubah Admin
                 </div>
                 <div className="border-t border-gray-500 mb-10" />
                 <div className="space-y-3 max-w-[430px] mx-auto">
@@ -58,37 +63,6 @@ function AddAdminModal ({ open, onClose, onSuccess }) {
                       size="small"
                       value={fullName}
                       onChange={(e) => setFullName(e.target.value)}
-                      sx={{
-                        "& .MuiOutlinedInput-root": {
-                          borderRadius: "999px",
-                          height: "28px",
-                        },
-                      }}
-                    />
-                  </div>
-
-                  <div className="grid grid-cols-[90px_1fr] items-center gap-4">
-                    <label>Username:</label>
-                    <TextField
-                      size="small"
-                      value={username}
-                      onChange={(e) => setUsername(e.target.value)}
-                      sx={{
-                        "& .MuiOutlinedInput-root": {
-                          borderRadius: "999px",
-                          height: "28px",
-                        },
-                      }}
-                    />
-                  </div>
-
-                  <div className="grid grid-cols-[90px_1fr] items-center gap-4">
-                    <label>Password:</label>
-                    <TextField
-                      size="small"
-                      type="password"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
                       sx={{
                         "& .MuiOutlinedInput-root": {
                           borderRadius: "999px",
@@ -155,4 +129,4 @@ function AddAdminModal ({ open, onClose, onSuccess }) {
     )
 }
 
-export default AddAdminModal;
+export default ChangeAdminModal;
