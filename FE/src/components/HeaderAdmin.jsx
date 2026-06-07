@@ -9,7 +9,7 @@ function HeaderAdmin({ isSidebarOpen }) {
 	return (
 		<header
             className={`
-                sticky top-0 bg-white border-b border-gray-200 flex items-center justify-between
+                sticky top-0 z-[8000] bg-white border-b border-gray-200 flex items-center justify-between
                 pr-4 py-3 shadow-sm transition-all duration-300
             `}
         >

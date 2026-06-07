@@ -22,7 +22,7 @@ function NavbarAdmin({ isOpen, setIsOpen }) {
 
 	return (
 		<>
-			<div className="fixed top-2 left-1 z-50">
+			<div className="fixed top-2 left-1 z-[10000]">
 				<IconButton
 					onClick={() => setIsOpen(!isOpen)}
 					sx={{
@@ -38,7 +38,7 @@ function NavbarAdmin({ isOpen, setIsOpen }) {
 
 			<aside
 				className={`
-					h-screen sticky top-0 bg-white shadow-md transition-all duration-300 overflow-hidden
+					h-screen sticky top-0 z-[9000] bg-white shadow-md transition-all duration-300 overflow-hidden
 					${isOpen ? "w-[200px]" : "w-0"}
 				`}
 			>

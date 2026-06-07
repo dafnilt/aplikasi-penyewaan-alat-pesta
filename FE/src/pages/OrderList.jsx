@@ -3,9 +3,10 @@ import { useNavigate } from "react-router-dom";
 import Skeleton from "@mui/material/Skeleton";
 import IconButton from "@mui/material/IconButton";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
+import PaymentsIcon from '@mui/icons-material/Payments';
 import { useOrderPage } from "../hooks/useOrderPage";
-import { useOrderDetail } from "../hooks/useOrderDetail";
 import LayoutAdmin from "../layout/LayoutAdmin";
+import ChangeStatusOrderModal from "../components/ChangeStatusOrderModal";
 import SortableTable from "../components/SortableTable";
 import { getStatusColor } from "../utils/getStatusColor";
 import { getStatusText } from "../utils/getStatusText";
@@ -16,10 +17,20 @@ function OrderList() {
   const [rows, setRows] = useState([]);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
+  const [openStatusModal, setOpenStatusModal] = useState(false);
+  const [selectedOrder, setSelectedOrder] = useState(null);
+
+  const handleOpenStatusModal = (row) => {
+    setSelectedOrder(row);
+    setOpenStatusModal(true);
+  };
+
+  const handleSaveStatus = (newStatus) => {
+    console.log("Status baru:", newStatus);
+  };
 
   const handleDetailOrder = async (orderId) => {
     try {
-      const response = await useOrderDetail(orderId);
       navigate(`/orders/${orderId}`);
     } catch (error) {
       console.error("Gagal mengambil detail order:", error);
@@ -61,13 +72,22 @@ function OrderList() {
       id: "action",
       label: "Aksi",
       render: (_, row) => (
-        <IconButton
-          size="small"
-          color="primary"
-          onClick={() => handleDetailOrder(row.idOrder)}
-        >
-          <InfoOutlinedIcon fontSize="small" />
-        </IconButton>
+        <div className="flex items-center gap-1">
+          <IconButton
+            size="small"
+            color="success"
+            onClick={() => handleOpenStatusModal(row)}
+          >
+            <PaymentsIcon fontSize="small" />
+          </IconButton>
+          <IconButton
+            size="small"
+            color="primary"
+            onClick={() => handleDetailOrder(row.idOrder)}
+          >
+            <InfoOutlinedIcon fontSize="small" />
+          </IconButton>
+        </div>
       ),
     },
   ];
@@ -111,6 +131,13 @@ function OrderList() {
           emptyMessage="Belum ada data pesanan"
         />
       </div>
+    <ChangeStatusOrderModal
+      open={openStatusModal}
+      onClose={() => setOpenStatusModal(false)}
+      orderId={selectedOrder?.idOrder}
+      currentStatus={selectedOrder?.status}
+      onSave={handleSaveStatus}
+    />
     </LayoutAdmin>
   );
 }
