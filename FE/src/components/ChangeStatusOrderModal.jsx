@@ -6,50 +6,76 @@ import {
   MenuItem,
   Button,
 } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useChangeStatusOrder } from "../hooks/useChangeStatusOrder";
-import { useEffect } from "react";
+
+const statusIdMap = {
+  "Pending Payment": "1",
+  "Down Payment 50%": "2",
+  "Fully Paid": "3",
+  "Completed": "4",
+};
+
+const statusOptionsByCurrentStatus = {
+  "Pending Payment": [
+    { value: "2", label: "Sudah bayar 50%" },
+  ],
+  "Down Payment 50%": [
+    { value: "1", label: "Belum bayar" },
+    { value: "3", label: "Sudah bayar lunas" },
+  ],
+  "Fully Paid": [
+    { value: "2", label: "Sudah bayar 50%" },
+    { value: "4", label: "Completed" },
+  ],
+  "Completed": [
+    { value: "3", label: "Sudah bayar lunas" },
+  ],
+};
 
 function ChangeStatusOrderModal({ open, onClose, orderId, currentStatus, onSuccess }) {
-  const [status, setStatus] = useState(currentStatus || "");
+  const [statusId, setStatusId] = useState("");
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    setStatus(currentStatus || "");
-  }, [currentStatus]);
+    setStatusId("");
+  }, [currentStatus, open]);
+
+  const changeStatusOrder = useChangeStatusOrder;
+
+  const options = statusOptionsByCurrentStatus[currentStatus] || [];
 
   const handleSave = async () => {
+    if (!statusId) return;
+
     try {
       setLoading(true);
-      await useChangeStatusOrder(orderId, status);
-      if (onSuccess) {
-        onSuccess();
-      }
+      await changeStatusOrder(orderId, statusId);
+      onSuccess();
       onClose();
     } catch (error) {
-      console.error("Gagal mengubah status pesanan:", error);
+      console.error("Gagal mengubah status:", error.response?.data || error);
     } finally {
       setLoading(false);
     }
   };
 
-
   return (
-      <Dialog
-        open={open}
-        onClose={onClose}
-        slotProps={{
-          paper: {
-            sx: {
-              borderRadius: "30px",
-              width: "450px",
-              maxWidth: "95%",
-              px: 3,
-              py: 2,
-            },
+    <Dialog
+      open={open}
+      onClose={onClose}
+      slotProps={{
+        paper: {
+          sx: {
+            borderRadius: "30px",
+            width: "450px",
+            maxWidth: "95%",
+            px: 3,
+            py: 2,
           },
-        }}
-      >
+        },
+      }}
+    >
       <DialogContent>
         <div className="text-center text-base font-medium mb-6">
           Ganti status pesanan
@@ -59,23 +85,29 @@ function ChangeStatusOrderModal({ open, onClose, orderId, currentStatus, onSucce
 
         <div className="text-center text-sm mb-4">
           <div>ID pesanan: {orderId}</div>
+          <div>Status saat ini: {currentStatus}</div>
           <div>Ganti status pembayaran ke:</div>
         </div>
 
         <FormControl fullWidth size="small">
           <Select
-            value={status}
-            onChange={(e) => setStatus(e.target.value)}
+            value={statusId}
+            onChange={(e) => setStatusId(e.target.value)}
             displayEmpty
             sx={{
               borderRadius: "10px",
               height: "40px",
             }}
           >
-            <MenuItem value="1">Belum Bayar</MenuItem>
-            <MenuItem value="2">Sudah bayar 50%</MenuItem>
-            <MenuItem value="3">Sudah bayar lunas</MenuItem>
-            <MenuItem value="4">Completed</MenuItem>
+            <MenuItem value="" disabled>
+              Pilih status baru
+            </MenuItem>
+
+            {options.map((option) => (
+              <MenuItem key={option.value} value={option.value}>
+                {option.label}
+              </MenuItem>
+            ))}
           </Select>
         </FormControl>
 
@@ -83,6 +115,7 @@ function ChangeStatusOrderModal({ open, onClose, orderId, currentStatus, onSucce
           <Button
             variant="contained"
             onClick={onClose}
+            disabled={loading}
             sx={{
               backgroundColor: "#2B2B2B",
               borderRadius: "999px",
@@ -101,7 +134,7 @@ function ChangeStatusOrderModal({ open, onClose, orderId, currentStatus, onSucce
           <Button
             variant="contained"
             onClick={handleSave}
-            disabled={loading}
+            disabled={loading || !statusId}
             sx={{
               backgroundColor: "#72B957",
               borderRadius: "999px",
