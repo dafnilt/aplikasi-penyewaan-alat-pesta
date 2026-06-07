@@ -11,11 +11,13 @@ import Button from "@mui/material/Button";
 import AddIcon from '@mui/icons-material/Add';
 import AddAdminModal from "../components/AddAdminModal";
 import ChangeAdminModal from "../components/ChangeAdminModal";
+import DeleteAdminModal from "../components/DeleteAdminModal";
 
 function AdminAccounts() {
     const [rows, setRows] = useState([]);
     const [openAddModal, setOpenAddModal] = useState(false);
     const [openChangeModal, setOpenChangeModal] = useState(false);
+    const [openDeleteModal, setOpenDeleteModal] = useState(false);
     const [selectedAdmin, setSelectedAdmin] = useState(null);
     const [loading, setLoading] = useState(false);
 
@@ -26,6 +28,11 @@ function AdminAccounts() {
     const handleOpenChangeModal = (admin) => {
         setSelectedAdmin(admin);
         setOpenChangeModal(true);
+    };
+
+    const handleOpenDeleteModal = (admin) => {
+        setSelectedAdmin(admin);
+        setOpenDeleteModal(true);
     };
 
     const columns = [
@@ -59,6 +66,7 @@ function AdminAccounts() {
                     <IconButton
                         size="small"
                         color="error"
+                        onClick={() => handleOpenDeleteModal(row)}
                     >
                         <DeleteIcon fontSize="small" />
                     </IconButton>
@@ -130,7 +138,13 @@ function AdminAccounts() {
                 onClose={() => setOpenChangeModal(false)}
                 onSuccess={fetchAdminAccounts}
                 adminData={selectedAdmin}
-            />    
+            /> 
+            <DeleteAdminModal
+                open={openDeleteModal}
+                onClose={() => setOpenDeleteModal(false)}
+                onSuccess={fetchAdminAccounts}
+                adminData={selectedAdmin}
+             />   
         </LayoutAdmin>        
     )
 }
