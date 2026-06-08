@@ -4,8 +4,6 @@ import { formatApiDateTime } from "../utils/formatApiDateTime.jsx";
 
 export function useCatalogProducts(startDate, endDate) {
   const guestId = localStorage.getItem("guestId") || "";
-  console.log("startDate", startDate);
-  console.log("endDate", endDate);
   const {
     data: products = [],
     isFetching,

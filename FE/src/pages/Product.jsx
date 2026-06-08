@@ -6,7 +6,7 @@ import ProductInfo from "../components/product/ProductInfo";
 import ProductSummary from "../components/product/ProductSummary";
 import UpsellModal from "../components/product/UpsellModal";
 
-import { useAddToCart } from "../hooks/useAddToCart";
+import { useAddToCart } from "../hooks/useCart";
 import { useProductPage } from "../hooks/useProductPage";
 import { useProductDetail } from "../hooks/useProductDetail";
 import { getTotalDays } from "../utils/getTotalDays";
@@ -30,7 +30,7 @@ function Product() {
     endDate,
   });
 
-  const { mutateAsync: addToCart, isPending: isAddingToCart } = useAddToCart();
+  const { mutateAsync: addToCart, isPending: isAddingToCart } = useAddToCart(startDate, endDate);
   const {
     mutateAsync: fetchUpsellRecommendations,
     isPending: isFetchingUpsell,

@@ -1,5 +1,30 @@
 import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
 import { privateApi } from "../utils/axios.js";
+import { formatApiDateTime } from "../utils/formatApiDateTime.jsx";
+
+export function useAddToCart() {
+  return useMutation({
+    mutationFn: async ({
+      guestId,
+      idProduct,
+      combinationId,
+      quantity,
+      startDate,
+      endDate,
+    }) => {
+      const response = await privateApi.post("/carts", {
+        guestId,
+        idProduct,
+        combinationId,
+        quantity,
+        startDate: formatApiDateTime(startDate),
+        endDate: formatApiDateTime(endDate),
+      });
+
+      return response.data?.data ?? response.data ?? null;
+    },
+  });
+}
 
 export function useCartDetail() {
   const guestId = localStorage.getItem("guestId");
