@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { privateApi } from "../utils/axios.js";
+import { useMutation } from "@tanstack/react-query";
 
 export function useShipping(city) {
   const guestId = localStorage.getItem("guestId");
@@ -21,7 +22,7 @@ export function useShipping(city) {
 
 export function useOrderSummary() {
   const guestId = localStorage.getItem("guestId");
-  
+
   return useQuery({
     queryKey: ["order-summary", guestId],
     enabled: Boolean(guestId),
@@ -30,6 +31,22 @@ export function useOrderSummary() {
         params: {
           guestId,
         },
+      });
+
+      return response.data?.data ?? null;
+    },
+  });
+}
+
+export function useCheckout() {
+  return useMutation({
+    mutationFn: async ({ name, address, city, phone }) => {
+      const response = await privateApi.post("/orders", {
+        guestId: localStorage.getItem("guestId"),
+        recipientName: name,
+        phoneNumber: `0${phone}`,
+        shippingAddress: address,
+        city,
       });
 
       return response.data?.data ?? null;

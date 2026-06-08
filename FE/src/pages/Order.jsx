@@ -4,10 +4,12 @@ import Layout from "../layout/Layout";
 import CustomerForm from "../components/order/CustomerForm";
 import ShippingInfo from "../components/order/ShippingInfo";
 import OrderSummary from "../components/order/OrderSummary";
-import { useShipping } from "../hooks/useOrder";
-import { useOrderSummary } from "../hooks/useOrder";
+import { useShipping, useCheckout, useOrderSummary } from "../hooks/useOrder";
+import { useNavigate } from "react-router-dom";
 
 function Order() {
+  const navigate = useNavigate();
+
   const [form, setForm] = useState({
     name: "",
     address: "",
@@ -22,8 +24,29 @@ function Order() {
     phone: false,
   });
 
+  const handleConfirmOrder = () => {
+    setTouched({
+      name: true,
+      address: true,
+      city: true,
+      phone: true,
+    });
+
+    const isValid =
+      form.name.trim() && form.address.trim() && form.city && form.phone;
+
+    if (!isValid) return;
+
+    checkout(form, {
+      onSuccess: () => {
+        navigate("/payment");
+      },
+    });
+  };
+  
   const { data: shippingInfo } = useShipping(form.city);
   const { data: orderSummary } = useOrderSummary();
+  const { mutate: checkout, isPending } = useCheckout();
 
   return (
     <Layout>
@@ -48,7 +71,7 @@ function Order() {
           <OrderSummary
             summary={orderSummary}
             shippingCost={shippingInfo?.shippingCost ?? 0}
-            onConfirm={() => console.log("checkout")}
+            onConfirm={handleConfirmOrder}
           />
         </div>
       </div>

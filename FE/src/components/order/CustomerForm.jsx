@@ -159,7 +159,7 @@ function CustomerForm({ form, setForm, touched, setTouched, onSave }) {
         </div>
       </div>
 
-      <div className="mt-2 flex justify-end">
+      {/* <div className="mt-2 flex justify-end">
         <button
           type="button"
           onClick={onSave}
@@ -167,7 +167,7 @@ function CustomerForm({ form, setForm, touched, setTouched, onSave }) {
         >
           Simpan
         </button>
-      </div>
+      </div> */}
     </div>
   );
 }

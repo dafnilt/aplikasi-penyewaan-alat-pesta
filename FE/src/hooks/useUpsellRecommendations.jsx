@@ -10,15 +10,8 @@ export function useUpsellRecommendations() {
       startDate,
       endDate,
       quantity,
-      guestId,
       isFromRecommendation,
     }) => {
-      await privateApi.post("/carts/upsert/", {
-        guestId,
-        startDate,
-        endDate,
-      });
-
       const response = await privateApi.post("/recommendations/upsell/", {
         idProduct,
         idVariantCombination,
