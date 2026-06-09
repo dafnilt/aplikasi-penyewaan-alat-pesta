@@ -18,6 +18,8 @@ import Portofolio from "./pages/Portofolio";
 import PortofolioDetail from "./pages/PortofolioDetail";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
+import ProtectedAdminRoute from "./guards/ProtectedAdminRoute";
+import ProtectedSuperAdminRoute from "./guards/ProtectedSuperAdminRoute";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -41,18 +43,29 @@ const router = createBrowserRouter([
     path: "/login",
     element: <Login />
   },
-  {
-    path: "/admin-accounts",
-    element: <AdminAccounts />
+ {
+  element: <ProtectedAdminRoute />,
+    children: [
+      {
+        path: "/orders",
+        element: <OrderList />,
+      },
+      {
+        path: "/orders/:orderId",
+        element: <OrderDetail />
+      },
+    ],
   },
   {
-    path: "/orders",
-    element: <OrderList />
+    element: <ProtectedSuperAdminRoute />,
+    children: [
+      {
+        path: "/admin-accounts",
+        element: <AdminAccounts />,
+      },
+    ],
   },
-  {
-    path: "/orders/:orderId",
-    element: <OrderDetail />
-  },
+
   {
     path: "/about-us",
     element: <AboutUs />,
