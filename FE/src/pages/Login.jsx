@@ -31,20 +31,7 @@ function Login() {
         password,
       });
 
-      const accessToken = response?.access || response?.token || response?.accessToken;
-      const refreshToken = response?.refresh || response?.refreshToken;
-
-      if (accessToken) {
-        localStorage.setItem("accessToken", accessToken);
-      }
-
-      if (refreshToken) {
-        localStorage.setItem("refreshToken", refreshToken);
-      }
-
-      if (accessToken) {
-        navigate("/orders");
-      }
+      navigate("/orders");
 
       setSuccessMessage("Login berhasil.");
     } catch (error) {
