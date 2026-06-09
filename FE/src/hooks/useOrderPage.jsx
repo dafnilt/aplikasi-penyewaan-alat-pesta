@@ -1,13 +1,7 @@
-import { privateApi } from "../utils/axios";
+import { adminApi } from "../utils/axios";
 
 export const useOrderPage = async () => {
-  const token = localStorage.getItem("accessToken");
-
-  const response = await privateApi.get("/orders/", {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  const response = await adminApi.get("/orders/");
 
   return response.data;
 };

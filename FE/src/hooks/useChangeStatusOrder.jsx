@@ -1,18 +1,10 @@
-import { privateApi } from "../utils/axios";
+import { adminApi } from "../utils/axios";
 
 export const useChangeStatusOrder = async (orderId, statusId) => {
-  const token = localStorage.getItem("accessToken");
-
-  const response = await privateApi.patch(`/orders/`, 
+  const response = await adminApi.patch(`/orders/`, 
     { 
         orderId,
         statusId:Number(statusId),
-    },
-    {
-        headers: {
-
-            Authorization: `Bearer ${token}`,
-        },
     },
   );
 

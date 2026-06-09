@@ -1,17 +1,12 @@
-import { privateApi } from "../utils/axios";
+import { adminApi } from "../utils/axios";
 
 export const useDeleteAdmin = async (idAdmin) => {
-  const token = localStorage.getItem("accessToken");
-
-  const response = await privateApi.delete(
+  const response = await adminApi.delete(
     "/users/manage-admin/",
     {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
       data: {
         idAdmin,
-      },
+      }
     }
   );
 

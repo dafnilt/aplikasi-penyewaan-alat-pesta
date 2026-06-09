@@ -1,12 +1,6 @@
-import { privateApi } from "../utils/axios";
+import { adminApi } from "../utils/axios";
 
 export const useAdminList = async () => {
-    const token = localStorage.getItem("accessToken");
-
-    const response = await privateApi.get("/users/manage-admin/",{
-        headers: {
-            Authorization: `Bearer ${token}`,
-        },
-    });
+    const response = await adminApi.get("/users/manage-admin/");
     return response.data;
 };
