@@ -15,9 +15,10 @@ function SortableTable({
   columns = [],
   rows = [],
   defaultOrderBy = "",
+  defaultOrder = "asc",
   emptyMessage = "Belum ada data",
 }) {
-  const [order, setOrder] = React.useState("asc");
+  const [order, setOrder] = React.useState(defaultOrder);
   const [orderBy, setOrderBy] = React.useState(defaultOrderBy || columns[0]?.id);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -36,6 +37,15 @@ function SortableTable({
 
       if (valueA === null || valueA === undefined) return 1;
       if (valueB === null || valueB === undefined) return -1;
+
+      const dateA = new Date(valueA);
+      const dateB = new Date(valueB);
+
+      if (!isNaN(dateA) && !isNaN(dateB)) {
+        return order === "asc"
+          ? dateA - dateB
+          : dateB - dateA;
+      }
 
       if (typeof valueA === "number" && typeof valueB === "number") {
         return order === "asc" ? valueA - valueB : valueB - valueA;

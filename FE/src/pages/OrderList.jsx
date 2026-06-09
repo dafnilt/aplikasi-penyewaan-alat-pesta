@@ -19,10 +19,12 @@ function OrderList() {
   const [loading, setLoading] = useState(true);
   const [openStatusModal, setOpenStatusModal] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleOpenStatusModal = (row) => {
     setSelectedOrder(row);
     setOpenStatusModal(true);
+    setIsModalOpen(true);
   };
 
   const handleDetailOrder = async (orderId) => {
@@ -31,6 +33,11 @@ function OrderList() {
     } catch (error) {
       console.error("Gagal mengambil detail order:", error);
     }
+  };
+
+  const handleCloseStatusModal = () => {
+    setOpenStatusModal(false);
+    setIsModalOpen(false);
   };
 
   const columns = [
@@ -106,7 +113,7 @@ function OrderList() {
 
   if (loading) {
     return (
-      <LayoutAdmin className="bg-[#F3F3F3] min-h-screen">
+      <LayoutAdmin className="bg-[#F3F3F3] min-h-screen" isModalOpen={isModalOpen}>
         <div className="text-sm font-semibold text-[#1f1f1f] mb-6">
           Daftar Pesanan
         </div>
@@ -115,7 +122,7 @@ function OrderList() {
     );
   }
   return (
-    <LayoutAdmin className="bg-[#F3F3F3] min-h-screen">
+    <LayoutAdmin className="bg-[#F3F3F3] min-h-screen" isModalOpen={isModalOpen}>
       <div>
         <div className="text-sm font-semibold text-[#1f1f1f] mb-6">
           Daftar Pesanan
@@ -124,13 +131,14 @@ function OrderList() {
         <SortableTable
           columns={columns}
           rows={rows}
-          defaultOrderBy="createdAt"
+          defaultOrderBy="updatedAt"
+          defaultOrder="desc"
           emptyMessage="Belum ada data pesanan"
         />
       </div>
     <ChangeStatusOrderModal
       open={openStatusModal}
-      onClose={() => setOpenStatusModal(false)}
+      onClose={handleCloseStatusModal}
       orderId={selectedOrder?.idOrder}
       currentStatus={selectedOrder?.status}
       onSuccess={fetchOrders}
