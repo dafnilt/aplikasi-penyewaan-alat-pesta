@@ -20,20 +20,31 @@ function AdminAccounts() {
     const [openDeleteModal, setOpenDeleteModal] = useState(false);
     const [selectedAdmin, setSelectedAdmin] = useState(null);
     const [loading, setLoading] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const handleOpenAddModal = () => {
         setOpenAddModal(true);
+        setIsModalOpen(true);
     };
 
     const handleOpenChangeModal = (admin) => {
         setSelectedAdmin(admin);
         setOpenChangeModal(true);
+        setIsModalOpen(true);
     };
 
     const handleOpenDeleteModal = (admin) => {
         setSelectedAdmin(admin);
         setOpenDeleteModal(true);
+        setIsModalOpen(true);
     };
+
+    const handleCloseModal = () => {
+        setOpenAddModal(false);
+        setOpenChangeModal(false);
+        setOpenDeleteModal(false);
+        setIsModalOpen(false);
+    }
 
     const columns = [
         { id: "no", label:"No.", 
@@ -93,7 +104,7 @@ function AdminAccounts() {
 
     if (loading) {
         return (
-            <LayoutAdmin className = "bg-[#F3F3F3] min-h-screen">
+            <LayoutAdmin className = "bg-[#F3F3F3] min-h-screen" isModalOpen={isModalOpen}>
                 <div className="text-sm font-semibold text-[#1f1f1f] mb-6">
                     Daftar Akun Admin
                 </div>
@@ -102,7 +113,7 @@ function AdminAccounts() {
         )
     }
     return (
-        <LayoutAdmin className = "bg-[#F3F3F3] min-h-screen">
+        <LayoutAdmin className = "bg-[#F3F3F3] min-h-screen" isModalOpen={isModalOpen}>
             <div className="text-sm font-semibold text-[#1f1f1f] mb-6">
                 <span>Daftar Admin</span>
                 <span className="float-right">
@@ -130,18 +141,18 @@ function AdminAccounts() {
             />
             <AddAdminModal
                 open={openAddModal}
-                onClose={() => setOpenAddModal(false)}
+                onClose={() => handleCloseModal()}
                 onSuccess={fetchAdminAccounts}
             />
             <ChangeAdminModal
                 open={openChangeModal}
-                onClose={() => setOpenChangeModal(false)}
+                onClose={() => handleCloseModal()}
                 onSuccess={fetchAdminAccounts}
                 adminData={selectedAdmin}
             /> 
             <DeleteAdminModal
                 open={openDeleteModal}
-                onClose={() => setOpenDeleteModal(false)}
+                onClose={() => handleCloseModal()}
                 onSuccess={fetchAdminAccounts}
                 adminData={selectedAdmin}
              />   
