@@ -7,6 +7,7 @@ import { useCatalogPage } from "../hooks/useCatalogPage";
 import { useCatalogProducts } from "../hooks/useCatalogProducts";
 import { Skeleton } from "@mui/material";
 import CardSkeleton from "../components/catalog/CardSkeleton";
+import { Empty } from "antd";
 
 function Catalog() {
   const {
@@ -45,6 +46,8 @@ function Catalog() {
     });
   }, [products, selectedCategory, search]);
 
+  const isEmpty = !isFetching && filteredProducts.length === 0;
+
   return (
     <Layout className="bg-[#f3f3f3]">
       <CalendarModal
@@ -68,21 +71,29 @@ function Catalog() {
         setSearch={setSearch}
       />
 
-      {/* {isError && <div>Gagal memuat produk</div>} */}
-
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-        {isFetching
-          ? Array.from({ length: 10 }).map((_, index) => (
-              <CardSkeleton key={index} />
-            ))
-          : filteredProducts.map((product) => (
-              <ProductCard
-                key={product.id}
-                product={product}
-                requestParams={requestParams}
-              />
-            ))}
-      </div>
+      {isError ? (
+        <div className="flex justify-center items-center py-20">
+          <Empty description="Gagal memuat produk" />
+        </div>
+      ) : isEmpty ? (
+        <div className="flex justify-center items-center py-20">
+          <Empty description="Produk tidak ditemukan" />
+        </div>
+      ) : (
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+          {isFetching
+            ? Array.from({ length: 10 }).map((_, index) => (
+                <CardSkeleton key={index} />
+              ))
+            : filteredProducts.map((product) => (
+                <ProductCard
+                  key={product.id}
+                  product={product}
+                  requestParams={requestParams}
+                />
+              ))}
+        </div>
+      )}
     </Layout>
   );
 }

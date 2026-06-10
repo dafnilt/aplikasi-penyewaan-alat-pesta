@@ -1,11 +1,11 @@
 import { useState } from "react";
-
 import Layout from "../layout/Layout";
 import CustomerForm from "../components/order/CustomerForm";
 import ShippingInfo from "../components/order/ShippingInfo";
 import OrderSummary from "../components/order/OrderSummary";
 import { useShipping, useCheckout, useOrderSummary } from "../hooks/useOrder";
 import { useNavigate } from "react-router-dom";
+import { Empty, Skeleton } from "antd";
 
 function Order() {
   const navigate = useNavigate();
@@ -44,8 +44,18 @@ function Order() {
     });
   };
 
-  const { data: shippingInfo } = useShipping(form.city);
-  const { data: orderSummary } = useOrderSummary();
+  const {
+    data: shippingInfo,
+    isLoading: isShippingLoading,
+    isError: isShippingError,
+  } = useShipping(form.city);
+
+  const {
+    data: orderSummary,
+    isLoading: isSummaryLoading,
+    isError: isSummaryError,
+  } = useOrderSummary();
+
   const { mutate: checkout, isPending } = useCheckout();
 
   return (
@@ -68,12 +78,21 @@ function Order() {
         <div className="flex flex-col gap-4">
           <ShippingInfo shippingCost={shippingInfo?.shippingCost ?? 0} />
 
-          <OrderSummary
-            summary={summary}
-            shippingCost={shippingCost}
-            variant="order"
-            onConfirm={handleConfirmOrder}
-          />
+          {isSummaryLoading ? (
+            <Skeleton active paragraph={{ rows: 8 }} />
+          ) : isSummaryError ? (
+            <Empty
+              image={Empty.PRESENTED_IMAGE_SIMPLE}
+              description="Gagal memuat ringkasan pesanan"
+            />
+          ) : (
+            <OrderSummary
+              summary={orderSummary}
+              shippingCost={shippingInfo?.shippingCost ?? 0}
+              variant="order"
+              onConfirm={handleConfirmOrder}
+            />
+          )}
         </div>
       </div>
     </Layout>
