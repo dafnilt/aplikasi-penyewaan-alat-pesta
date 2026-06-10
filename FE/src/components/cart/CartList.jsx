@@ -115,7 +115,7 @@ function CartList({ items, setItems }) {
               qty={item.qty}
               onIncrease={() => changeQty(item.id, 1, item.stock)}
               onDecrease={() => changeQty(item.id, -1, item.stock)}
-              disableIncrease={item.qty >= item.stock}
+              disableIncrease={item.stock <= item.qty}
               disableDecrease={item.qty <= 1}
               onChange={(value) => {
                 const nextQty = Number(value);

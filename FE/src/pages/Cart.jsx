@@ -41,6 +41,10 @@ function Cart() {
     );
   }, [items]);
 
+  const hasStockIssue = items.some(
+    (item) => Number(item.quantity ?? 0) > Number(item.availableStock ?? 0),
+  );
+
   return (
     <Layout>
       <div className="py-4 text-[#2A2A2A]">
@@ -96,6 +100,7 @@ function Cart() {
             totalDays={totalDays}
             totalProducts={totalProducts}
             totalPrice={formatPrice(totalPrice)}
+            disabled={hasStockIssue}
           />
         </div>
       </div>

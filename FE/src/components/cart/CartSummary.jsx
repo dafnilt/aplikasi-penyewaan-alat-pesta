@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
-function CartSummary({ totalDays, totalProducts, totalPrice, onCheckout }) {
+function CartSummary({ totalDays, totalProducts, totalPrice, disabled }) {
   const navigate = useNavigate();
 
   return (
@@ -16,8 +16,15 @@ function CartSummary({ totalDays, totalProducts, totalPrice, onCheckout }) {
       </div>
 
       <button
-        onClick = {() => navigate("/order")}
-        className="rounded-full bg-[#74B559] px-8 py-3 text-white font-medium transition hover:bg-[#689f4f]"
+        disabled={disabled}
+        onClick={() => navigate("/order")}
+        className={`rounded-full px-8 py-3 text-white font-medium transition
+    ${
+      disabled
+        ? "bg-gray-400 cursor-not-allowed"
+        : "bg-[#74B559] hover:bg-[#689f4f]"
+    }
+  `}
       >
         Lanjutkan ke pembayaran
       </button>
