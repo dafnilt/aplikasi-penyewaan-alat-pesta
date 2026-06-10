@@ -9,10 +9,18 @@ import { getTotalDays } from "../utils/getTotalDays";
 import { useCrossSellRecommendations } from "../hooks/useCrossSellRecommendations";
 import { useMemo, useState, useEffect } from "react";
 import { Empty, Skeleton } from "antd";
+import { useNavigate } from "react-router-dom";
 
 function Cart() {
-  const { data: cartData, isLoading, isError } = useCartDetail();
+  const { data: cartData, isLoading, isError, error } = useCartDetail();
   const { products: crossSellProducts } = useCrossSellRecommendations();
+
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (error?.response?.status === 400) {
+      navigate("/payment", { replace: true });
+    }
+  }, [error, navigate]);
 
   const totalDays = getTotalDays(cartData?.rentalStart, cartData?.rentalEnd);
 
@@ -44,7 +52,7 @@ function Cart() {
     (item) => Number(item.quantity ?? 0) > Number(item.availableStock ?? 0),
   );
 
-  if (isError) {
+  if (isError && error?.response?.status !== 400) {
     return (
       <Layout>
         <div className="py-40">
@@ -69,7 +77,7 @@ function Cart() {
           </div>
         )} */}
 
-        <div className="w-[40%] py-4 text-sm">
+        <div className="py-4 text-sm">
           {isLoading ? (
             <Skeleton.Input active size="small" block />
           ) : (
