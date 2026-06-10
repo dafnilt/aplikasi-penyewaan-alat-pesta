@@ -15,6 +15,7 @@ import Portofolio from "./pages/Portofolio";
 import PortofolioDetail from "./pages/PortofolioDetail";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
+import { ConfigProvider } from "antd";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -54,7 +55,7 @@ const router = createBrowserRouter([
     path: "/order",
     element: <Order />,
   },
-    {
+  {
     path: "/payment",
     element: <Payment />,
   },
@@ -78,8 +79,16 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} />
-    </QueryClientProvider>
+    <ConfigProvider
+      theme={{
+        token: {
+          colorPrimary: "#74B559",
+        },
+      }}
+    >
+      <QueryClientProvider client={queryClient}>
+        <RouterProvider router={router} />
+      </QueryClientProvider>
+    </ConfigProvider>
   </React.StrictMode>,
 );

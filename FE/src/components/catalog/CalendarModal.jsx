@@ -1,5 +1,6 @@
 import calenderIcon from "../../assets/icon/calender.svg";
-import DatePicker from "react-datepicker";
+import { DatePicker } from "antd";
+import dayjs from "dayjs";
 import "react-datepicker/dist/react-datepicker.css";
 
 function CalendarModal({
@@ -10,7 +11,6 @@ function CalendarModal({
   endDate,
   setStartDate,
   setEndDate,
-  isLoading = false,
 }) {
   if (!isOpen) return null;
 
@@ -28,38 +28,42 @@ function CalendarModal({
         </div>
 
         <div className="flex justify-center items-center gap-4">
-          <div className="border-2 border-[#74B559] rounded-lg px-4 py-2 flex items-center gap-3 bg-white">
-            <img src={calenderIcon} alt="Calendar" className="w-7" />
+          <div className="border-2 border-[#74B559] rounded-lg px-4 py-1 flex items-center gap-3 bg-white">
 
             <DatePicker
-              selected={startDate}
-              onChange={(date) => setStartDate(date)}
-              showTimeSelect
-              dateFormat="d MMMM yyyy, HH:mm"
-              placeholderText="Pilih Start Date"
-              className="outline-none bg-transparent text-md"
+              value={startDate ? dayjs(startDate) : null}
+              onChange={(date) => setStartDate(date?.toDate() ?? null)}
+              showTime
+              format="D MMMM YYYY, HH:mm"
+              placeholder="Pilih Start Date"
+              variant="borderless"
+              className="w-full"
             />
           </div>
         </div>
 
         <div className="flex items-center gap-4 my-14">
           <div className="h-[1px] bg-gray-300 flex-1"></div>
-          <div className="text-gray-400 text-xs">sampai dengan</div>
+          <div className="text-gray-400 text-sm">sampai dengan</div>
           <div className="h-[1px] bg-gray-300 flex-1"></div>
         </div>
 
         <div className="flex justify-center items-center gap-4">
-          <div className="border-2 border-[#74B559] rounded-lg px-4 py-2 flex items-center gap-3 bg-white">
-            <img src={calenderIcon} alt="Calendar" className="w-7" />
+          <div className="border-2 border-[#74B559] rounded-lg px-4 py-1 flex items-center gap-3 bg-white">
 
             <DatePicker
-              selected={endDate}
-              onChange={(date) => setEndDate(date)}
-              showTimeSelect
-              dateFormat="d MMMM yyyy, HH:mm"
-              placeholderText="Pilih End Date"
-              minDate={startDate}
-              className="outline-none bg-transparent text-md w-full"
+              value={endDate ? dayjs(endDate) : null}
+              onChange={(date) => setEndDate(date?.toDate() ?? null)}
+              showTime
+              format="D MMMM YYYY, HH:mm"
+              placeholder="Pilih End Date"
+              variant="borderless"
+              className="w-full"
+              disabledDate={(current) =>
+                startDate
+                  ? current && current < dayjs(startDate).startOf("day")
+                  : false
+              }
             />
           </div>
         </div>
@@ -67,10 +71,10 @@ function CalendarModal({
         <div className="flex justify-center mt-16">
           <button
             onClick={onSave}
-            disabled={isLoading || !startDate || !endDate}
-            className="bg-[#74B559] text-white text-lg font-medium px-16 py-2 rounded-xl disabled:cursor-not-allowed disabled:opacity-60"
+            disabled={!startDate || !endDate}
+            className="bg-[#74B559] text-white text-md font-medium px-12 py-2 rounded-xl disabled:cursor-not-allowed disabled:opacity-60"
           >
-            {isLoading ? "Memuat..." : "Simpan"}
+            Simpan
           </button>
         </div>
       </div>

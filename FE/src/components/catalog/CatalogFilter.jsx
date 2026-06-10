@@ -1,5 +1,6 @@
 import { useState } from "react";
-import DatePicker from "react-datepicker";
+import { DatePicker } from "antd";
+import dayjs from "dayjs";
 
 import filterIcon from "../../assets/icon/filter.svg";
 import calenderIcon from "../../assets/icon/calender.svg";
@@ -19,6 +20,8 @@ function CatalogFilter({
   const [isOpen, setIsOpen] = useState(false);
 
   const categoryList = ["Semua Kategori", "Tenda", "Kursi", "Meja"];
+
+  const { RangePicker } = DatePicker;
 
   return (
     <div className="flex items-center justify-between py-2">
@@ -90,20 +93,22 @@ function CatalogFilter({
 
         <div
           className="
-            flex items-center gap-2
-            rounded-full border border-gray-300
-            bg-white px-4
-            hover:border-[#74B559]
-            hover:bg-[#F8FCF6]
-            transition-all duration-200
-          "
+    flex items-center gap-2
+    rounded-full border border-gray-300
+    bg-white px-4
+    hover:border-[#74B559]
+    hover:bg-[#F8FCF6]
+    transition-all duration-200
+  "
         >
-          <img src={calenderIcon} alt="Calendar" className="w-4 h-4 shrink-0" />
-
-          <DatePicker
-            selected={startDate}
+          <RangePicker
+            value={[
+              startDate ? dayjs(startDate) : null,
+              endDate ? dayjs(endDate) : null,
+            ]}
             onChange={(dates) => {
-              const [start, end] = dates;
+              const start = dates?.[0]?.toDate() ?? null;
+              const end = dates?.[1]?.toDate() ?? null;
 
               setStartDate(start);
               setEndDate(end);
@@ -116,17 +121,14 @@ function CatalogFilter({
                 localStorage.setItem("lastEndDate", end.toISOString());
               }
             }}
-            startDate={startDate}
-            endDate={endDate}
-            selectsRange
-            showTimeSelect
-            dateFormat="dd MMM yyyy HH:mm"
-            className="
-              bg-transparent
-              outline-none
-              text-sm
-              min-w-[270px]
-            "
+            showTime={{
+              format: "HH:mm",
+            }}
+            format="DD MMM YYYY HH:mm"
+            placeholder={["Tanggal Mulai", "Tanggal Selesai"]}
+            allowClear={false}
+            variant="borderless"
+            className="border-none shadow-none"
           />
         </div>
       </div>
