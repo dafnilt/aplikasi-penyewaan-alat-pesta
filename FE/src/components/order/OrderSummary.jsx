@@ -1,10 +1,6 @@
 import { formatPrice } from "../../utils/formatPrice";
 
-function OrderSummary({
-  summary,
-  shippingCost,
-  onConfirm,
-}) {
+function OrderSummary({ summary, shippingCost, onConfirm, variant = "order" }) {
   const totalPricePerDay = summary?.totalPricePerDay ?? 0;
   const totalDays = summary?.totalDays ?? 0;
   const totalRentalAmount = summary?.totalRentalAmount ?? 0;
@@ -34,8 +30,10 @@ function OrderSummary({
         <div className="border-b border-gray-300 pb-2 flex justify-between font-medium">
           <div>
             <div>Subtotal sebelum pengiriman</div>
-            <div className="text-xs text-gray-500">(Rp {formatPrice(totalPricePerDay)} x {totalDays} hari)</div>
+            <div className="text-xs text-gray-500">
+              (Rp {formatPrice(totalPricePerDay)} x {totalDays} hari)
             </div>
+          </div>
           <div>Rp {formatPrice(totalRentalAmount)}</div>
         </div>
 
@@ -59,9 +57,7 @@ function OrderSummary({
 
         <div className="text-xs text-gray-700">
           Sisa pembayaran sebesar{" "}
-          <span className="font-semibold">
-            Rp {formatPrice(downPayment)}
-          </span>{" "}
+          <span className="font-semibold">Rp {formatPrice(downPayment)}</span>{" "}
           dilakukan setelah barang sudah Anda terima.
         </div>
 
@@ -69,9 +65,11 @@ function OrderSummary({
           <button
             type="button"
             onClick={onConfirm}
-            className="w-[60%] bg-[#7CB95B] hover:bg-[#6BA64C] text-lg text-white font-semibold rounded-full px-10 py-2 transition-colors"
+            className="w-[80%] bg-[#7CB95B] hover:bg-[#6BA64C] text-lg text-white font-semibold rounded-full px-10 py-2 transition-colors"
           >
-            Konfirmasi Pesanan
+            {variant === "payment"
+              ? "Upload Bukti Pembayaran"
+              : "Konfirmasi Pesanan"}
           </button>
         </div>
       </div>

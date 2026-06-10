@@ -43,7 +43,7 @@ function Order() {
       },
     });
   };
-  
+
   const { data: shippingInfo } = useShipping(form.city);
   const { data: orderSummary } = useOrderSummary();
   const { mutate: checkout, isPending } = useCheckout();
@@ -69,8 +69,9 @@ function Order() {
           <ShippingInfo shippingCost={shippingInfo?.shippingCost ?? 0} />
 
           <OrderSummary
-            summary={orderSummary}
-            shippingCost={shippingInfo?.shippingCost ?? 0}
+            summary={summary}
+            shippingCost={shippingCost}
+            variant="order"
             onConfirm={handleConfirmOrder}
           />
         </div>

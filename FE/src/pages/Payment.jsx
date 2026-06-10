@@ -4,13 +4,38 @@ import timerIcon from "../assets/icon/timer.svg";
 import briIcon from "../assets/icon/bri.svg";
 import PaymentInstruction from "../components/payment/PaymentInstruction";
 import { paymentInstructions } from "../utils/paymentInstructions";
+import { usePayment } from "../hooks/usePayment";
+import { formatDateTime } from "../utils/formatDateTime";
 
 function Payment() {
+  const { data: paymentData, isLoading, error } = usePayment();
+
+  if (!paymentData) return null;
+
+  const summary = {
+    totalPricePerDay:
+      paymentData.totalDays > 0
+        ? paymentData.totalRentalAmount / paymentData.totalDays
+        : 0,
+    totalDays: paymentData.totalDays,
+    totalRentalAmount: paymentData.totalRentalAmount,
+    downPayment: paymentData.totalRentalAmount * 0.5,
+  };
+
+  const handleConfirm = () => {
+    const orderId = paymentData.orderId;
+
+    const waLink = `https://wa.me/6281395892825?text=${encodeURIComponent(
+      `Saya akan mengirimkan bukti pembayaran id pesanan : ${orderId}`,
+    )}`;
+
+    window.open(waLink, "_blank");
+  };
   return (
     <Layout>
       <div className="pt-6 pb-2 text-sm flex items-center justify-between font-semibold gap-2 border-b border-gray-300">
         <div className="text-lg">Pembayaran</div>
-        <div className="text-sm">ID Pesanan :</div>
+        <div className="text-sm">ID Pesanan : {paymentData?.orderId}</div>
       </div>
 
       <div className="grid grid-cols-2 gap-8 py-6">
@@ -24,7 +49,9 @@ function Payment() {
               />
               <div>
                 <div className="text-sm text-gray-500">Transfer Sebelum</div>
-                <div className="text-lg font-semibold">28 Februari - 19.27</div>
+                <div className="text-lg font-semibold">
+                  {formatDateTime(paymentData?.paymentDeadline)}
+                </div>
               </div>
             </div>
           </div>
@@ -58,11 +85,10 @@ function Payment() {
         </div>
 
         <OrderSummary
-          totalProducts={20}
-          totalProductPrice={4200000}
-          totalDays={7}
-          shippingCost={120000}
-          onConfirm={() => console.log("checkout")}
+          summary={summary}
+          shippingCost={paymentData.shippingCost}
+          variant="payment"
+          onConfirm={handleConfirm}
         />
       </div>
     </Layout>
