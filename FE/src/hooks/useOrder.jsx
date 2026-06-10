@@ -41,7 +41,7 @@ export function useOrderSummary() {
 export function useCheckout() {
   return useMutation({
     mutationFn: async ({ name, address, city, phone }) => {
-      const response = await privateApi.post("/orders", {
+      const response = await privateApi.post("/orders/", {
         guestId: localStorage.getItem("guestId"),
         recipientName: name,
         phoneNumber: `0${phone}`,

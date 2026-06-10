@@ -11,6 +11,7 @@ import { useProductPage } from "../hooks/useProductPage";
 import { useProductDetail } from "../hooks/useProductDetail";
 import { getTotalDays } from "../utils/getTotalDays";
 import { useUpsellRecommendations } from "../hooks/useUpsellRecommendations";
+import ProductSkeleton from "../components/product/ProductSkeleton";
 
 const fallbackImages = [
   "/catalog/kursi/kursi-anak/foto-1.jpeg",
@@ -30,7 +31,10 @@ function Product() {
     endDate,
   });
 
-  const { mutateAsync: addToCart, isPending: isAddingToCart } = useAddToCart(startDate, endDate);
+  const { mutateAsync: addToCart, isPending: isAddingToCart } = useAddToCart(
+    startDate,
+    endDate,
+  );
   const {
     mutateAsync: fetchUpsellRecommendations,
     isPending: isFetchingUpsell,
@@ -47,6 +51,8 @@ function Product() {
     priceRange,
     unitPrice,
   } = productDetail || {};
+
+  const hasVariants = variantTypes.length > 0;
 
   const firstImage = thumbnail || images[0] || fallbackImages[0];
 
@@ -93,7 +99,10 @@ function Product() {
       combination.options.includes(optionId),
     );
   });
-  const availableStock = selectedVariantCombination?.stock ?? 0;
+
+  const availableStock = hasVariants
+    ? (selectedVariantCombination?.stock ?? 0)
+    : (productDetail?.availableStock ?? 0);
 
   const productPrice =
     selectedVariantCombination?.price ?? priceRange?.min ?? 0;
@@ -136,7 +145,11 @@ function Product() {
   };
 
   const handleOpenUpsellModal = async () => {
-    if (!productId || !selectedCombinationId) {
+    if (!productId) {
+      return;
+    }
+
+    if (hasVariants && !selectedCombinationId) {
       return;
     }
 
@@ -147,14 +160,19 @@ function Product() {
     }
 
     try {
-      const recommendations = await fetchUpsellRecommendations({
+      const payload = {
         idProduct: productId,
-        idVariantCombination: selectedCombinationId,
         startDate,
         endDate,
         quantity: qty,
         guestId,
-      });
+      };
+
+      if (selectedCombinationId) {
+        payload.idVariantCombination = selectedCombinationId;
+      }
+
+      const recommendations = await fetchUpsellRecommendations(payload);
 
       const recommendedProduct = recommendations?.[0] ?? null;
 
@@ -196,7 +214,11 @@ function Product() {
       localStorage.setItem("guestId", guestId);
     }
 
-    if (!productId || !selectedCombinationId) {
+    if (!productId) {
+      return;
+    }
+
+    if (hasVariants && !selectedCombinationId) {
       return;
     }
 
@@ -204,14 +226,19 @@ function Product() {
     setUpsellCartId("");
 
     try {
-      const response = await addToCart({
+      const payload = {
         guestId,
         idProduct: productId,
-        combinationId: selectedCombinationId,
         quantity: qty,
         startDate,
         endDate,
-      });
+      };
+
+      if (selectedCombinationId) {
+        payload.combinationId = selectedCombinationId;
+      }
+
+      const response = await addToCart(payload);
 
       if (response?.success) {
         setUpsellMessage(
@@ -225,11 +252,17 @@ function Product() {
     }
   };
 
+  if (isFetching) {
+    return (
+      <Layout>
+        <ProductSkeleton />
+      </Layout>
+    );
+  }
+
   return (
     <Layout>
       <div className="grid grid-cols-[1.2fr_2fr_1.2fr] gap-6 py-6">
-        {isFetching && <div>Loading...</div>}
-
         {isError && <div>Error mengambil data</div>}
 
         <ProductGallery
@@ -265,7 +298,9 @@ function Product() {
           totalDays={totalDays}
           subtotal={subtotal}
           onOpenUpsellModal={handleOpenUpsellModal}
-          canAddToCart={Boolean(productId && selectedCombinationId && qty > 0)}
+          canAddToCart={Boolean(
+            productId && qty > 0 && (!hasVariants || selectedCombinationId),
+          )}
         />
       </div>
 
@@ -274,7 +309,9 @@ function Product() {
         onClose={() => setOpenUpsellModal(false)}
         onAddToCart={handleAddToCart}
         isAddingToCart={isAddingToCart}
-        canAddToCart={Boolean(productId && selectedCombinationId && qty > 0)}
+        canAddToCart={Boolean(
+          productId && qty > 0 && (!hasVariants || selectedCombinationId),
+        )}
         upsellProduct={upsellProduct}
         startDate={startDate}
         endDate={endDate}

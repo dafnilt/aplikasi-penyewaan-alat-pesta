@@ -10,7 +10,6 @@ function OrderSummary({
   const totalRentalAmount = summary?.totalRentalAmount ?? 0;
   const downPayment = summary?.downPayment ?? 0;
   const totalPayment = summary?.downPayment + shippingCost;
-  const remainingPayment = totalRentalAmount - totalPayment;
 
   return (
     <div className="border border-gray-300 rounded-lg p-4">
@@ -61,7 +60,7 @@ function OrderSummary({
         <div className="text-xs text-gray-700">
           Sisa pembayaran sebesar{" "}
           <span className="font-semibold">
-            Rp {formatPrice(remainingPayment)}
+            Rp {formatPrice(downPayment)}
           </span>{" "}
           dilakukan setelah barang sudah Anda terima.
         </div>

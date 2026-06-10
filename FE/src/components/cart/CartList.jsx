@@ -8,6 +8,7 @@ import { useDeleteCartItem } from "../../hooks/useCart";
 function CartList({ items, setItems }) {
   const { mutate: updateCartItem } = useUpdateCartItem();
   const { mutate: deleteCartItem } = useDeleteCartItem();
+  const hasStockIssue = items.qty > items.stock;
 
   const matchesItemId = (item, id) => item.idCartItem === id;
 
@@ -68,13 +69,14 @@ function CartList({ items, setItems }) {
     });
   }, [items]);
 
-  const handleDelete = (idCartItem) => {
-    setItems((prev) => prev.filter((item) => item.idCartItem !== idCartItem));
-
-    deleteCartItem({
-      guestId: localStorage.getItem("guestId"),
-      idCartItem,
-    });
+  const handleDelete = async (id) => {
+    try {
+      await deleteCartItem({
+        idCartItem: id,
+      });
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -98,6 +100,12 @@ function CartList({ items, setItems }) {
               <div className="font-semibold pt-1">
                 Rp {formatPrice(item.price)}
               </div>
+              {item.qty > item.stock && (
+                <div className="text-xs text-red-600 font-medium">
+                  Stok tersisa {item.stock} item. Kurangi jumlah pesanan atau
+                  hapus produk dari keranjang.
+                </div>
+              )}
             </div>
           </div>
 

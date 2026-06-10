@@ -5,6 +5,8 @@ import CatalogFilter from "../components/catalog/CatalogFilter";
 import ProductCard from "../components/catalog/ProductCard";
 import { useCatalogPage } from "../hooks/useCatalogPage";
 import { useCatalogProducts } from "../hooks/useCatalogProducts";
+import { Skeleton } from "@mui/material";
+import CardSkeleton from "../components/catalog/CardSkeleton";
 
 function Catalog() {
   const {
@@ -69,13 +71,17 @@ function Catalog() {
       {/* {isError && <div>Gagal memuat produk</div>} */}
 
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-        {filteredProducts.map((product) => (
-          <ProductCard
-            key={product.id}
-            product={product}
-            requestParams={requestParams}
-          />
-        ))}
+        {isFetching
+          ? Array.from({ length: 10 }).map((_, index) => (
+              <CardSkeleton key={index} />
+            ))
+          : filteredProducts.map((product) => (
+              <ProductCard
+                key={product.id}
+                product={product}
+                requestParams={requestParams}
+              />
+            ))}
       </div>
     </Layout>
   );

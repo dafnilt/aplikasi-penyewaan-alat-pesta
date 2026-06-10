@@ -12,7 +12,7 @@ export function useAddToCart() {
       startDate,
       endDate,
     }) => {
-      const response = await privateApi.post("/carts", {
+      const response = await privateApi.post("/carts/", {
         guestId,
         idProduct,
         combinationId,
@@ -76,10 +76,14 @@ export function useDeleteCartItem() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async ({ guestId, idCartItem }) => {
+    mutationFn: async ({ idCartItem }) => {
+      const guestId = localStorage.getItem("guestId");
+
       const response = await privateApi.delete("/carts/", {
-        guestId,
-        idCartItem,
+        data: {
+          guestId,
+          idCartItem,
+        },
       });
 
       return response.data?.data;

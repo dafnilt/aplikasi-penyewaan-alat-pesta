@@ -4,9 +4,10 @@ import { navigateToProduct } from "../../utils/navigateToProduct";
 
 function ProductCard({ product, requestParams }) {
   const navigate = useNavigate();
+  const isAvailable = product.stock > 0;
 
   const handleNavigateProduct = () => {
-    if (!product.isAvailable) return;
+    if (!isAvailable) return;
 
     navigateToProduct({
       navigate,
@@ -21,13 +22,13 @@ function ProductCard({ product, requestParams }) {
   return (
     <button
       type="button"
-      disabled={!product.isAvailable}
+      disabled={!isAvailable}
       onClick={handleNavigateProduct}
       className={`
         relative bg-white border border-gray-200 rounded-2xl p-3 text-left
         transition
         ${
-          product.isAvailable
+          isAvailable
             ? "shadow-sm hover:shadow-md cursor-pointer"
             : "opacity-60 cursor-not-allowed"
         }
@@ -40,7 +41,7 @@ function ProductCard({ product, requestParams }) {
           className="w-full h-full object-cover"
         />
 
-        {!product.isAvailable && (
+        {!isAvailable && (
           <>
             <div className="absolute inset-0 bg-gray-500/40" />
 
