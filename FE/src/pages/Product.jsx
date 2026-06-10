@@ -12,6 +12,7 @@ import { useProductDetail } from "../hooks/useProductDetail";
 import { getTotalDays } from "../utils/getTotalDays";
 import { useUpsellRecommendations } from "../hooks/useUpsellRecommendations";
 import ProductSkeleton from "../components/product/ProductSkeleton";
+import { notification } from "antd";
 
 const fallbackImages = [
   "/catalog/kursi/kursi-anak/foto-1.jpeg",
@@ -240,14 +241,31 @@ function Product() {
 
       const response = await addToCart(payload);
 
-      if (response?.success) {
-        setUpsellMessage(
-          response.message || "Item berhasil ditambahkan ke keranjang.",
-        );
-        setUpsellCartId(response?.data?.cartId ?? "");
+      if (response?.cartId) {
+        setUpsellMessage("Item berhasil ditambahkan ke keranjang.");
+        setUpsellCartId(response.cartId);
+        notification.success({
+          message: "Produk berhasil ditambahkan ke keranjang",
+          placement: "topRight",
+          style: {
+            borderRadius: "16px",
+            border: "1px solid #74B559",
+            background: "#F8FCF6",
+          },
+        });
       }
     } catch (error) {
       setUpsellMessage("Gagal menambahkan item ke keranjang.");
+      notification.error({
+        message: error?.response?.data?.message,
+        placement: "topRight",
+        style: {
+          borderRadius: "16px",
+          border: "1px solid #FFCCC7",
+          background: "#FFF2F0",
+        },
+      });
+
       console.error("Gagal menambahkan produk ke keranjang", error);
     }
   };

@@ -116,7 +116,9 @@ function Cart() {
         ) : items.length > 0 ? (
           <CartList items={items} setItems={setItems} />
         ) : (
-          <Empty description="Keranjang kosong" />
+          <div className="py-10">
+            <Empty description="Keranjang kosong" />
+          </div>
         )}
 
         <div className="text-center text-md font-bold my-6">

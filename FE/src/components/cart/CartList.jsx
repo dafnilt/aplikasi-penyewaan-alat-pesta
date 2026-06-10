@@ -4,6 +4,7 @@ import { formatPrice } from "../../utils/formatPrice";
 import { useUpdateCartItem } from "../../hooks/useCart";
 import DeleteIcon from "../../assets/icon/delete.svg";
 import { useDeleteCartItem } from "../../hooks/useCart";
+import { notification } from "antd";
 
 function CartList({ items, setItems }) {
   const { mutate: updateCartItem } = useUpdateCartItem();
@@ -74,7 +75,27 @@ function CartList({ items, setItems }) {
       await deleteCartItem({
         idCartItem: id,
       });
+
+      notification.success({
+        message: "Item berhasil dihapus dari keranjang",
+        placement: "topRight",
+        style: {
+          borderRadius: "16px",
+          border: "1px solid #74B559",
+          background: "#F8FCF6",
+        },
+      });
     } catch (error) {
+      notification.error({
+        message: error?.response?.data?.message,
+        placement: "topRight",
+        style: {
+          borderRadius: "16px",
+          border: "1px solid #FFCCC7",
+          background: "#FFF2F0",
+        },
+      });
+
       console.error(error);
     }
   };

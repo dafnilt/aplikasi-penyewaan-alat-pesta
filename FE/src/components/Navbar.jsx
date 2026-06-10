@@ -73,7 +73,7 @@ function Navbar() {
   const catalogRegex = /\/catalog/;
 
   return (
-    <div className="bg-white fixed top-0 inset-x-0 z-[9999]">
+    <div className="bg-white fixed top-0 inset-x-0 z-50">
       <div className="h-[66px] max-w-screen-2xl mx-auto p-3 xl:border-b">
         <div className="h-full flex items-center justify-start">
           <img src={logo} className="h-10" alt="Logo Sewa Pesta Kita" />
