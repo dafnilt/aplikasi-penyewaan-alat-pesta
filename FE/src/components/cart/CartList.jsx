@@ -5,6 +5,7 @@ import { useUpdateCartItem } from "../../hooks/useCart";
 import DeleteIcon from "../../assets/icon/delete.svg";
 import { useDeleteCartItem } from "../../hooks/useCart";
 import { notification } from "antd";
+import EmptyImage from "../../assets/empty-image.svg";
 
 function CartList({ items, setItems }) {
   const { mutate: updateCartItem } = useUpdateCartItem();
@@ -57,8 +58,7 @@ function CartList({ items, setItems }) {
         category: item.category ?? "-",
         image:
           item.thumbnail ||
-          item.image ||
-          "/catalog/kursi/kursi-anak/foto-1.jpeg",
+          item.image || EmptyImage,
         qty,
         price,
         subtotal: qty * price,

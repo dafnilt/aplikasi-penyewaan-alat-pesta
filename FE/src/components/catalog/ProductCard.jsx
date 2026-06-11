@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { formatPrice } from "../../utils/formatPrice";
 import { navigateToProduct } from "../../utils/navigateToProduct";
+import EmptyImage from "../../assets/empty-image.svg";
 
 function ProductCard({ product, requestParams }) {
   const navigate = useNavigate();
@@ -36,7 +37,7 @@ function ProductCard({ product, requestParams }) {
     >
       <div className="relative w-full aspect-square rounded-xl overflow-hidden">
         <img
-          src={product.image || "/catalog/kursi/kursi-anak/foto-1.jpeg"}
+          src={product.image || EmptyImage}
           alt={product.name}
           className="w-full h-full object-cover"
         />

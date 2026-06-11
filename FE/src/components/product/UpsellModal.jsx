@@ -2,6 +2,7 @@ import { Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { navigateToProduct } from "../../utils/navigateToProduct";
 import { formatPrice } from "../../utils/formatPrice";
+import EmptyImage from "../../assets/empty-image.svg";
 
 function UpsellModal({
   isOpen,
@@ -18,7 +19,7 @@ function UpsellModal({
   if (!isOpen) return null;
 
   const productImage =
-    upsellProduct?.thumbnail || "/catalog/kursi/kursi-anak/foto-1.jpeg";
+    upsellProduct?.thumbnail || EmptyImage;
   const productName = upsellProduct?.productName || "No name";
   const productPrice = upsellProduct?.price ?? 0;
 

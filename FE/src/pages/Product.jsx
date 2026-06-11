@@ -13,10 +13,11 @@ import { getTotalDays } from "../utils/getTotalDays";
 import { useUpsellRecommendations } from "../hooks/useUpsellRecommendations";
 import ProductSkeleton from "../components/product/ProductSkeleton";
 import { notification } from "antd";
+import EmptyImage from "../assets/empty-image.svg";
 
 const fallbackImages = [
-  "/catalog/kursi/kursi-anak/foto-1.jpeg",
-  "/catalog/kursi/kursi-anak/foto-2.jpeg",
+  EmptyImage,
+  EmptyImage,
 ];
 
 function Product() {

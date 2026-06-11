@@ -49,7 +49,7 @@ function Catalog() {
   const isEmpty = !isFetching && filteredProducts.length === 0;
 
   return (
-    <Layout className="bg-[#f3f3f3]">
+    <Layout className="bg-[#EFEFEF]">
       <CalendarModal
         isOpen={isCalendarOpen}
         onClose={() => setIsCalendarOpen(false)}
