@@ -8,23 +8,11 @@ export function getTotalDays(startDate, endDate) {
 
   if (!start || !end) return 0;
 
-  const startOnlyDate = new Date(
-    start.getFullYear(),
-    start.getMonth(),
-    start.getDate(),
+  const diffDays = Math.ceil(
+    (end.getTime() - start.getTime()) / MS_PER_DAY,
   );
 
-  const endOnlyDate = new Date(
-    end.getFullYear(),
-    end.getMonth(),
-    end.getDate(),
-  );
-
-  const diffDays = Math.floor(
-    (endOnlyDate.getTime() - startOnlyDate.getTime()) / MS_PER_DAY,
-  );
-  
-  return diffDays + 1;
+  return Math.max(1, diffDays);
 }
 
 export default getTotalDays;
