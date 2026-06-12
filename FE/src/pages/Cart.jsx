@@ -1,19 +1,26 @@
 import Layout from "../layout/Layout";
-import CartList from "../components/CartList";
+import CartList from "../components/cart/CartList";
 import { formatDateTime } from "../utils/formatDateTime";
 import { formatPrice } from "../utils/formatPrice";
 import { useCartDetail } from "../hooks/useCart";
-import ProductCard from "../components/ProductCard";
-import CartSummary from "../components/CartSummary";
+import ProductCard from "../components/catalog/ProductCard";
+import CartSummary from "../components/cart/CartSummary";
 import { getTotalDays } from "../utils/getTotalDays";
 import { useCrossSellRecommendations } from "../hooks/useCrossSellRecommendations";
 import { useMemo, useState, useEffect } from "react";
+import { Empty, Skeleton } from "antd";
+import { useNavigate } from "react-router-dom";
 
 function Cart() {
-  const { data: cartData, isLoading, isError } = useCartDetail();
+  const { data: cartData, isLoading, isError, error } = useCartDetail();
   const { products: crossSellProducts } = useCrossSellRecommendations();
 
-  const cartItems = cartData?.items ?? [];
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (error?.response?.status === 400) {
+      navigate("/payment", { replace: true });
+    }
+  }, [error, navigate]);
 
   const totalDays = getTotalDays(cartData?.rentalStart, cartData?.rentalEnd);
 
@@ -41,6 +48,20 @@ function Cart() {
     );
   }, [items]);
 
+  const hasStockIssue = items.some(
+    (item) => Number(item.quantity ?? 0) > Number(item.availableStock ?? 0),
+  );
+
+  if (isError && error?.response?.status !== 400) {
+    return (
+      <Layout>
+        <div className="py-40">
+          <Empty description="Gagal mengambil data keranjang" />
+        </div>
+      </Layout>
+    );
+  }
+
   return (
     <Layout>
       <div className="py-4 text-[#2A2A2A]">
@@ -57,8 +78,14 @@ function Cart() {
         )} */}
 
         <div className="py-4 text-sm">
-          Tanggal Penyewaan : {formatDateTime(cartData?.rentalStart)} -{" "}
-          {formatDateTime(cartData?.rentalEnd)}
+          {isLoading ? (
+            <Skeleton.Input active size="small" block />
+          ) : (
+            <>
+              Tanggal Penyewaan : {formatDateTime(cartData?.rentalStart)} -{" "}
+              {formatDateTime(cartData?.rentalEnd)}
+            </>
+          )}
         </div>
 
         {/* {!isLoading && !isError && !cartData && (
@@ -72,23 +99,60 @@ function Cart() {
           <div></div>
         </div>
 
-        <CartList items={items} setItems={setItems} />
+        {isLoading ? (
+          <div className="space-y-4 py-4">
+            {[...Array(2)].map((_, index) => (
+              <Skeleton
+                key={index}
+                active
+                avatar={{
+                  shape: "square",
+                  size: 140,
+                }}
+                paragraph={{ rows: 1 }}
+              />
+            ))}
+          </div>
+        ) : items.length > 0 ? (
+          <CartList items={items} setItems={setItems} />
+        ) : (
+          <div className="py-10">
+            <Empty description="Keranjang kosong" />
+          </div>
+        )}
 
         <div className="text-center text-md font-bold my-6">
           Pelengkap untuk Acara Anda
         </div>
 
-        <div className="grid grid-cols-2 md:grid-coals-3 lg:grid-cols-5 gap-4">
-          {crossSellProducts.map((product) => (
-            <ProductCard
-              key={product.id}
-              requestParams={{
-                startDate: cartData?.rentalStart,
-                endDate: cartData?.rentalEnd,
-              }}
-              product={product}
-            />
-          ))}
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+          {isLoading ? (
+            [...Array(5)].map((_, index) => (
+              <Skeleton.Node
+                key={index}
+                active
+                style={{
+                  width: "100%",
+                  height: 200,
+                }}
+              />
+            ))
+          ) : crossSellProducts.length > 0 ? (
+            crossSellProducts.map((product) => (
+              <ProductCard
+                key={product.id}
+                requestParams={{
+                  startDate: cartData?.rentalStart,
+                  endDate: cartData?.rentalEnd,
+                }}
+                product={product}
+              />
+            ))
+          ) : (
+            <div className="col-span-full">
+              <Empty description="Tidak ada rekomendasi produk" />
+            </div>
+          )}
         </div>
 
         <div className="mt-4 sticky bottom-2 z-20 bg-white">
@@ -96,7 +160,7 @@ function Cart() {
             totalDays={totalDays}
             totalProducts={totalProducts}
             totalPrice={formatPrice(totalPrice)}
-            onCheckout={() => console.log("checkout")}
+            disabled={hasStockIssue}
           />
         </div>
       </div>

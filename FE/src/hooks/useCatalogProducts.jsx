@@ -1,26 +1,27 @@
 import { useQuery } from "@tanstack/react-query";
-
 import { privateApi } from "../utils/axios.js";
+import { formatApiDateTime } from "../utils/formatApiDateTime.jsx";
 
-export function useCatalogProducts(requestParams) {
+export function useCatalogProducts(startDate, endDate) {
+  const guestId = localStorage.getItem("guestId") || "";
   const {
     data: products = [],
     isFetching,
     isError,
   } = useQuery({
-    queryKey: ["products", requestParams],
-    enabled: !!requestParams,
+    queryKey: ["products", startDate, endDate, guestId],
+
+    enabled: !!startDate && !!endDate,
+
     queryFn: async ({ signal }) => {
-      const guestId = localStorage.getItem("guestId") || "";
       const response = await privateApi.post(
         "/products/",
         {
-          ...requestParams,
+          startDate: formatApiDateTime(startDate),
+          endDate: formatApiDateTime(endDate),
           guestId,
         },
-        {
-          signal,
-        },
+        { signal },
       );
 
       return response.data?.data ?? [];

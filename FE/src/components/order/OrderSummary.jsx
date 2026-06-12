@@ -1,0 +1,80 @@
+import { formatPrice } from "../../utils/formatPrice";
+
+function OrderSummary({ summary, shippingCost, onConfirm, variant = "order" }) {
+  const totalPricePerDay = summary?.totalPricePerDay ?? 0;
+  const totalDays = summary?.totalDays ?? 0;
+  const totalRentalAmount = summary?.totalRentalAmount ?? 0;
+  const downPayment = summary?.downPayment ?? 0;
+  const totalPayment = summary?.downPayment + shippingCost;
+
+  return (
+    <div className="border border-gray-300 rounded-lg p-4">
+      <div className="text-lg font-semibold mb-4">Ringkasan Pesanan</div>
+
+      <div className="flex flex-col gap-3 text-sm">
+        {/* <div className="border-b border-gray-300 pb-2 flex justify-between">
+          <div>Jumlah Produk</div>
+          <div>{totalProducts}</div>
+        </div>
+
+        <div className="flex justify-between">
+          <div>Total Harga Produk</div>
+          <div>Rp {formatPrice(totalRentalAmount)}</div>
+        </div>
+
+        <div className="border-b border-gray-300 pb-2 flex justify-between">
+          <div>Jumlah Hari Peminjaman</div>
+          <div>{totalDays}</div>
+        </div> */}
+
+        <div className="border-b border-gray-300 pb-2 flex justify-between font-medium">
+          <div>
+            <div>Subtotal sebelum pengiriman</div>
+            <div className="text-xs text-gray-500">
+              (Rp {formatPrice(totalPricePerDay)} x {totalDays} hari)
+            </div>
+          </div>
+          <div>Rp {formatPrice(totalRentalAmount)}</div>
+        </div>
+
+        <div className="flex justify-between">
+          <div>Subtotal sebelum pengiriman (DP 50%)</div>
+          <div>Rp {formatPrice(downPayment)}</div>
+        </div>
+
+        <div className="border-b border-gray-300 pb-2 flex justify-between">
+          <div>Biaya Pengiriman</div>
+          <div>Rp {formatPrice(shippingCost)}</div>
+        </div>
+
+        <div className="border-b border-gray-300 pb-2 flex justify-between items-center">
+          <div className="text-lg font-medium">Total Pembayaran</div>
+
+          <div className="text-lg font-semibold text-[#5A8D49]">
+            Rp {formatPrice(totalPayment)}
+          </div>
+        </div>
+
+        <div className="text-xs text-gray-700">
+          Sisa pembayaran sebesar{" "}
+          <span className="font-semibold">Rp {formatPrice(downPayment)}</span>{" "}
+          dilakukan setelah barang sudah Anda terima.
+        </div>
+
+        <div className="flex justify-center mt-6">
+          <button
+            type="button"
+            onClick={onConfirm}
+            className="w-[80%] bg-[#7CB95B] hover:bg-[#6BA64C] text-lg text-white font-semibold rounded-full px-10 py-2 transition-colors"
+          >
+            {variant === "payment"
+              ? "Upload Bukti Pembayaran"
+              : "Konfirmasi Pesanan"}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default OrderSummary;

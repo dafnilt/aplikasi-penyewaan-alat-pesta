@@ -3,12 +3,12 @@ import Navbar from "../components/Navbar";
 
 function Layout({ children, className = "" }) {
   return (
-    <div className={className}>
+    <div className={`min-h-screen flex flex-col ${className}`}>
       <Navbar />
 
-      <div className="pt-[66px] mb-4 px-4 md:px-6 lg:px-8 mx-auto max-w-6xl">
+      <main className="flex-1 mt-[66px] px-4 md:px-6 lg:px-8 mx-auto max-w-6xl w-full">
         {children}
-      </div>
+      </main>
 
       <Footer />
     </div>
@@ -16,4 +16,3 @@ function Layout({ children, className = "" }) {
 }
 
 export default Layout;
-

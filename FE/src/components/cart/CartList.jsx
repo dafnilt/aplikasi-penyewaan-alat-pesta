@@ -1,13 +1,16 @@
 import { useEffect, useMemo, useState } from "react";
-import QuantitySelector from "./QuantitySelector";
-import { formatPrice } from "../utils/formatPrice";
-import { useUpdateCartItem } from "../hooks/useCart";
-import DeleteIcon from "../assets/icon/delete.svg";
-import { useDeleteCartItem } from "../hooks/useCart";
+import QuantitySelector from "../QuantitySelector";
+import { formatPrice } from "../../utils/formatPrice";
+import { useUpdateCartItem } from "../../hooks/useCart";
+import DeleteIcon from "../../assets/icon/delete.svg";
+import { useDeleteCartItem } from "../../hooks/useCart";
+import { notification } from "antd";
+import EmptyImage from "../../assets/empty-image.svg";
 
 function CartList({ items, setItems }) {
   const { mutate: updateCartItem } = useUpdateCartItem();
   const { mutate: deleteCartItem } = useDeleteCartItem();
+  const hasStockIssue = items.qty > items.stock;
 
   const matchesItemId = (item, id) => item.idCartItem === id;
 
@@ -55,8 +58,7 @@ function CartList({ items, setItems }) {
         category: item.category ?? "-",
         image:
           item.thumbnail ||
-          item.image ||
-          "/catalog/kursi/kursi-anak/foto-1.jpeg",
+          item.image || EmptyImage,
         qty,
         price,
         subtotal: qty * price,
@@ -68,16 +70,35 @@ function CartList({ items, setItems }) {
     });
   }, [items]);
 
-  const handleDelete = (idCartItem) => {
-  setItems((prev) =>
-    prev.filter((item) => item.idCartItem !== idCartItem),
-  );
+  const handleDelete = async (id) => {
+    try {
+      await deleteCartItem({
+        idCartItem: id,
+      });
 
-  deleteCartItem({
-    guestId: localStorage.getItem("guestId"),
-    idCartItem,
-  });
-};
+      notification.success({
+        message: "Item berhasil dihapus dari keranjang",
+        placement: "topRight",
+        style: {
+          borderRadius: "16px",
+          border: "1px solid #74B559",
+          background: "#F8FCF6",
+        },
+      });
+    } catch (error) {
+      notification.error({
+        message: error?.response?.data?.message,
+        placement: "topRight",
+        style: {
+          borderRadius: "16px",
+          border: "1px solid #FFCCC7",
+          background: "#FFF2F0",
+        },
+      });
+
+      console.error(error);
+    }
+  };
 
   return (
     <div>
@@ -100,6 +121,12 @@ function CartList({ items, setItems }) {
               <div className="font-semibold pt-1">
                 Rp {formatPrice(item.price)}
               </div>
+              {item.qty > item.stock && (
+                <div className="text-xs text-red-600 font-medium">
+                  Stok tersisa {item.stock} item. Kurangi jumlah pesanan atau
+                  hapus produk dari keranjang.
+                </div>
+              )}
             </div>
           </div>
 
@@ -109,7 +136,7 @@ function CartList({ items, setItems }) {
               qty={item.qty}
               onIncrease={() => changeQty(item.id, 1, item.stock)}
               onDecrease={() => changeQty(item.id, -1, item.stock)}
-              disableIncrease={item.qty >= item.stock}
+              disableIncrease={item.stock <= item.qty}
               disableDecrease={item.qty <= 1}
               onChange={(value) => {
                 const nextQty = Number(value);

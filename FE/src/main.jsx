@@ -13,13 +13,15 @@ import AboutUs from "./pages/AboutUs";
 import Catalog from "./pages/Catalog";
 import Product from "./pages/Product";
 import Cart from "./pages/Cart";
-import Checkout from "./pages/Checkout";
+import Order from "./pages/Order";
+import Payment from "./pages/Payment";
 import Portofolio from "./pages/Portofolio";
 import PortofolioDetail from "./pages/PortofolioDetail";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 import ProtectedAdminRoute from "./guards/ProtectedAdminRoute";
 import ProtectedSuperAdminRoute from "./guards/ProtectedSuperAdminRoute";
+import { ConfigProvider } from "antd";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -83,8 +85,12 @@ const router = createBrowserRouter([
     element: <Cart />,
   },
   {
-    path: "/checkout",
-    element: <Checkout />,
+    path: "/order",
+    element: <Order />,
+  },
+  {
+    path: "/payment",
+    element: <Payment />,
   },
   {
     path: "/portofolio",
@@ -106,8 +112,16 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} />
-    </QueryClientProvider>
+    <ConfigProvider
+      theme={{
+        token: {
+          colorPrimary: "#74B559",
+        },
+      }}
+    >
+      <QueryClientProvider client={queryClient}>
+        <RouterProvider router={router} />
+      </QueryClientProvider>
+    </ConfigProvider>
   </React.StrictMode>,
 );
