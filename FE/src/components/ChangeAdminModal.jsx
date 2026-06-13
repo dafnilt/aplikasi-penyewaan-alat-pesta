@@ -11,6 +11,8 @@ import { useChangeAdmin } from "../hooks/useChangeAdmin";
 function ChangeAdminModal ({ open, onClose, onSuccess, adminData }) {
     const [id, setId] = useState("");
     const [fullName, setFullName] = useState("");
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
     const [isActive, setIsActive] = useState(true);
     const [loading, setLoading] = useState(false);
     const changeAdmin = useChangeAdmin;
@@ -18,15 +20,17 @@ function ChangeAdminModal ({ open, onClose, onSuccess, adminData }) {
     useEffect(() => {
         setId(adminData?.id || "");
         setFullName(adminData?.fullName || "");
+        setUsername(adminData?.username || "");
+        setPassword("");
         setIsActive(adminData?.isActive || false);
     }, [adminData]);
 
     const handleSave = async () => {
-        if (!id || !fullName) return;
+        if (!id || !fullName || !username ) return;
 
         try {
             setLoading(true);
-            await changeAdmin(id, fullName, isActive);
+            await changeAdmin(id, fullName, username, password, isActive);
             onSuccess();
             onClose();
         } catch (error) {
@@ -71,6 +75,37 @@ function ChangeAdminModal ({ open, onClose, onSuccess, adminData }) {
                       }}
                     />
                   </div>
+                  
+                  <div className="grid grid-cols-[90px_1fr] items-center gap-4">
+                    <label>Username:</label>
+                    <TextField
+                      size="small"
+                      value={username}
+                      onChange={(e) => setUsername(e.target.value)}
+                      sx={{
+                        "& .MuiOutlinedInput-root": {
+                          borderRadius: "999px",
+                          height: "28px",
+                        },
+                      }}
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-[90px_1fr] items-center gap-4">
+                    <label>Password:</label>
+                    <TextField
+                      size="small"
+                      type="password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      sx={{
+                        "& .MuiOutlinedInput-root": {
+                            borderRadius: "999px",
+                            height: "28px",
+                        }
+                      }}
+                    />
+                  </div>
 
                   <div className="grid grid-cols-[90px_1fr] items-center gap-4">
                     <label>Aktif:</label>
@@ -109,7 +144,7 @@ function ChangeAdminModal ({ open, onClose, onSuccess, adminData }) {
                     <Button
                         variant="contained"
                         onClick={handleSave}
-                        disabled={loading || !fullName}
+                        disabled={loading || !fullName || !username }
                         sx={{
                             backgroundColor: "#72B957",
                             borderRadius: "999px",
