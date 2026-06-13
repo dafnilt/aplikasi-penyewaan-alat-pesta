@@ -15,6 +15,7 @@ function ChangeAdminModal ({ open, onClose, onSuccess, adminData }) {
     const [password, setPassword] = useState("");
     const [isActive, setIsActive] = useState(true);
     const [loading, setLoading] = useState(false);
+    const [usernameError, setUsernameError] = useState("");
     const changeAdmin = useChangeAdmin;
 
     useEffect(() => {
@@ -34,11 +35,29 @@ function ChangeAdminModal ({ open, onClose, onSuccess, adminData }) {
             onSuccess();
             onClose();
         } catch (error) {
-            console.error("Gagal mengubah admin:", error.response?.data || error);
+            const errorData = error.response?.data;
+
+            if (errorData?.message === "Username already taken by another account.") {
+                setUsernameError("Username sudah digunakan oleh akun lain.");
+                return;
+            }
         } finally {
             setLoading(false);
         }
     };
+
+    const handleUsernameChange = (e) => {
+      const value = e.target.value;
+
+      setUsername(value);
+
+      if (/\s/.test(value)) {
+        setUsernameError("Username tidak boleh mengandung spasi.");
+      } else {
+        setUsernameError("");
+      }
+    };
+
     return (
         <Dialog
             open={open}
@@ -81,7 +100,9 @@ function ChangeAdminModal ({ open, onClose, onSuccess, adminData }) {
                     <TextField
                       size="small"
                       value={username}
-                      onChange={(e) => setUsername(e.target.value)}
+                      onChange={handleUsernameChange}
+                      error={Boolean(usernameError)}
+                      helperText={usernameError}
                       sx={{
                         "& .MuiOutlinedInput-root": {
                           borderRadius: "999px",
@@ -149,7 +170,7 @@ function ChangeAdminModal ({ open, onClose, onSuccess, adminData }) {
                     <Button
                         variant="contained"
                         onClick={handleSave}
-                        disabled={loading || !fullName || !username }
+                        disabled={loading || !fullName || !username || Boolean(usernameError)}
                         sx={{
                             backgroundColor: "#72B957",
                             borderRadius: "999px",
