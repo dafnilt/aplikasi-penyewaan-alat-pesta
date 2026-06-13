@@ -135,6 +135,7 @@ function AddAdminModal ({ open, onClose, onSuccess }) {
                     <Button
                         variant="contained"
                         onClick={handleSave}
+                        disabled={loading || !username || !password || !fullName}
                         sx={{
                         backgroundColor: "#72B957",
                         borderRadius: "999px",
