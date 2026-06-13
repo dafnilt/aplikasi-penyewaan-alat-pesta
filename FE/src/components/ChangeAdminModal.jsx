@@ -98,11 +98,16 @@ function ChangeAdminModal ({ open, onClose, onSuccess, adminData }) {
                       type="password"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
+                      placeholder="Kosongkan jika tidak ingin diubah"
                       sx={{
                         "& .MuiOutlinedInput-root": {
                             borderRadius: "999px",
                             height: "28px",
-                        }
+                        },
+                        "& input::placeholder": {
+                            fontSize: "12px",
+                            color: "#373737",
+                        },
                       }}
                     />
                   </div>
