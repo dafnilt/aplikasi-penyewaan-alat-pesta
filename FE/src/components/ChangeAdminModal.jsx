@@ -109,16 +109,17 @@ function ChangeAdminModal ({ open, onClose, onSuccess, adminData }) {
                     <Button
                         variant="contained"
                         onClick={handleSave}
+                        disabled={loading || !fullName}
                         sx={{
-                        backgroundColor: "#72B957",
-                        borderRadius: "999px",
-                        px: 5,
-                        py: 1,
-                        textTransform: "none",
-                        fontSize: "14px",
-                        "&:hover": {
-                            backgroundColor: "#5B9941",
-                        },
+                            backgroundColor: "#72B957",
+                            borderRadius: "999px",
+                            px: 5,
+                            py: 1,
+                            textTransform: "none",
+                            fontSize: "14px",
+                            "&:hover": {
+                                backgroundColor: "#5B9941",
+                            },
                         }}
                     >
                         {loading ? "Menyimpan..." : "Simpan"}
