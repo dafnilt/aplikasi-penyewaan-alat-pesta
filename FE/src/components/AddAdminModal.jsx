@@ -14,6 +14,7 @@ function AddAdminModal ({ open, onClose, onSuccess }) {
     const [fullName, setFullName] = useState("");
     const [isActive, setIsActive] = useState(true);
     const [loading, setLoading] = useState(false);
+    const [usernameError, setUsernameError] = useState("");
     const addAdmin = useAddAdmin;
 
     const handleSave = async () => {
@@ -25,11 +26,31 @@ function AddAdminModal ({ open, onClose, onSuccess }) {
             onSuccess();
             onClose();
         } catch (error) {
-            console.error("Gagal menambahkan admin:", error.response?.data || error);
+            const errorData = error.response?.data;
+
+            if (errorData?.message === "Username already exists.") {
+              setUsernameError("Username sudah digunakan.");
+              return;
+            }
+
+            console.error("Gagal menambahkan admin:", errorData || error);
         } finally {
             setLoading(false);
         }
     };
+
+    const handleUsernameChange = (e) => {
+      const value = e.target.value;
+
+      setUsername(value);
+
+      if (/\s/.test(value)) {
+        setUsernameError("Username tidak boleh mengandung spasi.");
+      } else {
+        setUsernameError("");
+      }
+    };
+
     return (
         <Dialog
             open={open}
@@ -72,7 +93,9 @@ function AddAdminModal ({ open, onClose, onSuccess }) {
                     <TextField
                       size="small"
                       value={username}
-                      onChange={(e) => setUsername(e.target.value)}
+                      onChange={handleUsernameChange}
+                      error={Boolean(usernameError)}
+                      helperText={usernameError}
                       sx={{
                         "& .MuiOutlinedInput-root": {
                           borderRadius: "999px",
@@ -135,7 +158,7 @@ function AddAdminModal ({ open, onClose, onSuccess }) {
                     <Button
                         variant="contained"
                         onClick={handleSave}
-                        disabled={loading || !username || !password || !fullName}
+                        disabled={loading || !username || !password || !fullName || Boolean(usernameError)}
                         sx={{
                         backgroundColor: "#72B957",
                         borderRadius: "999px",
