@@ -71,7 +71,7 @@ function HeaderAdmin({ isSidebarOpen }) {
 						</div>
 
 						<div className="text-xs text-gray-500">
-							{user?.groups?.includes("Admin") ? "Admin" : "Super Admin"}
+							{user?.groups?.includes("Admin") ? "Admin" : user?.groups?.includes("Super Admin") ? "Super Admin" : ""}
 						</div>
 					</div>
 				</button>
