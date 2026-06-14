@@ -8,6 +8,7 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useChangeStatusOrder } from "../hooks/useChangeStatusOrder";
+import { notification } from "antd";
 
 const statusIdMap = {
   "Pending Payment": "1",
@@ -51,10 +52,29 @@ function ChangeStatusOrderModal({ open, onClose, orderId, currentStatus, onSucce
     try {
       setLoading(true);
       await changeStatusOrder(orderId, statusId);
-      onSuccess();
+      notification.success({
+        message: "Status berhasil diubah",
+        description: `Status pesanan berhasil diubah menjadi "${options.find(opt => opt.value === statusId)?.label}".`,
+        placement: "topRight",
+        style: {
+          borderRadius: "16px",
+          border: "1px solid #74B559",
+          background: "#F8FCF6",
+        },
+      });
+      await onSuccess();
       onClose();
     } catch (error) {
-      console.error("Gagal mengubah status:", error.response?.data || error);
+      notification.error({
+        message: "Gagal mengubah status",
+        description: error.response?.data || "Terjadi kesalahan saat mengubah status.",
+        placement: "topRight",
+        style: {
+          borderRadius: "16px",
+          border: "1px solid #FFCCC7",
+          background: "#FFF2F0",
+        },
+      });
     } finally {
       setLoading(false);
     }

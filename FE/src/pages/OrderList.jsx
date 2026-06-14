@@ -95,17 +95,18 @@ function OrderList() {
     },
   ];
 
-  const fetchOrders = async () => {
-      try {
-        setLoading(true);
-        const response = await useOrderPage();
-        setRows(response.data);
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const fetchOrders = async (showLoading = true) => {
+    try {
+      if (showLoading) setLoading(true);
+
+      const response = await useOrderPage();
+      setRows(response.data);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      if (showLoading) setLoading(false);
+    }
+  };
 
   useEffect(() => {
     fetchOrders();
@@ -141,7 +142,7 @@ function OrderList() {
       onClose={handleCloseStatusModal}
       orderId={selectedOrder?.idOrder}
       currentStatus={selectedOrder?.status}
-      onSuccess={fetchOrders}
+      onSuccess={() => fetchOrders(false)}
     />
     </LayoutAdmin>
   );
