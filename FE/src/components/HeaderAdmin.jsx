@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
 import { useAuthMe } from "../hooks/useAuthMe";
 import { useLogout } from "../hooks/useLogout";
+import { notification } from "antd";
 
 function HeaderAdmin({ isSidebarOpen }) {
 	const [user, setUser] = useState(null);
@@ -21,17 +22,28 @@ function HeaderAdmin({ isSidebarOpen }) {
 	};
 
 	const handleLogout = async () => {
-	try {	
-		await logoutMutation.mutateAsync();
-	} catch (error) {
-		console.error(error);
-	} finally {
-		navigate("/login");
-	}};
+		try {
+			await logoutMutation.mutateAsync();
+
+			notification.success({
+			message: "Logout berhasil",
+			description: "Anda berhasil logout.",
+			placement: "topRight",
+			});
+
+			navigate("/login");
+		} catch (error) {
+			notification.error({
+			message: "Logout gagal",
+			description: "Terjadi kesalahan saat logout.",
+			placement: "topRight",
+			});
+	}
+	};
 
 	useEffect(() => {
 		fetchUser();
-	}, []);
+	}, []);	
 	
 
 	return (

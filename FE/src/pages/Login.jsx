@@ -3,6 +3,7 @@ import { useLogin } from "../hooks/useLogin";
 import logo from "../assets/logo.webp";
 import Skeleton from "@mui/material/Skeleton";
 import { useNavigate } from "react-router-dom";
+import { notification } from "antd";
 
 const getLoginErrorMessage = (error) => {
   const status = error?.response?.status;
@@ -16,26 +17,32 @@ function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  const [successMessage, setSuccessMessage] = useState("");
   const loginMutation = useLogin();
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setErrorMessage("");
-    setSuccessMessage("");
 
     try {
-      const response = await loginMutation.mutateAsync({
+      await loginMutation.mutateAsync({
         username,
         password,
       });
 
-      navigate("/orders");
+      notification.success({
+        message: "Login berhasil",
+        description: "Anda berhasil login.",
+        placement: "topRight",
+      });
 
-      setSuccessMessage("Login berhasil.");
+      navigate("/orders");
     } catch (error) {
       setErrorMessage(getLoginErrorMessage(error));
+      notification.error({
+        message: "Login gagal",
+        description: getLoginErrorMessage(error),
+        placement: "topRight",
+      });
     }
   };
 
@@ -75,18 +82,6 @@ function Login() {
                   className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-gray-900 outline-none transition focus:border-[#2F4C23] focus:bg-white"
                 />
               </div>
-
-              {errorMessage ? (
-                <div className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
-                  {errorMessage}
-                </div>
-              ) : null}
-
-              {successMessage ? (
-                <div className="rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-700">
-                  {successMessage}
-                </div>
-              ) : null}
 
             <button
               type="submit"
