@@ -6,6 +6,7 @@ import {
 import { useState } from "react";
 import { useDeleteAdmin } from "../hooks/useDeleteAdmin";
 import ErrorOutlineOutlinedIcon from '@mui/icons-material/ErrorOutlineOutlined';
+import { notification } from "antd";
 
 function DeleteAdminModal ({ open, onClose, onSuccess, adminData }) {
     const [loading, setLoading] = useState(false);
@@ -18,8 +19,28 @@ function DeleteAdminModal ({ open, onClose, onSuccess, adminData }) {
             await deleteAdmin(adminData.id);
             onSuccess();
             onClose();
+            notification.success({
+                message: "Admin berhasil dihapus",
+                description: `Admin dengan username "${adminData.username}" berhasil dihapus.`,
+                placement: "topRight",
+                style: {
+                    borderRadius: "16px",
+                    border: "1px solid #74B559",
+                    background: "#F8FCF6",
+                },
+            });
         } catch (error) {
             console.error("Gagal menghapus admin:", error.response?.data || error);
+            notification.error({
+                message: "Gagal menghapus admin",
+                description: error.response?.data || "Terjadi kesalahan saat menghapus admin.",
+                placement: "topRight",
+                style: {
+                    borderRadius: "16px",
+                    border: "1px solid #FFCCC7",
+                    background: "#FFF2F0",
+                },
+            });
         } finally {
             setLoading(false);
         }
@@ -54,7 +75,7 @@ function DeleteAdminModal ({ open, onClose, onSuccess, adminData }) {
                 />
                 </div>
                 <div className="text-center text-sm text-gray-600">
-                    Hapus {adminData?.fullName} dari daftar admin?
+                    Hapus {adminData?.username} dari daftar admin?
                 </div>
                 <div className="flex justify-between mt-8">
                     <Button
