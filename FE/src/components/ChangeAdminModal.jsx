@@ -7,6 +7,7 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useChangeAdmin } from "../hooks/useChangeAdmin";
+import { notification } from "antd";
 
 function ChangeAdminModal ({ open, onClose, onSuccess, adminData }) {
     const [id, setId] = useState("");
@@ -32,6 +33,18 @@ function ChangeAdminModal ({ open, onClose, onSuccess, adminData }) {
         try {
             setLoading(true);
             await changeAdmin(id, fullName, username, password, isActive);
+
+            notification.success({
+                message: "Admin berhasil diubah",
+                description: `Admin dengan username "${username}" berhasil diubah.`,
+                placement: "topRight",
+                style: {
+                  borderRadius: "16px",
+                  border: "1px solid #74B559",
+                  background: "#F8FCF6",
+                },
+            });
+
             onSuccess();
             onClose();
         } catch (error) {
@@ -41,6 +54,16 @@ function ChangeAdminModal ({ open, onClose, onSuccess, adminData }) {
                 setUsernameError("Username sudah digunakan oleh akun lain.");
                 return;
             }
+            notification.error({
+                message: "Gagal mengubah admin",
+                description: errorData?.message || "Terjadi kesalahan saat mengubah admin.",
+                placement: "topRight",
+                style: {
+                  borderRadius: "16px",
+                  border: "1px solid #FFCCC7",
+                  background: "#FFF2F0",
+                },
+            });
         } finally {
             setLoading(false);
         }
