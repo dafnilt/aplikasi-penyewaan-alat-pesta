@@ -7,6 +7,7 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import { useAddAdmin } from "../hooks/useAddAdmin";
+import { notification } from "antd";
 
 function AddAdminModal ({ open, onClose, onSuccess }) {
     const [username, setUsername] = useState("");
@@ -25,6 +26,16 @@ function AddAdminModal ({ open, onClose, onSuccess }) {
             await addAdmin(username, password, fullName, isActive);
             onSuccess();
             onClose();
+            notification.success({
+                message: "Admin berhasil ditambahkan",
+                description: `Admin dengan username "${username}" berhasil ditambahkan.`,
+                placement: "topRight",
+                style: {
+                  borderRadius: "16px",
+                  border: "1px solid #74B559",
+                  background: "#F8FCF6",
+                },
+            });    
         } catch (error) {
             const errorData = error.response?.data;
 
@@ -32,6 +43,16 @@ function AddAdminModal ({ open, onClose, onSuccess }) {
               setUsernameError("Username sudah digunakan.");
               return;
             }
+            notification.error({
+                message: "Gagal menambahkan admin",
+                description: errorData?.message || "Terjadi kesalahan saat menambahkan admin.",
+                placement: "topRight",
+                style: {
+                  borderRadius: "16px",
+                  border: "1px solid #FFCCC7",
+                  background: "#FFF2F0",
+                },
+            });    
 
             console.error("Gagal menambahkan admin:", errorData || error);
         } finally {
