@@ -17,7 +17,6 @@ function CalendarModal({
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm"
-      onClick={onClose}
     >
       <div
         className="bg-[#f3f3f3] w-[40%] rounded-[32px] px-2 py-8 relative"
@@ -29,7 +28,6 @@ function CalendarModal({
 
         <div className="flex justify-center items-center gap-4">
           <div className="border-2 border-[#74B559] rounded-lg px-4 py-1 flex items-center gap-3 bg-white">
-
             <DatePicker
               value={startDate ? dayjs(startDate) : null}
               onChange={(date) => setStartDate(date?.toDate() ?? null)}
@@ -38,6 +36,26 @@ function CalendarModal({
               placeholder="Pilih Start Date"
               variant="borderless"
               className="w-full"
+              disabledDate={(current) =>
+                current && current < dayjs().startOf("day")
+              }
+              disabledTime={(current) => {
+                if (!current || !current.isSame(dayjs(), "day")) {
+                  return {};
+                }
+
+                const now = dayjs();
+
+                return {
+                  disabledHours: () =>
+                    Array.from({ length: now.hour() }, (_, i) => i),
+
+                  disabledMinutes: (selectedHour) =>
+                    selectedHour === now.hour()
+                      ? Array.from({ length: now.minute() }, (_, i) => i)
+                      : [],
+                };
+              }}
             />
           </div>
         </div>
@@ -50,7 +68,6 @@ function CalendarModal({
 
         <div className="flex justify-center items-center gap-4">
           <div className="border-2 border-[#74B559] rounded-lg px-4 py-1 flex items-center gap-3 bg-white">
-
             <DatePicker
               value={endDate ? dayjs(endDate) : null}
               onChange={(date) => setEndDate(date?.toDate() ?? null)}
@@ -64,6 +81,32 @@ function CalendarModal({
                   ? current && current < dayjs(startDate).startOf("day")
                   : false
               }
+              disabledTime={(current) => {
+                if (!startDate || !current) {
+                  return {};
+                }
+
+                const start = dayjs(startDate);
+                if (!current.isSame(start, "day")) {
+                  return {};
+                }
+
+                return {
+                  disabledHours: () =>
+                    Array.from({ length: start.hour() }, (_, i) => i),
+
+                  disabledMinutes: (selectedHour) => {
+                    if (selectedHour !== start.hour()) {
+                      return [];
+                    }
+
+                    return Array.from(
+                      { length: start.minute() + 1 },
+                      (_, i) => i,
+                    );
+                  },
+                };
+              }}
             />
           </div>
         </div>
