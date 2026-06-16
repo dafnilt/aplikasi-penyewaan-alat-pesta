@@ -80,7 +80,7 @@ function Catalog() {
           <Empty description="Produk tidak ditemukan" />
         </div>
       ) : (
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 pb-5 gap-4">
           {isFetching
             ? Array.from({ length: 10 }).map((_, index) => (
                 <CardSkeleton key={index} />

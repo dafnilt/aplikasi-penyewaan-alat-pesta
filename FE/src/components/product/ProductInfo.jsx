@@ -50,11 +50,11 @@ function ProductInfo({
 
       {/* Section 2 */}
       <div className="flex flex-col gap-2 text-sm">
-          <div>Tanggal :</div>
+        <div>Tanggal :</div>
 
-          <div className="w-fit border border-[#B9B9B9] bg-[#F5F5F5] px-3 py-0.5 rounded-xl">
-            {formatDateTime(startDate)} - {formatDateTime(endDate)}
-          </div>
+        <div className="w-fit border border-[#B9B9B9] bg-[#F5F5F5] px-3 py-0.5 rounded-xl">
+          {formatDateTime(startDate)} - {formatDateTime(endDate)}
+        </div>
 
         {variantTypes.map((variantType) => (
           <div key={variantType.idVariant} className="flex flex-col gap-2 pt-4">
@@ -69,6 +69,8 @@ function ProductInfo({
                 const isColor = variantType.variantName
                   .toLowerCase()
                   .includes("warna");
+                const colorValue = getColorHex(option.valueOption);
+                const isImage = colorValue.startsWith("/");
 
                 if (isColor) {
                   return (
@@ -84,13 +86,20 @@ function ProductInfo({
                         width: 25,
                         height: 25,
                         borderRadius: "50%",
-                        bgcolor: getColorHex(option.valueOption),
                         cursor: "pointer",
                         border: isSelected
                           ? "3px solid #2A2A2A"
                           : "2px solid #ccc",
-                        transition: "0.2s",
-                        transform: isSelected ? "scale(1.1)" : "scale(1)",
+
+                        ...(isImage
+                          ? {
+                              backgroundImage: `url(${colorValue})`,
+                              backgroundSize: "cover",
+                              backgroundPosition: "center",
+                            }
+                          : {
+                              bgcolor: colorValue,
+                            }),
                       }}
                     />
                   );
@@ -130,7 +139,9 @@ function ProductInfo({
             onClick={() => setOpenDetail(!openDetail)}
             className="flex items-center justify-between w-full"
           >
-            <div className="text-sm font-bold text-[#5B8E47]">Detail Produk</div>
+            <div className="text-sm font-bold text-[#5B8E47]">
+              Detail Produk
+            </div>
 
             <KeyboardArrowDownIcon
               className={`transition-transform duration-300 ${
