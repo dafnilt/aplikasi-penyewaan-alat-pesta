@@ -19,7 +19,7 @@ function CatalogFilter({
 }) {
   const [isOpen, setIsOpen] = useState(false);
 
-  const categoryList = ["Semua Kategori", "Tenda", "Kursi", "Meja"];
+  const categoryList = ["Semua Kategori", "Tenda", "Kursi", "Meja", "Multimedia", "Perlengkapan", "Utilitas"];
 
   const { RangePicker } = DatePicker;
 

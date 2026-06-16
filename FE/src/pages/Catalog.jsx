@@ -36,7 +36,7 @@ function Catalog() {
     return products.filter((product) => {
       const matchCategory =
         selectedCategory === "Semua Kategori" ||
-        product.category === selectedCategory;
+        product.category?.toLowerCase() === selectedCategory.toLowerCase();
 
       const matchSearch =
         search.trim() === "" ||
