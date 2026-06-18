@@ -7,10 +7,9 @@ import { useDeleteCartItem } from "../../hooks/useCart";
 import { notification } from "antd";
 import EmptyImage from "../../assets/empty-image.svg";
 
-function CartList({ items, setItems }) {
+function CartList({ items, setItems, onRefresh }) {
   const { mutate: updateCartItem } = useUpdateCartItem();
   const { mutate: deleteCartItem } = useDeleteCartItem();
-  const hasStockIssue = items.qty > items.stock;
 
   const matchesItemId = (item, id) => item.idCartItem === id;
 
@@ -56,9 +55,7 @@ function CartList({ items, setItems }) {
         id: item.idCartItem ?? item.id,
         name: item.productName ?? item.name ?? "-",
         category: item.category ?? "-",
-        image:
-          item.thumbnail ||
-          item.image || EmptyImage,
+        image: item.thumbnail || item.image || EmptyImage,
         qty,
         price,
         subtotal: qty * price,
@@ -75,6 +72,8 @@ function CartList({ items, setItems }) {
       await deleteCartItem({
         idCartItem: id,
       });
+
+      onRefresh?.();
 
       notification.success({
         message: "Item berhasil dihapus dari keranjang",

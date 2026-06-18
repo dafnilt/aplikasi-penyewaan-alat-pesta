@@ -10,6 +10,7 @@ import { useCrossSellRecommendations } from "../hooks/useCrossSellRecommendation
 import { useMemo, useState, useEffect } from "react";
 import { Button, Empty, Skeleton } from "antd";
 import { useNavigate } from "react-router-dom";
+import { useQueryClient } from "@tanstack/react-query";
 
 function Cart() {
   const { data: cartData, isLoading, isError, error } = useCartDetail();
@@ -21,6 +22,18 @@ function Cart() {
       navigate("/payment", { replace: true });
     }
   }, [error, navigate]);
+
+  const queryClient = useQueryClient();
+
+  const handleCartRefresh = () => {
+    queryClient.invalidateQueries(["cart-detail"]);
+  };
+
+  useEffect(() => {
+    if (!cartData?.items || cartData.items.length === 0) {
+      localStorage.removeItem("cartDates");
+    }
+  }, [cartData]);
 
   const totalDays = getTotalDays(cartData?.rentalStart, cartData?.rentalEnd);
 
@@ -52,14 +65,29 @@ function Cart() {
     (item) => Number(item.quantity ?? 0) > Number(item.availableStock ?? 0),
   );
 
-  if (isError && error?.response?.status !== 400) {
+  const isEmptyCart =
+    !isError && !isLoading && (!cartData?.items || cartData.items.length === 0);
+
+  const isServerError = isError && error?.response?.status !== 400;
+
+  if (isServerError) {
+    return (
+      <Layout>
+        <div className="flex flex-col items-center justify-center py-40">
+          <Empty description="Gagal memuat keranjang" />
+        </div>
+      </Layout>
+    );
+  }
+
+  if (isEmptyCart) {
     return (
       <Layout>
         <div className="flex flex-col items-center justify-center py-40">
           <Empty
             description={
               <div className="text-lg font-medium pb-4">
-                  Keranjang kamu masih kosong
+                Keranjang kamu masih kosong
               </div>
             }
           />
@@ -81,16 +109,6 @@ function Cart() {
       <div className="py-4 text-[#2A2A2A]">
         <div className="text-lg font-semibold">Keranjang Anda</div>
 
-        {/* {isLoading && (
-          <div className="text-sm text-[#6F6F6F]">Memuat keranjang...</div>
-        )}
-
-        {isError && (
-          <div className="text-sm text-red-600">
-            Gagal mengambil data keranjang.
-          </div>
-        )} */}
-
         <div className="py-4 text-sm">
           {isLoading ? (
             <Skeleton.Input active size="small" block />
@@ -101,10 +119,6 @@ function Cart() {
             </>
           )}
         </div>
-
-        {/* {!isLoading && !isError && !cartData && (
-          <div className="text-sm text-[#6F6F6F]">Keranjang kosong.</div>
-        )} */}
 
         <div className="grid grid-cols-[2fr_1fr_1fr_0.3fr] pb-4 border-b border-gray-200 text-sm font-semibold text-[#2A2A2A]">
           <div>Produk</div>
@@ -128,7 +142,11 @@ function Cart() {
             ))}
           </div>
         ) : items.length > 0 ? (
-          <CartList items={items} setItems={setItems} />
+          <CartList
+            items={items}
+            setItems={setItems}
+            onRefresh={handleCartRefresh}
+          />
         ) : (
           <div className="py-10">
             <Empty description="Keranjang kosong" />

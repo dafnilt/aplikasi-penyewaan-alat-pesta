@@ -15,10 +15,7 @@ import ProductSkeleton from "../components/product/ProductSkeleton";
 import { notification } from "antd";
 import EmptyImage from "../assets/empty-image.svg";
 
-const fallbackImages = [
-  EmptyImage,
-  EmptyImage,
-];
+const fallbackImages = [EmptyImage, EmptyImage];
 
 function Product() {
   const { productId, startDate, endDate } = useProductPage();
@@ -245,6 +242,16 @@ function Product() {
       if (response?.cartId) {
         setUpsellMessage("Item berhasil ditambahkan ke keranjang.");
         setUpsellCartId(response.cartId);
+
+        const existing = localStorage.getItem("cartDates");
+        if (!existing) {
+          const cartDates = {
+            startDate,
+            endDate,
+          };
+          localStorage.setItem("cartDates", JSON.stringify(cartDates));
+        }
+
         notification.success({
           message: "Produk berhasil ditambahkan ke keranjang",
           placement: "topRight",
