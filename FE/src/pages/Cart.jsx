@@ -8,7 +8,7 @@ import CartSummary from "../components/cart/CartSummary";
 import { getTotalDays } from "../utils/getTotalDays";
 import { useCrossSellRecommendations } from "../hooks/useCrossSellRecommendations";
 import { useMemo, useState, useEffect } from "react";
-import { Empty, Skeleton } from "antd";
+import { Button, Empty, Skeleton } from "antd";
 import { useNavigate } from "react-router-dom";
 
 function Cart() {
@@ -55,8 +55,22 @@ function Cart() {
   if (isError && error?.response?.status !== 400) {
     return (
       <Layout>
-        <div className="py-40">
-          <Empty description="Gagal mengambil data keranjang" />
+        <div className="flex flex-col items-center justify-center py-40">
+          <Empty
+            description={
+              <div className="text-lg font-medium pb-4">
+                  Keranjang kamu masih kosong
+              </div>
+            }
+          />
+
+          <Button
+            type="primary"
+            size="large"
+            onClick={() => navigate("/catalog")}
+          >
+            Kembali ke Katalog
+          </Button>
         </div>
       </Layout>
     );
