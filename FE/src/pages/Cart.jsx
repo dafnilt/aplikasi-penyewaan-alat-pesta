@@ -13,7 +13,13 @@ import { useNavigate } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
 
 function Cart() {
-  const { data: cartData, isLoading, isError, error } = useCartDetail();
+  const {
+    data: cartData,
+    isLoading,
+    isError,
+    error,
+    refetch,
+  } = useCartDetail();
   const { products: crossSellProducts } = useCrossSellRecommendations();
 
   const navigate = useNavigate();
@@ -24,16 +30,10 @@ function Cart() {
   }, [error, navigate]);
 
   const queryClient = useQueryClient();
-
-  const handleCartRefresh = () => {
-    queryClient.invalidateQueries(["cart-detail"]);
+  
+  const handleCartRefresh = async () => {
+    return await refetch();
   };
-
-  useEffect(() => {
-    if (!cartData?.items || cartData.items.length === 0) {
-      localStorage.removeItem("cartDates");
-    }
-  }, [cartData]);
 
   const totalDays = getTotalDays(cartData?.rentalStart, cartData?.rentalEnd);
 
@@ -65,16 +65,21 @@ function Cart() {
     (item) => Number(item.quantity ?? 0) > Number(item.availableStock ?? 0),
   );
 
-  const isEmptyCart =
-    !isError && !isLoading && (!cartData?.items || cartData.items.length === 0);
+  const status = error?.response?.status;
 
-  const isServerError = isError && error?.response?.status !== 400;
+  const isEmptyCart =
+    (!isError &&
+      !isLoading &&
+      (!cartData?.items || cartData.items.length === 0)) ||
+    status === 404;
+
+  const isServerError = isError && status !== 400 && status !== 404;
 
   if (isServerError) {
     return (
       <Layout>
         <div className="flex flex-col items-center justify-center py-40">
-          <Empty description="Gagal memuat keranjang" />
+          <Empty description="Gagal memuat produk" />
         </div>
       </Layout>
     );
@@ -142,11 +147,7 @@ function Cart() {
             ))}
           </div>
         ) : items.length > 0 ? (
-          <CartList
-            items={items}
-            setItems={setItems}
-            onRefresh={handleCartRefresh}
-          />
+          <CartList items={items} setItems={setItems} onRefresh={refetch} />
         ) : (
           <div className="py-10">
             <Empty description="Keranjang kosong" />

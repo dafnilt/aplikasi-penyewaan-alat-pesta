@@ -19,9 +19,34 @@ function CatalogFilter({
 }) {
   const [isOpen, setIsOpen] = useState(false);
 
-  const categoryList = ["Semua Kategori", "Tenda", "Kursi", "Meja", "Multimedia", "Perlengkapan", "Utilitas"];
+  const categoryList = [
+    "Semua Kategori",
+    "Tenda",
+    "Kursi",
+    "Meja",
+    "Multimedia",
+    "Perlengkapan",
+    "Utilitas",
+  ];
 
   const { RangePicker } = DatePicker;
+
+  const handleUseCartDates = () => {
+  const savedCartDates = localStorage.getItem("cartDates");
+
+  if (!savedCartDates) {
+    return;
+  }
+
+  try {
+    const { startDate, endDate } = JSON.parse(savedCartDates);
+
+    setStartDate(startDate ? new Date(startDate) : null);
+    setEndDate(endDate ? new Date(endDate) : null);
+  } catch (error) {
+    console.error("Gagal membaca cartDates:", error);
+  }
+};
 
   return (
     <div className="flex items-center justify-between py-2">
@@ -131,6 +156,22 @@ function CatalogFilter({
             className="border-none shadow-none"
           />
         </div>
+        <button
+          type="button"
+          onClick={handleUseCartDates}
+          title="Gunakan tanggal dari keranjang"
+          className="
+      flex items-center justify-center
+      w-10 h-10
+      rounded-full border border-gray-300
+      bg-white
+      hover:border-[#74B559]
+      hover:bg-[#F8FCF6]
+      transition-all duration-200
+    "
+        >
+          <img src={calenderIcon} alt="Calendar" className="w-5 h-5" />
+        </button>
       </div>
 
       <div className="relative">

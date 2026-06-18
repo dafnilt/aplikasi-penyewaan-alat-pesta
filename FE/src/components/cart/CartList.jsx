@@ -73,7 +73,15 @@ function CartList({ items, setItems, onRefresh }) {
         idCartItem: id,
       });
 
-      onRefresh?.();
+      await onRefresh?.();
+
+      setTimeout(() => {
+        const cartDates = localStorage.getItem("cartDates");
+
+        if (items.length === 1 && cartDates) {
+          localStorage.removeItem("cartDates");
+        }
+      }, 100);
 
       notification.success({
         message: "Item berhasil dihapus dari keranjang",
@@ -87,15 +95,7 @@ function CartList({ items, setItems, onRefresh }) {
     } catch (error) {
       notification.error({
         message: error?.response?.data?.message,
-        placement: "topRight",
-        style: {
-          borderRadius: "16px",
-          border: "1px solid #FFCCC7",
-          background: "#FFF2F0",
-        },
       });
-
-      console.error(error);
     }
   };
 
