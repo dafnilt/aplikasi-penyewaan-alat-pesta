@@ -10,7 +10,6 @@ import { useCrossSellRecommendations } from "../hooks/useCrossSellRecommendation
 import { useMemo, useState, useEffect } from "react";
 import { Button, Empty, Skeleton } from "antd";
 import { useNavigate } from "react-router-dom";
-import { useQueryClient } from "@tanstack/react-query";
 
 function Cart() {
   const {
@@ -20,6 +19,11 @@ function Cart() {
     error,
     refetch,
   } = useCartDetail();
+
+  useEffect(() => {
+    refetch();
+  }, []);
+
   const { products: crossSellProducts } = useCrossSellRecommendations();
 
   const navigate = useNavigate();
@@ -28,12 +32,6 @@ function Cart() {
       navigate("/payment", { replace: true });
     }
   }, [error, navigate]);
-
-  const queryClient = useQueryClient();
-  
-  const handleCartRefresh = async () => {
-    return await refetch();
-  };
 
   const totalDays = getTotalDays(cartData?.rentalStart, cartData?.rentalEnd);
 

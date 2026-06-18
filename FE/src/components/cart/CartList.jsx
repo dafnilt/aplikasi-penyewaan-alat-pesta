@@ -12,6 +12,7 @@ function CartList({ items, setItems, onRefresh }) {
   const { mutate: deleteCartItem } = useDeleteCartItem();
 
   const matchesItemId = (item, id) => item.idCartItem === id;
+  const [stockWarning, setStockWarning] = useState({});
 
   const updateQty = (id, nextQty) => {
     setItems((prev) =>
@@ -28,21 +29,41 @@ function CartList({ items, setItems, onRefresh }) {
   };
 
   const changeQty = (id, delta, maxStock) => {
-    setItems((prev) =>
-      prev.map((it) => {
+    setItems((prev) => {
+      return prev.map((it) => {
         if (it.idCartItem !== id) return it;
 
         const currentQty = Number(it.quantity) || 1;
-        const nextQty = Math.min(maxStock, Math.max(1, currentQty + delta));
+        const nextQty = currentQty + delta;
 
-        updateQty(id, nextQty);
+        if (nextQty > maxStock) {
+          setStockWarning((prev) => ({
+            ...prev,
+            [id]: true,
+          }));
+          return it; // stop, jangan update qty
+        }
+
+        // kalau valid, hilangkan warning
+        setStockWarning((prev) => ({
+          ...prev,
+          [id]: false,
+        }));
+
+        const safeQty = Math.max(1, nextQty);
+
+        updateCartItem({
+          guestId: localStorage.getItem("guestId"),
+          idCartItem: id,
+          quantity: safeQty,
+        });
 
         return {
           ...it,
-          quantity: nextQty,
+          quantity: safeQty,
         };
-      }),
-    );
+      });
+    });
   };
 
   const formattedItems = useMemo(() => {
@@ -52,7 +73,7 @@ function CartList({ items, setItems, onRefresh }) {
       const stock = Number(item.availableStock);
 
       return {
-        id: item.idCartItem ?? item.id,
+        id: item.idCartItem,
         name: item.productName ?? item.name ?? "-",
         category: item.category ?? "-",
         image: item.thumbnail || item.image || EmptyImage,
@@ -130,7 +151,7 @@ function CartList({ items, setItems, onRefresh }) {
           </div>
 
           {/* QTY */}
-          <div className="flex justify-center">
+          <div className="flex flex-col items-center justify-center">
             <QuantitySelector
               qty={item.qty}
               onIncrease={() => changeQty(item.id, 1, item.stock)}
@@ -141,20 +162,34 @@ function CartList({ items, setItems, onRefresh }) {
                 const nextQty = Number(value);
                 if (Number.isNaN(nextQty)) return;
 
-                const boundedQty = Math.min(item.stock, Math.max(1, nextQty));
+                if (nextQty > item.stock) {
+                  setStockWarning((prev) => ({
+                    ...prev,
+                    [item.idCartItem]: true,
+                  }));
+                  return;
+                }
+
+                setStockWarning((prev) => ({
+                  ...prev,
+                  [item.idCartItem]: false,
+                }));
 
                 setItems((current) =>
-                  current.map((it) => {
-                    if (!matchesItemId(it, item.id)) return it;
-
-                    return {
-                      ...it,
-                      quantity: boundedQty,
-                    };
-                  }),
+                  current.map((it) =>
+                    matchesItemId(it, item.idCartItem)
+                      ? { ...it, quantity: nextQty }
+                      : it,
+                  ),
                 );
               }}
             />
+
+            {stockWarning[item.idCartItem] && (
+              <div className="text-xs text-red-600 font-medium mt-2 text-center">
+                Stok tersedia = {item.stock}
+              </div>
+            )}
           </div>
 
           <div className="text-center font-semibold">
