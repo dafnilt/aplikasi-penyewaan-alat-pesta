@@ -6,8 +6,8 @@ function ProductSkeleton() {
       <div>
         <Skeleton
           variant="rounded"
-          width="100%"
-          height={350}
+          width={250}
+          height={250}
           sx={{ borderRadius: "16px" }}
         />
 
@@ -16,8 +16,8 @@ function ProductSkeleton() {
             <Skeleton
               key={index}
               variant="rounded"
-              width={80}
-              height={80}
+              width={60}
+              height={60}
               sx={{ borderRadius: "12px" }}
             />
           ))}

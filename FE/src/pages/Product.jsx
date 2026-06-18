@@ -281,7 +281,7 @@ function Product() {
 
   return (
     <Layout>
-      <div className="grid grid-cols-[1.2fr_2fr_1.2fr] gap-6 py-6">
+      <div className="grid grid-cols-[minmax(0,1.2fr)_minmax(0,2fr)_minmax(0,1.2fr)] gap-6 py-6">
         {isError && <div>Error mengambil data</div>}
 
         <ProductGallery
