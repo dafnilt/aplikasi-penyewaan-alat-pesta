@@ -75,15 +75,23 @@ function Product() {
   const [notes, setNotes] = useState("");
 
   useEffect(() => {
-    const initialVariants = variantTypes.reduce((acc, variant) => {
-      if (variant.options?.[0]) {
-        acc[variant.idVariant] = variant.options[0].idOption;
+    if (!variantTypes.length) return;
+
+    setSelectedVariantOptionIds((prev) => {
+      if (Object.keys(prev).length > 0) {
+        return prev;
       }
 
-      return acc;
-    }, {});
+      const initialVariants = variantTypes.reduce((acc, variant) => {
+        if (variant.options?.[0]) {
+          acc[variant.idVariant] = variant.options[0].idOption;
+        }
 
-    setSelectedVariantOptionIds(initialVariants);
+        return acc;
+      }, {});
+
+      return initialVariants;
+    });
   }, [variantTypes]);
 
   const handleVariantSelect = (variantId, optionId) => {
@@ -145,18 +153,28 @@ function Product() {
   };
 
   const handleOpenUpsellModal = async () => {
-    if (!productId) {
-      return;
-    }
-
-    if (hasVariants && !selectedCombinationId) {
-      return;
-    }
+    if (!productId) return;
+    if (hasVariants && !selectedCombinationId) return;
 
     const guestId = localStorage.getItem("guestId");
 
-    if (!guestId) {
-      localStorage.setItem("guestId", guestId);
+    const storedCartDates = localStorage.getItem("cartDates");
+    let parsedCartDates = null;
+
+    try {
+      parsedCartDates = storedCartDates ? JSON.parse(storedCartDates) : null;
+    } catch (e) {
+      parsedCartDates = null;
+    }
+
+    const isSameDate =
+      parsedCartDates &&
+      parsedCartDates.startDate === startDate &&
+      parsedCartDates.endDate === endDate;
+
+    if (!isSameDate) {
+      await handleAddToCart();
+      return;
     }
 
     try {
@@ -185,8 +203,6 @@ function Product() {
       }
 
       setUpsellProduct(recommendedProduct);
-      setUpsellMessage("");
-      setUpsellCartId("");
       setOpenUpsellModal(true);
     } catch (error) {
       console.error("Gagal mengambil rekomendasi upsell", error);
@@ -256,7 +272,7 @@ function Product() {
         }
 
         notification.success({
-          message: "Produk berhasil ditambahkan ke keranjang",
+          title: "Produk berhasil ditambahkan ke keranjang",
           placement: "topRight",
           style: {
             borderRadius: "16px",
@@ -268,7 +284,7 @@ function Product() {
     } catch (error) {
       setUpsellMessage("Gagal menambahkan item ke keranjang.");
       notification.error({
-        message: error?.response?.data?.message,
+        title: "Lengkapi keranjang belanja Anda sebelum mengubah tanggal penyewaan.",
         placement: "topRight",
         style: {
           borderRadius: "16px",

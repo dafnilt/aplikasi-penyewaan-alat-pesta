@@ -104,7 +104,7 @@ function CartList({ items, setItems, onRefresh }) {
       }, 100);
 
       notification.success({
-        message: "Item berhasil dihapus dari keranjang",
+        title: "Item berhasil dihapus dari keranjang",
         placement: "topRight",
         style: {
           borderRadius: "16px",
@@ -114,7 +114,7 @@ function CartList({ items, setItems, onRefresh }) {
       });
     } catch (error) {
       notification.error({
-        message: error?.response?.data?.message,
+        title: error?.response?.data?.title,
       });
     }
   };
