@@ -95,7 +95,7 @@ function UpsellModal({
               disabled={!canAddToCart}
               className="w-full bg-black mt-4 border text-white font-semibold py-2 rounded-2xl disabled:cursor-not-allowed disabled:opacity-60"
             >
-              Tidak, lihat keranjang
+              Tetap dengan pilihan ini
             </button>
           </div>
         </div>

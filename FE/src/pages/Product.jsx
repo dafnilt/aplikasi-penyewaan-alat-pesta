@@ -72,6 +72,8 @@ function Product() {
 
   const [selectedVariantOptionIds, setSelectedVariantOptionIds] = useState({});
 
+  const [notes, setNotes] = useState("");
+
   useEffect(() => {
     const initialVariants = variantTypes.reduce((acc, variant) => {
       if (variant.options?.[0]) {
@@ -116,8 +118,7 @@ function Product() {
   const subtotal = productPrice * qty * totalDays;
 
   const selectedCombinationId =
-    selectedVariantCombination?.idCombination ??
-    selectedVariantCombination?.combinationId ??
+    selectedVariantCombination?.idVariantCombination ??
     selectedVariantCombination?.idVariantCombination;
 
   const increaseQty = () => {
@@ -165,6 +166,7 @@ function Product() {
         endDate,
         quantity: qty,
         guestId,
+        notes,
       };
 
       if (selectedCombinationId) {
@@ -231,10 +233,11 @@ function Product() {
         quantity: qty,
         startDate,
         endDate,
+        notes,
       };
 
       if (selectedCombinationId) {
-        payload.combinationId = selectedCombinationId;
+        payload.idVariantCombination = selectedCombinationId;
       }
 
       const response = await addToCart(payload);
@@ -327,6 +330,8 @@ function Product() {
           canAddToCart={Boolean(
             productId && qty > 0 && (!hasVariants || selectedCombinationId),
           )}
+          notes={notes}
+          setNotes={setNotes}
         />
       </div>
 

@@ -7,18 +7,20 @@ export function useAddToCart() {
     mutationFn: async ({
       guestId,
       idProduct,
-      combinationId,
+      idVariantCombination,
       quantity,
       startDate,
       endDate,
+      notes,
     }) => {
       const response = await privateApi.post("/carts/", {
         guestId,
         idProduct,
-        combinationId,
+        idVariantCombination,
         quantity,
         startDate: formatApiDateTime(startDate),
         endDate: formatApiDateTime(endDate),
+        notes,
       });
 
       return response.data?.data ?? response.data ?? null;

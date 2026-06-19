@@ -39,7 +39,9 @@ function ProductInfo({
 
           <div className="text-lg font-semibold">
             Rp {formatPrice(productPrice)}
-            {!allVariantsSelected ? ` - ${formatPrice(productMaxPrice)}` : ""}
+            {productPrice !== productMaxPrice && (
+              <> - {formatPrice(productMaxPrice)}</>
+            )}
           </div>
 
           <div className="text-md self-end">/{productPriceUnit}</div>

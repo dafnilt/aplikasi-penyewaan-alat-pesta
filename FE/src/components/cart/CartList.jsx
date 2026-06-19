@@ -41,10 +41,9 @@ function CartList({ items, setItems, onRefresh }) {
             ...prev,
             [id]: true,
           }));
-          return it; // stop, jangan update qty
+          return it;
         }
 
-        // kalau valid, hilangkan warning
         setStockWarning((prev) => ({
           ...prev,
           [id]: false,
@@ -81,9 +80,9 @@ function CartList({ items, setItems, onRefresh }) {
         price,
         subtotal: qty * price,
         stock,
-        variants: Array.isArray(item.variants)
-          ? item.variants.join(", ")
-          : (item.size ?? ""),
+        variants: Array.isArray(item.variantCombination?.variants)
+          ? item.variantCombination.variants.join(", ")
+          : "",
       };
     });
   }, [items]);
@@ -136,7 +135,7 @@ function CartList({ items, setItems, onRefresh }) {
 
             <div className="flex flex-col justify-center gap-1">
               <div className="font-semibold">{item.name}</div>
-              <div className="text-sm text-[#6F6F6F]">{item.category}</div>
+              {/* <div className="text-sm text-[#6F6F6F]">{item.category}</div> */}
               <div className="text-sm text-[#6F6F6F]">{item.variants}</div>
               <div className="font-semibold pt-1">
                 Rp {formatPrice(item.price)}
