@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import SortableTable from "../components/SortableTable";
+import SortableTable from "../components/admin/SortableTable";
 import Skeleton from "@mui/material/Skeleton";
 import LayoutAdmin from "../layout/LayoutAdmin";
 import { useAdminList } from "../hooks/useAdminList";
@@ -9,9 +9,9 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Button from "@mui/material/Button";
 import AddIcon from '@mui/icons-material/Add';
-import AddAdminModal from "../components/AddAdminModal";
-import ChangeAdminModal from "../components/ChangeAdminModal";
-import DeleteAdminModal from "../components/DeleteAdminModal";
+import AddAdminModal from "../components/admin/AddAdminModal";
+import ChangeAdminModal from "../components/admin/ChangeAdminModal";
+import DeleteAdminModal from "../components/admin/DeleteAdminModal";
 
 function AdminAccounts() {
     const [rows, setRows] = useState([]);

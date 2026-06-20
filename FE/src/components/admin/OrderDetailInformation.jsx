@@ -1,5 +1,5 @@
-import { getStatusColor } from "../utils/getStatusColor";
-import { formatDateTimeOrder } from "../utils/formatDateTime";
+import { getStatusColor } from "../../utils/getStatusColor";
+import { formatDateTimeOrder } from "../../utils/formatDateTime";
 
 function OrderDetailInformation({ order }) {
   return (

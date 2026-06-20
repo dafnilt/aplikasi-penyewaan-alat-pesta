@@ -4,7 +4,7 @@ import {
   Button,
 } from "@mui/material";
 import { useState } from "react";
-import { useDeleteAdmin } from "../hooks/useDeleteAdmin";
+import { useDeleteAdmin } from "../../hooks/useDeleteAdmin";
 import ErrorOutlineOutlinedIcon from '@mui/icons-material/ErrorOutlineOutlined';
 import { notification } from "antd";
 
