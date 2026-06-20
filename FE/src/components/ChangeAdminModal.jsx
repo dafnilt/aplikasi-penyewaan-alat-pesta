@@ -8,6 +8,8 @@ import {
 import { useEffect, useState } from "react";
 import { useChangeAdmin } from "../hooks/useChangeAdmin";
 import { notification } from "antd";
+import { textFieldStyle } from "../utils/textFieldStyle";
+import { checkboxStyle } from "../utils/checkboxStyle";
 
 function ChangeAdminModal ({ open, onClose, onSuccess, adminData }) {
     const [id, setId] = useState("");
@@ -109,12 +111,7 @@ function ChangeAdminModal ({ open, onClose, onSuccess, adminData }) {
                       size="small"
                       value={fullName}
                       onChange={(e) => setFullName(e.target.value)}
-                      sx={{
-                        "& .MuiOutlinedInput-root": {
-                          borderRadius: "999px",
-                          height: "28px",
-                        },
-                      }}
+                      sx={textFieldStyle}
                     />
                   </div>
                   
@@ -126,12 +123,7 @@ function ChangeAdminModal ({ open, onClose, onSuccess, adminData }) {
                       onChange={handleUsernameChange}
                       error={Boolean(usernameError)}
                       helperText={usernameError}
-                      sx={{
-                        "& .MuiOutlinedInput-root": {
-                          borderRadius: "999px",
-                          height: "28px",
-                        },
-                      }}
+                      sx={textFieldStyle}
                     />
                   </div>
 
@@ -143,16 +135,7 @@ function ChangeAdminModal ({ open, onClose, onSuccess, adminData }) {
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       placeholder="Kosongkan jika tidak ingin diubah"
-                      sx={{
-                        "& .MuiOutlinedInput-root": {
-                            borderRadius: "999px",
-                            height: "28px",
-                        },
-                        "& input::placeholder": {
-                            fontSize: "12px",
-                            color: "#373737",
-                        },
-                      }}
+                      sx={textFieldStyle}
                     />
                   </div>
 
@@ -161,13 +144,7 @@ function ChangeAdminModal ({ open, onClose, onSuccess, adminData }) {
                     <Checkbox
                       checked={isActive}
                       onChange={(e) => setIsActive(e.target.checked)}
-                      sx={{
-                        p: 0,
-                        color: "#1f1f1f",
-                        "&.Mui-checked": {
-                          color: "#1f1f1f",
-                        },
-                      }}
+                      sx={checkboxStyle}
                     />
                   </div>
                 </div>
