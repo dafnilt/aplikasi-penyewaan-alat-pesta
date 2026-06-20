@@ -9,27 +9,28 @@ import {
 import { useEffect, useState } from "react";
 import { useChangeStatusOrder } from "../hooks/useChangeStatusOrder";
 import { notification } from "antd";
+import { textFieldStyle } from "../utils/textFieldStyle";
 
 const statusIdMap = {
-  "Pending Payment": "1",
-  "Down Payment 50%": "2",
-  "Fully Paid": "3",
-  "Completed": "4",
+  "Belum Bayar": "1",
+  "Bayar 50%": "2",
+  "Bayar Lunas": "3",
+  "Selesai": "4",
 };
 
 const statusOptionsByCurrentStatus = {
-  "Pending Payment": [
+  "Belum Bayar": [
     { value: "2", label: "Sudah bayar 50%" },
   ],
-  "Down Payment 50%": [
+  "Bayar 50%": [
     { value: "1", label: "Belum bayar" },
     { value: "3", label: "Sudah bayar lunas" },
   ],
-  "Fully Paid": [
+  "Bayar Lunas": [
     { value: "2", label: "Sudah bayar 50%" },
-    { value: "4", label: "Completed" },
+    { value: "4", label: "Selesai" },
   ],
-  "Completed": [
+  "Selesai": [
     { value: "3", label: "Sudah bayar lunas" },
   ],
 };
@@ -109,15 +110,11 @@ function ChangeStatusOrderModal({ open, onClose, orderId, currentStatus, onSucce
           <div>Ganti status pembayaran ke:</div>
         </div>
 
-        <FormControl fullWidth size="small">
+        <FormControl fullWidth size="small" sx={textFieldStyle}>
           <Select
             value={statusId}
             onChange={(e) => setStatusId(e.target.value)}
             displayEmpty
-            sx={{
-              borderRadius: "10px",
-              height: "40px",
-            }}
           >
             <MenuItem value="" disabled>
               Pilih status baru
