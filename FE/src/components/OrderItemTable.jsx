@@ -28,6 +28,7 @@ function OrderItemTable({ items = [] }) {
               <TableCell>Jumlah</TableCell>
               <TableCell>Harga Satuan</TableCell>
               <TableCell>Subtotal</TableCell>
+              <TableCell>Notes</TableCell>
             </TableRow>
           </TableHead>
 
@@ -44,6 +45,7 @@ function OrderItemTable({ items = [] }) {
                 <TableCell>{item.quantity}</TableCell>
                 <TableCell>Rp {formatPrice(item.pricePerItem)}</TableCell>
                 <TableCell>Rp {formatPrice(item.subtotal)}</TableCell>
+                <TableCell>{item.notes || "-"}</TableCell>
               </TableRow>
             ))}
           </TableBody>
