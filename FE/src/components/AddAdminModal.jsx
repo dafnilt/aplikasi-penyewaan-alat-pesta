@@ -8,6 +8,8 @@ import {
 import { useState } from "react";
 import { useAddAdmin } from "../hooks/useAddAdmin";
 import { notification } from "antd";
+import { textFieldStyle } from "../utils/textFieldStyle";
+import { checkboxStyle } from "../utils/checkboxStyle";
 
 function AddAdminModal ({ open, onClose, onSuccess }) {
     const [username, setUsername] = useState("");
@@ -100,12 +102,7 @@ function AddAdminModal ({ open, onClose, onSuccess }) {
                       size="small"
                       value={fullName}
                       onChange={(e) => setFullName(e.target.value)}
-                      sx={{
-                        "& .MuiOutlinedInput-root": {
-                          borderRadius: "999px",
-                          height: "28px",
-                        },
-                      }}
+                      sx={textFieldStyle}
                     />
                   </div>
 
@@ -117,12 +114,7 @@ function AddAdminModal ({ open, onClose, onSuccess }) {
                       onChange={handleUsernameChange}
                       error={Boolean(usernameError)}
                       helperText={usernameError}
-                      sx={{
-                        "& .MuiOutlinedInput-root": {
-                          borderRadius: "999px",
-                          height: "28px",
-                        },
-                      }}
+                      sx={textFieldStyle}
                     />
                   </div>
 
@@ -133,12 +125,7 @@ function AddAdminModal ({ open, onClose, onSuccess }) {
                       type="password"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
-                      sx={{
-                        "& .MuiOutlinedInput-root": {
-                          borderRadius: "999px",
-                          height: "28px",
-                        },
-                      }}
+                      sx={textFieldStyle}
                     />
                   </div>
 
@@ -147,13 +134,7 @@ function AddAdminModal ({ open, onClose, onSuccess }) {
                     <Checkbox
                       checked={isActive}
                       onChange={(e) => setIsActive(e.target.checked)}
-                      sx={{
-                        p: 0,
-                        color: "#1f1f1f",
-                        "&.Mui-checked": {
-                          color: "#1f1f1f",
-                        },
-                      }}
+                      sx={checkboxStyle}
                     />
                   </div>
                 </div>
