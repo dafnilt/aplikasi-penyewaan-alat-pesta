@@ -7,19 +7,26 @@ import PaymentsIcon from '@mui/icons-material/Payments';
 import { useOrderPage } from "../hooks/useOrderPage";
 import LayoutAdmin from "../layout/LayoutAdmin";
 import ChangeStatusOrderModal from "../components/ChangeStatusOrderModal";
-import SortableTable from "../components/SortableTable";
+import ServerSortableTable from "../components/ServerSortableTable";
 import { getStatusColor } from "../utils/getStatusColor";
-import { getStatusText } from "../utils/getStatusText";
 import { formatPrice } from "../utils/formatPrice";
 import { formatDateTimeOrder } from "../utils/formatDateTime";
 
 function OrderList() {
-  const [rows, setRows] = useState([]);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [openStatusModal, setOpenStatusModal] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [orders, setOrders] = useState([]);
+  const [pagination, setPagination] = useState({
+    totalItems: 0,
+  });
+
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [orderBy, setOrderBy] = useState("updatedAt");
+  const [order, setOrder] = useState("desc");
 
   const handleOpenStatusModal = (row) => {
     setSelectedOrder(row);
@@ -67,7 +74,7 @@ function OrderList() {
           className="px-3 py-1 rounded-full text-xs text-white text-center"
           style={{ backgroundColor: getStatusColor(value) }}
         >
-          {getStatusText(value)}
+          {value}
         </div>
       ),
     },
@@ -99,8 +106,14 @@ function OrderList() {
     try {
       if (showLoading) setLoading(true);
 
-      const response = await useOrderPage();
-      setRows(response.data);
+      const response = await useOrderPage({
+        page,
+        pageSize: rowsPerPage,
+        sortBy: orderBy,
+        sortOrder: order,
+      });
+      setOrders(response.data.orders);
+      setPagination(response.data.pagination)
     } catch (error) {
       console.error(error);
     } finally {
@@ -110,7 +123,22 @@ function OrderList() {
 
   useEffect(() => {
     fetchOrders();
-  }, []);
+  }, [page, rowsPerPage, orderBy, order]);
+
+  const handleSort = (property, newOrder) => {
+    setOrderBy(property);
+    setOrder(newOrder);
+    setPage(0);
+  };
+
+  const handleChangePage = (_, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
 
   if (loading) {
     return (
@@ -128,12 +156,17 @@ function OrderList() {
         <div className="text-sm font-semibold text-[#1f1f1f] mb-6">
           Daftar Pesanan
         </div>
-
-        <SortableTable
+        <ServerSortableTable
           columns={columns}
-          rows={rows}
-          defaultOrderBy="updatedAt"
-          defaultOrder="desc"
+          rows={orders}
+          totalItems={pagination.totalItems}
+          page={page}
+          rowsPerPage={rowsPerPage}
+          order={order}
+          orderBy={orderBy}
+          onSort={handleSort}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
           emptyMessage="Belum ada data pesanan"
         />
       </div>
