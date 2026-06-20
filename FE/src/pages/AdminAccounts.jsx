@@ -51,7 +51,7 @@ function AdminAccounts() {
             render: (_, __, index) => index + 1 },
         { id: "username", label: "Username"},
         { id: "fullName", label: "Full Name"},
-        { id: "role", label: "Role"},
+        { id: "role", label: "Role", sortable: false },
         { id: "isActive" , label: "Status", 
             render: (value) => (
                 <div 
@@ -64,7 +64,8 @@ function AdminAccounts() {
         },
         {
             id: "actions",
-            label: "Actions",
+            label: "Aksi",
+            sortable: false,
             render: (_, row) => (
                 <div className="flex item-center gap-2">
                     <IconButton
@@ -136,7 +137,8 @@ function AdminAccounts() {
             <SortableTable
                 columns={columns}
                 rows={rows}
-                defaultSort={{ columnId: "username", direction: "asc" }}
+                defaultOrderBy="createdAt"
+                defaultOrder="asc"
                 emptyMessage="Tidak ada akun admin yang tersedia."
             />
             <AddAdminModal
