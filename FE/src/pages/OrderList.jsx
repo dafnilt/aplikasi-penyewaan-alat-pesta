@@ -11,6 +11,10 @@ import ServerSortableTable from "../components/ServerSortableTable";
 import { getStatusColor } from "../utils/getStatusColor";
 import { formatPrice } from "../utils/formatPrice";
 import { formatDateTimeOrder } from "../utils/formatDateTime";
+import TextField from "@mui/material/TextField";
+import { textFieldStyle } from "../utils/textFieldStyle";
+import SearchIcon from "@mui/icons-material/Search";
+import InputAdornment from "@mui/material/InputAdornment";
 
 function OrderList() {
   const navigate = useNavigate();
@@ -24,9 +28,11 @@ function OrderList() {
   });
 
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const rowsPerPage = 10;
   const [orderBy, setOrderBy] = useState("updatedAt");
   const [order, setOrder] = useState("desc");
+  const [searchInput, setSearchInput] = useState("");
+  const [search, setSearch] = useState("");
 
   const handleOpenStatusModal = (row) => {
     setSelectedOrder(row);
@@ -60,7 +66,7 @@ function OrderList() {
         </div>
       ),
     },
-    { id: "phoneNumber", label: "Nomor Telepon" },
+    { id: "phoneNumber", label: "Nomor Telepon", sortable: false },
     {
       id: "totalPrice",
       label: "Total Harga",
@@ -81,6 +87,7 @@ function OrderList() {
     {
       id: "action",
       label: "Aksi",
+      sortable: false,
       render: (_, row) => (
         <div className="flex items-center gap-1">
           <IconButton
@@ -111,6 +118,7 @@ function OrderList() {
         pageSize: rowsPerPage,
         sortBy: orderBy,
         sortOrder: order,
+        search,
       });
       setOrders(response.data.orders);
       setPagination(response.data.pagination)
@@ -123,7 +131,7 @@ function OrderList() {
 
   useEffect(() => {
     fetchOrders();
-  }, [page, rowsPerPage, orderBy, order]);
+  }, [page, orderBy, order, search]);
 
   const handleSort = (property, newOrder) => {
     setOrderBy(property);
@@ -133,11 +141,6 @@ function OrderList() {
 
   const handleChangePage = (_, newPage) => {
     setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
   };
 
   if (loading) {
@@ -153,8 +156,42 @@ function OrderList() {
   return (
     <LayoutAdmin className="bg-[#F3F3F3] min-h-screen" isModalOpen={isModalOpen}>
       <div>
-        <div className="text-sm font-semibold text-[#1f1f1f] mb-6">
-          Daftar Pesanan
+        <div className="flex items-center justify-between mb-6">
+          <div className="text-sm font-semibold text-[#1f1f1f]">
+            Daftar Pesanan
+          </div>
+
+          <TextField
+            size="small"
+            placeholder="Search"
+            value={searchInput}
+            onChange={(e) => setSearchInput(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                setSearch(searchInput.trim());
+                setPage(0);
+              }
+            }}
+            sx={textFieldStyle}
+            slotProps={{
+              input: {
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      edge="end"
+                      size="small"
+                      onClick={() => {
+                        setSearch(searchInput.trim());
+                        setPage(0);
+                      }}
+                    >
+                      <SearchIcon fontSize="small" />
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              },
+            }}
+          />
         </div>
         <ServerSortableTable
           columns={columns}
@@ -166,7 +203,6 @@ function OrderList() {
           orderBy={orderBy}
           onSort={handleSort}
           onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
           emptyMessage="Belum ada data pesanan"
         />
       </div>
