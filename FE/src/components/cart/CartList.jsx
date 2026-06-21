@@ -12,21 +12,6 @@ function CartList({ items, setItems, onRefresh }) {
   const { mutate: deleteCartItem } = useDeleteCartItem();
 
   const matchesItemId = (item, id) => item.idCartItem === id;
-  const [stockWarning, setStockWarning] = useState({});
-
-  const updateQty = (id, nextQty) => {
-    setItems((prev) =>
-      prev.map((it) =>
-        it.idCartItem === id ? { ...it, quantity: nextQty } : it,
-      ),
-    );
-
-    updateCartItem({
-      guestId: localStorage.getItem("guestId"),
-      idCartItem: id,
-      quantity: nextQty,
-    });
-  };
 
   const changeQty = (id, delta, maxStock) => {
     setItems((prev) => {
@@ -35,20 +20,6 @@ function CartList({ items, setItems, onRefresh }) {
 
         const currentQty = Number(it.quantity) || 1;
         const nextQty = currentQty + delta;
-
-        if (nextQty > maxStock) {
-          setStockWarning((prev) => ({
-            ...prev,
-            [id]: true,
-          }));
-          return it;
-        }
-
-        setStockWarning((prev) => ({
-          ...prev,
-          [id]: false,
-        }));
-
         const safeQty = Math.max(1, nextQty);
 
         updateCartItem({
@@ -161,19 +132,6 @@ function CartList({ items, setItems, onRefresh }) {
                 const nextQty = Number(value);
                 if (Number.isNaN(nextQty)) return;
 
-                if (nextQty > item.stock) {
-                  setStockWarning((prev) => ({
-                    ...prev,
-                    [item.idCartItem]: true,
-                  }));
-                  return;
-                }
-
-                setStockWarning((prev) => ({
-                  ...prev,
-                  [item.idCartItem]: false,
-                }));
-
                 setItems((current) =>
                   current.map((it) =>
                     matchesItemId(it, item.idCartItem)
@@ -184,11 +142,9 @@ function CartList({ items, setItems, onRefresh }) {
               }}
             />
 
-            {stockWarning[item.idCartItem] && (
               <div className="text-xs text-red-600 font-medium mt-2 text-center">
                 Stok tersedia = {item.stock}
               </div>
-            )}
           </div>
 
           <div className="text-center font-semibold">

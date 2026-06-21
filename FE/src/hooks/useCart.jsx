@@ -9,10 +9,11 @@ export function useAddToCart() {
       idProduct,
       idVariantCombination,
       quantity,
-      startDate,
-      endDate,
       notes,
     }) => {
+      const startDate = localStorage.getItem("lastStartDate");
+      const endDate = localStorage.getItem("lastEndDate");
+
       const response = await privateApi.post("/carts/", {
         guestId,
         idProduct,

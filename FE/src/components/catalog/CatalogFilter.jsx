@@ -32,21 +32,29 @@ function CatalogFilter({
   const { RangePicker } = DatePicker;
 
   const handleUseCartDates = () => {
-  const savedCartDates = localStorage.getItem("cartDates");
+    const savedCartDates = localStorage.getItem("cartDates");
 
-  if (!savedCartDates) {
-    return;
-  }
+    if (!savedCartDates) return;
 
-  try {
-    const { startDate, endDate } = JSON.parse(savedCartDates);
+    try {
+      const parsed = JSON.parse(savedCartDates);
 
-    setStartDate(startDate ? new Date(startDate) : null);
-    setEndDate(endDate ? new Date(endDate) : null);
-  } catch (error) {
-    console.error("Gagal membaca cartDates:", error);
-  }
-};
+      const start = parsed?.startDate ? new Date(parsed.startDate) : null;
+      const end = parsed?.endDate ? new Date(parsed.endDate) : null;
+      setStartDate(start);
+      setEndDate(end);
+      
+      if (start) {
+        localStorage.setItem("lastStartDate", start.toISOString());
+      }
+
+      if (end) {
+        localStorage.setItem("lastEndDate", end.toISOString());
+      }
+    } catch (error) {
+      console.error("Gagal membaca cartDates:", error);
+    }
+  };
 
   return (
     <div className="flex items-center justify-between py-2">
