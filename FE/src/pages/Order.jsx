@@ -6,6 +6,7 @@ import OrderSummary from "../components/order/OrderSummary";
 import { useShipping, useCheckout, useOrderSummary } from "../hooks/useOrder";
 import { useNavigate } from "react-router-dom";
 import { Empty, Skeleton } from "antd";
+import { formatDateTime } from "../utils/formatDateTime";
 
 function Order() {
   const navigate = useNavigate();
@@ -58,12 +59,19 @@ function Order() {
 
   const { mutate: checkout, isPending } = useCheckout();
 
+  const cartDates = JSON.parse(localStorage.getItem("cartDates") || "{}");
+  const startDate = cartDates.startDate;
+  const endDate = cartDates.endDate;
   return (
     <Layout>
       <div className="pt-6 pb-2 text-sm flex items-center justify-between gap-2 border-b border-gray-300">
         <div className="text-lg font-semibold">Pesanan</div>
 
-        <div className="text-sm text-gray-600">Tanggal Penyewaan :</div>
+        <div className="text-sm text-gray-600">
+          Tanggal Penyewaan :{" "}
+          {cartDates.startDate ? formatDateTime(cartDates.startDate) : "-"} -{" "}
+          {cartDates.endDate ? formatDateTime(cartDates.endDate) : "-"}
+        </div>
       </div>
 
       <div className="grid grid-cols-2 gap-8 py-6">

@@ -1,6 +1,8 @@
 import { jabodetabekCities } from "../../utils/jabodetabekCities";
 
 function CustomerForm({ form, setForm, touched, setTouched, onSave }) {
+  const isPhoneValid = form.phone.length >= 9 && form.phone.length <= 13;
+
   return (
     <div className="flex flex-col gap-4">
       <div className="font-semibold text-lg text-center">Data Pemesan</div>
@@ -140,7 +142,7 @@ function CustomerForm({ form, setForm, touched, setTouched, onSave }) {
               onChange={(e) =>
                 setForm((prev) => ({
                   ...prev,
-                  phone: e.target.value.replace(/\D/g, ""),
+                  phone: e.target.value.replace(/\D/g, "").slice(0, 13),
                 }))
               }
               onBlur={() =>
@@ -156,6 +158,14 @@ function CustomerForm({ form, setForm, touched, setTouched, onSave }) {
           {touched.phone && !form.phone && (
             <p className="text-xs text-red-500">Nomor telepon wajib diisi</p>
           )}
+          
+          {touched.phone &&
+            form.phone &&
+            (form.phone.length < 9 || form.phone.length > 13) && (
+              <p className="text-xs text-red-500">
+                Nomor telepon harus terdiri dari 9 sampai 13 digit
+              </p>
+            )}
         </div>
       </div>
 
