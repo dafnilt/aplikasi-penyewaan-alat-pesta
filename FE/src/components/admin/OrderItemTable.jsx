@@ -5,7 +5,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { formatPrice } from "../utils/formatPrice";
+import { formatPrice } from "../../utils/formatPrice";
 
 function OrderItemTable({ items = [] }) {
   return (
@@ -28,6 +28,7 @@ function OrderItemTable({ items = [] }) {
               <TableCell>Jumlah</TableCell>
               <TableCell>Harga Satuan</TableCell>
               <TableCell>Subtotal</TableCell>
+              <TableCell>Notes</TableCell>
             </TableRow>
           </TableHead>
 
@@ -44,6 +45,7 @@ function OrderItemTable({ items = [] }) {
                 <TableCell>{item.quantity}</TableCell>
                 <TableCell>Rp {formatPrice(item.pricePerItem)}</TableCell>
                 <TableCell>Rp {formatPrice(item.subtotal)}</TableCell>
+                <TableCell>{item.notes || "-"}</TableCell>
               </TableRow>
             ))}
           </TableBody>

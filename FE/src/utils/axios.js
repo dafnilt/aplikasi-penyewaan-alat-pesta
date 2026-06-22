@@ -9,11 +9,13 @@ export const privateApi = axios.create({
   headers: {
     "Content-Type": "application/json",
   },
+  timeout: 10000,
 });
 
 export const authApi = axios.create({
   baseURL,
   withCredentials: true,
+  timeout: 30000,
   headers: {
     "Content-Type": "application/json",
   },
@@ -22,6 +24,7 @@ export const authApi = axios.create({
 export const adminApi = axios.create({
   baseURL,
   withCredentials: true,
+  timeout: 30000,
   headers: {
     "Content-Type": "application/json",
   },

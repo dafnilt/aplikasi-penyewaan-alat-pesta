@@ -1,4 +1,4 @@
-import { formatPrice } from "../utils/formatPrice";
+import { formatPrice } from "../../utils/formatPrice";
 
 function OrderDetailSummary({ order, totalDays }) {
   const productPrice = (order?.items || []).reduce(

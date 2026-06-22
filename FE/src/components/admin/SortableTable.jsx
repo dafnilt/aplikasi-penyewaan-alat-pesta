@@ -76,17 +76,25 @@ function SortableTable({
       <Table>
         <TableHead>
           <TableRow>
-            {columns.map((column) => (
-              <TableCell key={column.id}>
-                <TableSortLabel
-                  active={orderBy === column.id}
-                  direction={orderBy === column.id ? order : "asc"}
-                  onClick={() => handleRequestSort(column.id)}
-                >
-                  {column.label}
-                </TableSortLabel>
-              </TableCell>
-            ))}
+            {columns.map((column) => {
+            const isSortable = column.sortable !== false;
+
+            return (
+                <TableCell key={column.id}>
+                {isSortable ? (
+                    <TableSortLabel
+                    active={orderBy === column.id}
+                    direction={orderBy === column.id ? order : "asc"}
+                    onClick={() => handleRequestSort(column.id)}
+                    >
+                    {column.label}
+                    </TableSortLabel>
+                ) : (
+                    column.label
+                )}
+                </TableCell>
+            );
+            })}
           </TableRow>
         </TableHead>
 
@@ -117,9 +125,8 @@ function SortableTable({
         count={rows.length}
         page={page}
         rowsPerPage={rowsPerPage}
-        rowsPerPageOptions={[5, 10, 25]}
+        rowsPerPageOptions={10}
         onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
         labelRowsPerPage="Data per halaman"
       />
     </TableContainer>

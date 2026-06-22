@@ -5,9 +5,9 @@ import Skeleton from "@mui/material/Skeleton";
 import LayoutAdmin from "../layout/LayoutAdmin";
 import { useOrderDetail } from "../hooks/useOrderDetail";
 import { getTotalDays } from "../utils/getTotalDays";
-import OrderDetailInformation from "../components/OrderDetailInformation";
-import OrderItemTable from "../components/OrderItemTable";
-import OrderDetailSummary from "../components/OrderDetailSummary";
+import OrderDetailInformation from "../components/admin/OrderDetailInformation";
+import OrderItemTable from "../components/admin/OrderItemTable";
+import OrderDetailSummary from "../components/admin/OrderDetailSummary";
 
 function OrderDetail() {
   const { orderId } = useParams();

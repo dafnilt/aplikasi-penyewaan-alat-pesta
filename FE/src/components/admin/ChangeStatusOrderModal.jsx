@@ -7,28 +7,30 @@ import {
   Button,
 } from "@mui/material";
 import { useEffect, useState } from "react";
-import { useChangeStatusOrder } from "../hooks/useChangeStatusOrder";
+import { useChangeStatusOrder } from "../../hooks/useChangeStatusOrder";
+import { notification } from "antd";
+import { textFieldStyle } from "../../utils/textFieldStyle";
 
 const statusIdMap = {
-  "Pending Payment": "1",
-  "Down Payment 50%": "2",
-  "Fully Paid": "3",
-  "Completed": "4",
+  "Belum Bayar": "1",
+  "Bayar 50%": "2",
+  "Bayar Lunas": "3",
+  "Selesai": "4",
 };
 
 const statusOptionsByCurrentStatus = {
-  "Pending Payment": [
+  "Belum Bayar": [
     { value: "2", label: "Sudah bayar 50%" },
   ],
-  "Down Payment 50%": [
+  "Bayar 50%": [
     { value: "1", label: "Belum bayar" },
     { value: "3", label: "Sudah bayar lunas" },
   ],
-  "Fully Paid": [
+  "Bayar Lunas": [
     { value: "2", label: "Sudah bayar 50%" },
-    { value: "4", label: "Completed" },
+    { value: "4", label: "Selesai" },
   ],
-  "Completed": [
+  "Selesai": [
     { value: "3", label: "Sudah bayar lunas" },
   ],
 };
@@ -51,10 +53,29 @@ function ChangeStatusOrderModal({ open, onClose, orderId, currentStatus, onSucce
     try {
       setLoading(true);
       await changeStatusOrder(orderId, statusId);
-      onSuccess();
+      notification.success({
+        message: "Status berhasil diubah",
+        description: `Status pesanan berhasil diubah menjadi "${options.find(opt => opt.value === statusId)?.label}".`,
+        placement: "topRight",
+        style: {
+          borderRadius: "16px",
+          border: "1px solid #74B559",
+          background: "#F8FCF6",
+        },
+      });
+      await onSuccess();
       onClose();
     } catch (error) {
-      console.error("Gagal mengubah status:", error.response?.data || error);
+      notification.error({
+        message: "Gagal mengubah status",
+        description: error.response?.data || "Terjadi kesalahan saat mengubah status.",
+        placement: "topRight",
+        style: {
+          borderRadius: "16px",
+          border: "1px solid #FFCCC7",
+          background: "#FFF2F0",
+        },
+      });
     } finally {
       setLoading(false);
     }
@@ -89,15 +110,11 @@ function ChangeStatusOrderModal({ open, onClose, orderId, currentStatus, onSucce
           <div>Ganti status pembayaran ke:</div>
         </div>
 
-        <FormControl fullWidth size="small">
+        <FormControl fullWidth size="small" sx={textFieldStyle}>
           <Select
             value={statusId}
             onChange={(e) => setStatusId(e.target.value)}
             displayEmpty
-            sx={{
-              borderRadius: "10px",
-              height: "40px",
-            }}
           >
             <MenuItem value="" disabled>
               Pilih status baru

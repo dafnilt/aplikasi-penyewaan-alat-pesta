@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import SortableTable from "../components/SortableTable";
+import SortableTable from "../components/admin/SortableTable";
 import Skeleton from "@mui/material/Skeleton";
 import LayoutAdmin from "../layout/LayoutAdmin";
 import { useAdminList } from "../hooks/useAdminList";
@@ -9,9 +9,9 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Button from "@mui/material/Button";
 import AddIcon from '@mui/icons-material/Add';
-import AddAdminModal from "../components/AddAdminModal";
-import ChangeAdminModal from "../components/ChangeAdminModal";
-import DeleteAdminModal from "../components/DeleteAdminModal";
+import AddAdminModal from "../components/admin/AddAdminModal";
+import ChangeAdminModal from "../components/admin/ChangeAdminModal";
+import DeleteAdminModal from "../components/admin/DeleteAdminModal";
 
 function AdminAccounts() {
     const [rows, setRows] = useState([]);
@@ -51,7 +51,7 @@ function AdminAccounts() {
             render: (_, __, index) => index + 1 },
         { id: "username", label: "Username"},
         { id: "fullName", label: "Full Name"},
-        { id: "role", label: "Role"},
+        { id: "role", label: "Role", sortable: false },
         { id: "isActive" , label: "Status", 
             render: (value) => (
                 <div 
@@ -64,7 +64,8 @@ function AdminAccounts() {
         },
         {
             id: "actions",
-            label: "Actions",
+            label: "Aksi",
+            sortable: false,
             render: (_, row) => (
                 <div className="flex item-center gap-2">
                     <IconButton
@@ -136,7 +137,8 @@ function AdminAccounts() {
             <SortableTable
                 columns={columns}
                 rows={rows}
-                defaultSort={{ columnId: "username", direction: "asc" }}
+                defaultOrderBy="createdAt"
+                defaultOrder="asc"
                 emptyMessage="Tidak ada akun admin yang tersedia."
             />
             <AddAdminModal

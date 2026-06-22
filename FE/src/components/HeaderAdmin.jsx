@@ -4,34 +4,51 @@ import { useNavigate } from "react-router-dom";
 import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
 import { useAuthMe } from "../hooks/useAuthMe";
 import { useLogout } from "../hooks/useLogout";
+import { notification } from "antd";
+import Skeleton from "@mui/material/Skeleton";
 
 function HeaderAdmin({ isSidebarOpen }) {
 	const [user, setUser] = useState(null);
+	const [loading, setLoading] = useState(true);
 	const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 	const navigate = useNavigate();
 	const logoutMutation = useLogout();
 
 	const fetchUser = async () => {
 		try {
+			setLoading(true);
 			const response = await useAuthMe();
 			setUser(response.data);
 		} catch (error) {
 			console.error(error);
-		} 
+		} finally {
+			setLoading(false);
+		}
 	};
 
 	const handleLogout = async () => {
-	try {	
-		await logoutMutation.mutateAsync();
-	} catch (error) {
-		console.error(error);
-	} finally {
-		navigate("/login");
-	}};
+		try {
+			await logoutMutation.mutateAsync();
+
+			notification.success({
+			message: "Logout berhasil",
+			description: "Anda berhasil logout.",
+			placement: "topRight",
+			});
+
+			navigate("/login");
+		} catch (error) {
+			notification.error({
+			message: "Logout gagal",
+			description: "Terjadi kesalahan saat logout.",
+			placement: "topRight",
+			});
+	}
+	};
 
 	useEffect(() => {
 		fetchUser();
-	}, []);
+	}, []);	
 	
 
 	return (
@@ -63,17 +80,34 @@ function HeaderAdmin({ isSidebarOpen }) {
 					}}
 					className={`flex items-center gap-3 rounded-lg px-3 py-2 transition hover:bg-gray-100`}
 				>
-					<AccountCircleRoundedIcon />
+					{loading ? (
+						<>
+							<Skeleton variant="circular" width={24} height={24} />
 
-					<div className="text-right pr-2">
-						<div className="text-sm font-medium text-[#1f1f1f]">
-							{user?.fullName || user?.username}
-						</div>
+							<div className="text-right pr-2">
+								<Skeleton width={100} height={20} />
+								<Skeleton width={60} height={16} />
+							</div>
+						</>
+					) : (
+						<>
+							<AccountCircleRoundedIcon />
 
-						<div className="text-xs text-gray-500">
-							{user?.groups?.includes("Admin") ? "Admin" : "Super Admin"}
-						</div>
-					</div>
+							<div className="text-right pr-2">
+								<div className="text-sm font-medium text-[#1f1f1f]">
+									{user?.fullName || user?.username}
+								</div>
+
+								<div className="text-xs text-gray-500">
+									{user?.groups?.includes("Admin")
+										? "Admin"
+										: user?.groups?.includes("Super Admin")
+										? "Super Admin"
+										: ""}
+								</div>
+							</div>
+						</>
+					)}
 				</button>
 
 				{isDropdownOpen ? (

@@ -5,36 +5,75 @@ import {
   TextField,
   Checkbox,
 } from "@mui/material";
-import { useEffect, useState } from "react";
-import { useChangeAdmin } from "../hooks/useChangeAdmin";
+import { useState } from "react";
+import { useAddAdmin } from "../../hooks/useAddAdmin";
+import { notification } from "antd";
+import { textFieldStyle } from "../../utils/textFieldStyle";
+import { checkboxStyle } from "../../utils/checkboxStyle";
 
-function ChangeAdminModal ({ open, onClose, onSuccess, adminData }) {
-    const [id, setId] = useState("");
+function AddAdminModal ({ open, onClose, onSuccess }) {
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
     const [fullName, setFullName] = useState("");
     const [isActive, setIsActive] = useState(true);
     const [loading, setLoading] = useState(false);
-    const changeAdmin = useChangeAdmin;
-
-    useEffect(() => {
-        setId(adminData?.id || "");
-        setFullName(adminData?.fullName || "");
-        setIsActive(adminData?.isActive || false);
-    }, [adminData]);
+    const [usernameError, setUsernameError] = useState("");
+    const addAdmin = useAddAdmin;
 
     const handleSave = async () => {
-        if (!id || !fullName) return;
+        if (!username || !password || !fullName) return;
 
         try {
             setLoading(true);
-            await changeAdmin(id, fullName, isActive);
+            await addAdmin(username, password, fullName, isActive);
             onSuccess();
             onClose();
+            notification.success({
+                message: "Admin berhasil ditambahkan",
+                description: `Admin dengan username "${username}" berhasil ditambahkan.`,
+                placement: "topRight",
+                style: {
+                  borderRadius: "16px",
+                  border: "1px solid #74B559",
+                  background: "#F8FCF6",
+                },
+            });    
         } catch (error) {
-            console.error("Gagal mengubah admin:", error.response?.data || error);
+            const errorData = error.response?.data;
+
+            if (errorData?.message === "Username already exists.") {
+              setUsernameError("Username sudah digunakan.");
+              return;
+            }
+            notification.error({
+                message: "Gagal menambahkan admin",
+                description: errorData?.message || "Terjadi kesalahan saat menambahkan admin.",
+                placement: "topRight",
+                style: {
+                  borderRadius: "16px",
+                  border: "1px solid #FFCCC7",
+                  background: "#FFF2F0",
+                },
+            });    
+
+            console.error("Gagal menambahkan admin:", errorData || error);
         } finally {
             setLoading(false);
         }
     };
+
+    const handleUsernameChange = (e) => {
+      const value = e.target.value;
+
+      setUsername(value);
+
+      if (/\s/.test(value)) {
+        setUsernameError("Username tidak boleh mengandung spasi.");
+      } else {
+        setUsernameError("");
+      }
+    };
+
     return (
         <Dialog
             open={open}
@@ -53,7 +92,7 @@ function ChangeAdminModal ({ open, onClose, onSuccess, adminData }) {
         >
             <DialogContent>
                 <div className="text-center text-base font-medium mb-6">
-                    Ubah Admin
+                    Tambah Admin
                 </div>
                 <div className="border-t border-gray-500 mb-10" />
                 <div className="space-y-3 max-w-[430px] mx-auto">
@@ -63,12 +102,30 @@ function ChangeAdminModal ({ open, onClose, onSuccess, adminData }) {
                       size="small"
                       value={fullName}
                       onChange={(e) => setFullName(e.target.value)}
-                      sx={{
-                        "& .MuiOutlinedInput-root": {
-                          borderRadius: "999px",
-                          height: "28px",
-                        },
-                      }}
+                      sx={textFieldStyle}
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-[90px_1fr] items-center gap-4">
+                    <label>Username:</label>
+                    <TextField
+                      size="small"
+                      value={username}
+                      onChange={handleUsernameChange}
+                      error={Boolean(usernameError)}
+                      helperText={usernameError}
+                      sx={textFieldStyle}
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-[90px_1fr] items-center gap-4">
+                    <label>Password:</label>
+                    <TextField
+                      size="small"
+                      type="password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      sx={textFieldStyle}
                     />
                   </div>
 
@@ -77,13 +134,7 @@ function ChangeAdminModal ({ open, onClose, onSuccess, adminData }) {
                     <Checkbox
                       checked={isActive}
                       onChange={(e) => setIsActive(e.target.checked)}
-                      sx={{
-                        p: 0,
-                        color: "#1f1f1f",
-                        "&.Mui-checked": {
-                          color: "#1f1f1f",
-                        },
-                      }}
+                      sx={checkboxStyle}
                     />
                   </div>
                 </div>
@@ -109,6 +160,7 @@ function ChangeAdminModal ({ open, onClose, onSuccess, adminData }) {
                     <Button
                         variant="contained"
                         onClick={handleSave}
+                        disabled={loading || !username || !password || !fullName || Boolean(usernameError)}
                         sx={{
                         backgroundColor: "#72B957",
                         borderRadius: "999px",
@@ -129,4 +181,4 @@ function ChangeAdminModal ({ open, onClose, onSuccess, adminData }) {
     )
 }
 
-export default ChangeAdminModal;
+export default AddAdminModal;
