@@ -1,6 +1,5 @@
-import { getStatusColor } from "../utils/getStatusColor";
-import { getStatusText } from "../utils/getStatusText";
-import { formatDateTimeOrder } from "../utils/formatDateTime";
+import { getStatusColor } from "../../utils/getStatusColor";
+import { formatDateTimeOrder } from "../../utils/formatDateTime";
 
 function OrderDetailInformation({ order }) {
   return (
@@ -29,7 +28,7 @@ function OrderDetailInformation({ order }) {
             className="inline-block px-4 py-1 rounded-full text-xs text-white"
             style={{ backgroundColor: getStatusColor(order?.status) }}
           >
-            {getStatusText(order?.status)}
+            {order?.status}
           </span>
         </div>
       </div>
