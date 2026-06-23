@@ -1,11 +1,14 @@
 import Layout from "./layout/Layout";
-import Carousel from "react-multi-carousel";
+import CarouselImport from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
+
 import banner from "./assets/banner.webp";
 import locationIcon from "./assets/icon/location.svg";
 import { allPortofolio } from "./data";
 import Maps from "./components/Maps";
-import { allProduct, Kursi, Meja, Multimedia, Perlengkapan, Tenda  } from "./dataProduk";
+import { Kursi, Meja, Multimedia, Perlengkapan, Tenda } from "./dataProduk";
 
+const Carousel = CarouselImport.default || CarouselImport;
 function App() {
   const catalogResponsive = {
     xl: {
@@ -73,7 +76,7 @@ function App() {
       img: Tenda[0]?.images[0],
     },
   ];
-  
+
   const portoItems = [
     allPortofolio[13],
     { ...allPortofolio[2], img: allPortofolio[2].dokumentasi[0] },

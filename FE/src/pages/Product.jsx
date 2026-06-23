@@ -14,6 +14,7 @@ import { useUpsellRecommendations } from "../hooks/useUpsellRecommendations";
 import ProductSkeleton from "../components/product/ProductSkeleton";
 import { notification } from "antd";
 import EmptyImage from "../assets/empty-image.svg";
+import { useLocation } from "react-router-dom";
 
 const fallbackImages = [EmptyImage, EmptyImage];
 
@@ -185,6 +186,7 @@ function Product() {
         quantity: qty,
         guestId,
         notes,
+        isFromRecommendation,
       };
 
       if (selectedCombinationId) {
@@ -208,6 +210,9 @@ function Product() {
       console.error("Gagal mengambil rekomendasi upsell", error);
     }
   };
+
+  const location = useLocation();
+  const isFromRecommendation = location.state?.isFromRecommendation === true;
 
   const selectedVariantText = Object.entries(selectedVariantOptionIds)
     .map(([variantId, optionId]) => {
@@ -284,7 +289,8 @@ function Product() {
     } catch (error) {
       setUpsellMessage("Gagal menambahkan item ke keranjang.");
       notification.error({
-        title: "Lengkapi keranjang belanja Anda sebelum mengubah tanggal penyewaan.",
+        title:
+          "Lengkapi keranjang belanja Anda sebelum mengubah tanggal penyewaan.",
         placement: "topRight",
         style: {
           borderRadius: "16px",

@@ -18,8 +18,7 @@ function UpsellModal({
 
   if (!isOpen) return null;
 
-  const productImage =
-    upsellProduct?.thumbnail || EmptyImage;
+  const productImage = upsellProduct?.thumbnail || EmptyImage;
   const productName = upsellProduct?.productName || "No name";
   const productPrice = upsellProduct?.price ?? 0;
 
@@ -28,11 +27,12 @@ function UpsellModal({
       return;
     }
 
-    navigateToProduct({
-      navigate,
-      idProduct,
-      startDate,
-      endDate,
+    navigate(`/product/${idProduct}`, {
+      state: {
+        startDate,
+        endDate,
+        isFromRecommendation: true,
+      },
     });
 
     onClose();
