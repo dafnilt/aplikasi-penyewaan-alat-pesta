@@ -15,6 +15,8 @@ import ProductSkeleton from "../components/product/ProductSkeleton";
 import { notification } from "antd";
 import EmptyImage from "../assets/empty-image.svg";
 import { useLocation } from "react-router-dom";
+import { Empty, Button } from "antd";
+import { useNavigate } from "react-router-dom";
 
 const fallbackImages = [EmptyImage, EmptyImage];
 
@@ -302,6 +304,25 @@ function Product() {
       console.error("Gagal menambahkan produk ke keranjang", error);
     }
   };
+
+  const navigate = useNavigate();
+
+  if (isError) {
+    return (
+      <Layout>
+        <div className="flex justify-center items-center min-h-[60vh]">
+          <Empty
+            description="Produk tidak ditemukan atau sudah tidak tersedia"
+            image={Empty.PRESENTED_IMAGE_SIMPLE}
+          >
+            <Button type="primary" onClick={() => navigate("/catalog")}>
+              Kembali ke Katalog
+            </Button>
+          </Empty>
+        </div>
+      </Layout>
+    );
+  }
 
   if (isFetching) {
     return (
