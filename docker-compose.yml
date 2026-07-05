@@ -48,3 +48,7 @@ volumes:
   vhost:
   html:
   acme:
+
+networks:
+  default:
+    name: sewapesta-network
