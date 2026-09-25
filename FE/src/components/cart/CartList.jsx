@@ -129,22 +129,37 @@ function CartList({ items, setItems, onRefresh }) {
               disableIncrease={item.stock <= item.qty}
               disableDecrease={item.qty <= 1}
               onChange={(value) => {
+                if (value === "") {
+                  setItems((current) =>
+                    current.map((it) =>
+                      matchesItemId(it, item.id) ? { ...it, quantity: "" } : it,
+                    ),
+                  );
+                  return;
+                }
+
                 const nextQty = Number(value);
+
                 if (Number.isNaN(nextQty)) return;
+
+                const boundedQty = Math.min(
+                  Math.max(1, nextQty),
+                  item.stock || 1,
+                );
 
                 setItems((current) =>
                   current.map((it) =>
-                    matchesItemId(it, item.idCartItem)
-                      ? { ...it, quantity: nextQty }
+                    matchesItemId(it, item.id)
+                      ? { ...it, quantity: boundedQty }
                       : it,
                   ),
                 );
               }}
             />
 
-              <div className="text-xs text-red-600 font-medium mt-2 text-center">
-                Stok tersedia = {item.stock}
-              </div>
+            <div className="text-xs text-red-600 font-medium mt-2 text-center">
+              Stok tersedia = {item.stock}
+            </div>
           </div>
 
           <div className="text-center font-semibold">

@@ -1,16 +1,16 @@
 import axios from "axios";
 
-const baseURL = import.meta.env.DEV
-  ? import.meta.env.VITE_BASE_API_URL
-  : "/api";
+  const baseURL = import.meta.env.DEV
+    ? import.meta.env.VITE_BASE_API_URL
+    : "/api";
 
-export const privateApi = axios.create({
-  baseURL,
-  headers: {
-    "Content-Type": "application/json",
-  },
-  timeout: 10000,
-});
+  export const privateApi = axios.create({
+    baseURL,
+    headers: {
+      "Content-Type": "application/json",
+    },
+    timeout: 10000,
+  });
 
 export const authApi = axios.create({
   baseURL,

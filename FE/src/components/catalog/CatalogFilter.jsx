@@ -43,7 +43,7 @@ function CatalogFilter({
       const end = parsed?.endDate ? new Date(parsed.endDate) : null;
       setStartDate(start);
       setEndDate(end);
-      
+
       if (start) {
         localStorage.setItem("lastStartDate", start.toISOString());
       }
@@ -140,19 +140,81 @@ function CatalogFilter({
               endDate ? dayjs(endDate) : null,
             ]}
             onChange={(dates) => {
-              const start = dates?.[0]?.toDate() ?? null;
-              const end = dates?.[1]?.toDate() ?? null;
+              const start = dates?.[0] ?? null;
+              const end = dates?.[1] ?? null;
 
-              setStartDate(start);
-              setEndDate(end);
+              const now = dayjs();
 
-              if (start) {
-                localStorage.setItem("lastStartDate", start.toISOString());
+              if (start && start.isBefore(now, "minute")) {
+                notification.error({
+                  message:
+                    "Tanggal mulai tidak boleh kurang dari waktu sekarang",
+                  placement: "topRight",
+                });
+                return;
               }
 
-              if (end) {
-                localStorage.setItem("lastEndDate", end.toISOString());
+              if (end && end.isBefore(now, "minute")) {
+                notification.error({
+                  message:
+                    "Tanggal selesai tidak boleh kurang dari waktu sekarang",
+                  placement: "topRight",
+                });
+                return;
               }
+
+              if (start && end && end.isBefore(start, "minute") || end.isSame(start, "minute")) {
+                notification.error({
+                  message: "Tanggal selesai harus setelah tanggal mulai",
+                  placement: "topRight",
+                });
+                return;
+              }
+
+              const startDateValue = start?.toDate() ?? null;
+              const endDateValue = end?.toDate() ?? null;
+
+              setStartDate(startDateValue);
+              setEndDate(endDateValue);
+
+              if (startDateValue) {
+                localStorage.setItem(
+                  "lastStartDate",
+                  startDateValue.toISOString(),
+                );
+              }
+
+              if (endDateValue) {
+                localStorage.setItem("lastEndDate", endDateValue.toISOString());
+              }
+            }}
+            disabledDate={(current) => {
+              return current && current < dayjs().startOf("day");
+            }}
+            disabledTime={(current) => {
+              if (!current) return {};
+
+              const now = dayjs();
+
+              if (!current.isSame(now, "day")) {
+                return {};
+              }
+
+              return {
+                disabledHours: () =>
+                  Array.from({ length: now.hour() }, (_, index) => index),
+
+                disabledMinutes: (selectedHour) => {
+                  if (selectedHour === now.hour()) {
+                    return Array.from(
+                      { length: now.minute() },
+                      (_, index) => index,
+                    );
+                  }
+
+                  return [];
+                },
+              };
             }}
             showTime={{
               format: "HH:mm",

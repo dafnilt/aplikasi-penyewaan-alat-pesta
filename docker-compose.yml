@@ -1,8 +1,54 @@
 services:
+  # 1. Nginx Reverse Proxy (Menerima Trafik dari Luar)
+  nginx-proxy:
+    image: nginxproxy/nginx-proxy
+    container_name: nginx-proxy
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - certs:/etc/nginx/certs
+      - vhost:/etc/nginx/vhost.d
+      - html:/usr/share/nginx/html
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+    restart: always
+
+  # 2. ACME Companion (Otomatis Mengurus Sertifikat HTTPS/SSL)
+  acme-companion:
+    image: nginxproxy/acme-companion
+    environment:
+      - DEFAULT_EMAIL=admin@sewapestakita.duckdns.org
+      - NGINX_PROXY_CONTAINER=nginx-proxy
+    volumes:
+      - certs:/etc/nginx/certs
+      - vhost:/etc/nginx/vhost.d
+      - html:/usr/share/nginx/html
+      - acme:/etc/acme.sh
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    volumes_from:
+      - nginx-proxy
+    depends_on:
+      - nginx-proxy
+    restart: always
+
+  # 3. Aplikasi Frontend Kamu
   frontend:
     build:
       context: ./FE
       dockerfile: Dockerfile
-    ports:
-      - "8080:80"
+    expose:
+      - "80"
+    environment:
+      - VIRTUAL_HOST=sewapestakita.duckdns.org
+      - LETSENCRYPT_HOST=sewapestakita.duckdns.org
     restart: always
+
+volumes:
+  certs:
+  vhost:
+  html:
+  acme:
+
+networks:
+  default:
+    name: sewapesta-network

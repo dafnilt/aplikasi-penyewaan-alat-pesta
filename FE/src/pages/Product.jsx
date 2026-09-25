@@ -21,6 +21,10 @@ import { useNavigate } from "react-router-dom";
 const fallbackImages = [EmptyImage, EmptyImage];
 
 function Product() {
+  const location = useLocation();
+  const isFromRecommendation = location.state?.isFromRecommendation === true;
+  const recommendationQty = Number(location.state?.quantity ?? 1);
+
   const { productId, startDate, endDate } = useProductPage();
 
   const {
@@ -85,6 +89,26 @@ function Product() {
         return prev;
       }
 
+      const targetQty = isFromRecommendation ? recommendationQty : 1;
+
+      const availableCombination = variantCombinations.find(
+        (combination) => Number(combination.stock ?? 0) >= targetQty,
+      );
+
+      if (availableCombination?.options?.length) {
+        return variantTypes.reduce((acc, variant) => {
+          const matchedOption = variant.options?.find((option) =>
+            availableCombination.options.includes(option.idOption),
+          );
+
+          if (matchedOption) {
+            acc[variant.idVariant] = matchedOption.idOption;
+          }
+
+          return acc;
+        }, {});
+      }
+
       const initialVariants = variantTypes.reduce((acc, variant) => {
         if (variant.options?.[0]) {
           acc[variant.idVariant] = variant.options[0].idOption;
@@ -95,7 +119,12 @@ function Product() {
 
       return initialVariants;
     });
-  }, [variantTypes]);
+  }, [
+    variantTypes,
+    variantCombinations,
+    isFromRecommendation,
+    recommendationQty,
+  ]);
 
   const handleVariantSelect = (variantId, optionId) => {
     setSelectedVariantOptionIds((current) => ({
@@ -139,10 +168,14 @@ function Product() {
   };
 
   const handleQtyChange = (nextQty) => {
+    if (nextQty === "") {
+      setQty("");
+      return;
+    }
+
     const numericQty = Number(nextQty);
 
     if (Number.isNaN(numericQty)) {
-      setQty(1);
       return;
     }
 
@@ -170,12 +203,22 @@ function Product() {
       parsedCartDates = null;
     }
 
+    const hasCartDates = parsedCartDates?.startDate && parsedCartDates?.endDate;
+
     const isSameDate =
-      parsedCartDates &&
+      hasCartDates &&
       parsedCartDates.startDate === startDate &&
       parsedCartDates.endDate === endDate;
 
-    if (!isSameDate) {
+    // Kalau produk ini dibuka dari rekomendasi, jangan tampilkan upsell lagi
+    if (isFromRecommendation) {
+      await handleAddToCart();
+      return;
+    }
+
+    // Kalau cart sudah punya tanggal dan tanggal sekarang beda, langsung add to cart
+    // supaya validasi backend yang menangani
+    if (hasCartDates && !isSameDate) {
       await handleAddToCart();
       return;
     }
@@ -188,7 +231,7 @@ function Product() {
         quantity: qty,
         guestId,
         notes,
-        isFromRecommendation,
+        isFromRecommendation: false,
       };
 
       if (selectedCombinationId) {
@@ -212,9 +255,6 @@ function Product() {
       console.error("Gagal mengambil rekomendasi upsell", error);
     }
   };
-
-  const location = useLocation();
-  const isFromRecommendation = location.state?.isFromRecommendation === true;
 
   const selectedVariantText = Object.entries(selectedVariantOptionIds)
     .map(([variantId, optionId]) => {
@@ -307,6 +347,12 @@ function Product() {
 
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (!isFromRecommendation) return;
+
+    setQty(Math.min(recommendationQty, availableStock || recommendationQty));
+  }, [isFromRecommendation, recommendationQty, availableStock]);
+
   if (isError) {
     return (
       <Layout>
@@ -389,6 +435,7 @@ function Product() {
         upsellProduct={upsellProduct}
         startDate={startDate}
         endDate={endDate}
+        quantity={qty}
       />
     </Layout>
   );

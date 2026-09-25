@@ -13,6 +13,7 @@ function UpsellModal({
   upsellProduct,
   startDate,
   endDate,
+  quantity,
 }) {
   const navigate = useNavigate();
 
@@ -32,6 +33,7 @@ function UpsellModal({
         startDate,
         endDate,
         isFromRecommendation: true,
+        quantity,
       },
     });
 
